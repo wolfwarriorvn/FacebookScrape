@@ -39,13 +39,24 @@ def convert_ui_to_py():
         # if os.path.isfile(filename): # filter dirs
         if filename.endswith(".ui"):
             # new_py = os.path.dirname(filename)  + os.path.basename(filename).removesuffix('.ui')
-            py_convert = "{0}\\ui_{1}.py".format(os.path.dirname(filename), os.path.basename(filename).removesuffix('.ui'))
-            shell_uic = "pyside6-uic .\{0} -o .\{1} --rc-prefix --from-imports".format(filename, py_convert)
-            # print(shell_uic)
+            py_convert = "{0}\\{1}_ui.py".format(os.path.dirname(filename), os.path.basename(filename).removesuffix('.ui'))
+            shell_uic = "pyside6-uic .\{0} -o .\{1}".format(filename, py_convert)
+            print(shell_uic)
             if convert_action(backup_info, filename):
                 print(filename)
                 #TODO: check status was completed when excute command
                 run_status = run(shell_uic)
+                # print(run_status)
+        elif filename.endswith(".qrc"):
+            py_convert = "{0}\\{1}_rc.py".format(os.path.dirname(filename), os.path.basename(filename).removesuffix('.qrc'))
+            shell_uic = "pyside6-rcc .\{0} -o .\{1}".format(filename, py_convert)
+            print(shell_uic)
+            if convert_action(backup_info, filename):
+                print(filename)
+                #TODO: check status was completed when excute command
+                run_status = run(shell_uic)
+                # print(run_status)
+
     rewrite_backup(backup_info)
 
 convert_ui_to_py()

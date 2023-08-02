@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget
 
-from views.ui.pages.ui_tumbr import Ui_Form
+from views.ui.tumbr_ui import Ui_Form
 
 class Tumbr(QWidget):
     def __init__(self):

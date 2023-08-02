@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>410</width>
+    <height>285</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <string notr="true">font-size: 20pt;</string>
      </property>
      <property name="text">
-      <string>Dashboard</string>
+      <string>Group Join</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

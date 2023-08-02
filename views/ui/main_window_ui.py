@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.3
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QMainWindow,
-    QPushButton, QSizePolicy, QSpacerItem, QTabWidget,
-    QToolBox, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
+    QMainWindow, QPushButton, QSizePolicy, QSpacerItem,
+    QTabWidget, QToolBox, QVBoxLayout, QWidget)
 import resource_rc
 
 class Ui_MainWindow(object):
@@ -51,6 +51,7 @@ class Ui_MainWindow(object):
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.toolBox = QToolBox(self.menu_widget)
         self.toolBox.setObjectName(u"toolBox")
+        self.toolBox.setContextMenuPolicy(Qt.NoContextMenu)
         self.toolBox.setStyleSheet(u"#toolBox {\n"
 "	color:  white;\n"
 "}\n"
@@ -82,58 +83,60 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "")
+        self.toolBox.setFrameShape(QFrame.NoFrame)
+        self.toolBox.setFrameShadow(QFrame.Raised)
         self.page_3 = QWidget()
         self.page_3.setObjectName(u"page_3")
-        self.page_3.setGeometry(QRect(0, 0, 201, 549))
+        self.page_3.setGeometry(QRect(0, 0, 180, 579))
         self.verticalLayout = QVBoxLayout(self.page_3)
         self.verticalLayout.setSpacing(4)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(5, 0, 5, 0)
-        self.btn_home = QPushButton(self.page_3)
-        self.btn_home.setObjectName(u"btn_home")
-        self.btn_home.setContextMenuPolicy(Qt.DefaultContextMenu)
+        self.btn_account = QPushButton(self.page_3)
+        self.btn_account.setObjectName(u"btn_account")
+        self.btn_account.setContextMenuPolicy(Qt.DefaultContextMenu)
         icon = QIcon()
-        icon.addFile(u":/icons/icon/user-48.ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_home.setIcon(icon)
+        icon.addFile(u":/icons/views/icon/home-4-48 (2).ico", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_account.setIcon(icon)
 
-        self.verticalLayout.addWidget(self.btn_home)
+        self.verticalLayout.addWidget(self.btn_account)
 
-        self.btn_dashboard = QPushButton(self.page_3)
-        self.btn_dashboard.setObjectName(u"btn_dashboard")
+        self.btn_proxy = QPushButton(self.page_3)
+        self.btn_proxy.setObjectName(u"btn_proxy")
         icon1 = QIcon()
-        icon1.addFile(u":/icons/icon/globe-48.ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_dashboard.setIcon(icon1)
+        icon1.addFile(u":/icons/views/icon/group-48.ico", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_proxy.setIcon(icon1)
 
-        self.verticalLayout.addWidget(self.btn_dashboard)
+        self.verticalLayout.addWidget(self.btn_proxy)
 
         self.verticalSpacer = QSpacerItem(20, 417, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
         icon2 = QIcon()
-        icon2.addFile(u":/icons/icon/home-4-48 (2).ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon2.addFile(u":/icon/views/icon/home-4-48 (2).ico", QSize(), QIcon.Normal, QIcon.Off)
         self.toolBox.addItem(self.page_3, icon2, u"Gerneral")
         self.page_4 = QWidget()
         self.page_4.setObjectName(u"page_4")
-        self.page_4.setGeometry(QRect(0, 0, 180, 570))
+        self.page_4.setGeometry(QRect(0, 0, 180, 579))
         self.verticalLayout_2 = QVBoxLayout(self.page_4)
         self.verticalLayout_2.setSpacing(4)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(5, 0, 5, 0)
-        self.btn_toyota = QPushButton(self.page_4)
-        self.btn_toyota.setObjectName(u"btn_toyota")
+        self.btn_group_scan = QPushButton(self.page_4)
+        self.btn_group_scan.setObjectName(u"btn_group_scan")
 
-        self.verticalLayout_2.addWidget(self.btn_toyota)
+        self.verticalLayout_2.addWidget(self.btn_group_scan)
 
-        self.btn_lexus = QPushButton(self.page_4)
-        self.btn_lexus.setObjectName(u"btn_lexus")
+        self.btn_group_view = QPushButton(self.page_4)
+        self.btn_group_view.setObjectName(u"btn_group_view")
 
-        self.verticalLayout_2.addWidget(self.btn_lexus)
+        self.verticalLayout_2.addWidget(self.btn_group_view)
 
-        self.btn_mazda = QPushButton(self.page_4)
-        self.btn_mazda.setObjectName(u"btn_mazda")
+        self.btn_group_join = QPushButton(self.page_4)
+        self.btn_group_join.setObjectName(u"btn_group_join")
 
-        self.verticalLayout_2.addWidget(self.btn_mazda)
+        self.verticalLayout_2.addWidget(self.btn_group_join)
 
         self.verticalSpacer_2 = QSpacerItem(20, 381, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -141,10 +144,10 @@ class Ui_MainWindow(object):
 
         icon3 = QIcon()
         icon3.addFile(u":/icons/icon/car-4-48.ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolBox.addItem(self.page_4, icon3, u"Car")
+        self.toolBox.addItem(self.page_4, icon3, u"T\u01b0\u01a1ng t\u00e1c Nh\u00f3m")
         self.page_5 = QWidget()
         self.page_5.setObjectName(u"page_5")
-        self.page_5.setGeometry(QRect(0, 0, 180, 570))
+        self.page_5.setGeometry(QRect(0, 0, 137, 68))
         self.verticalLayout_3 = QVBoxLayout(self.page_5)
         self.verticalLayout_3.setSpacing(4)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -165,7 +168,7 @@ class Ui_MainWindow(object):
 
         icon4 = QIcon()
         icon4.addFile(u":/icons/icon/group-48.ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolBox.addItem(self.page_5, icon4, u"Social Media")
+        self.toolBox.addItem(self.page_5, icon4, u"Schedule")
 
         self.gridLayout.addWidget(self.toolBox, 0, 0, 1, 1)
 
@@ -180,6 +183,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.tabWidget = QTabWidget(self.main_widget)
         self.tabWidget.setObjectName(u"tabWidget")
+        self.tabWidget.setEnabled(True)
         self.tabWidget.setFocusPolicy(Qt.NoFocus)
         self.tabWidget.setStyleSheet(u"#tabWidget{\n"
 "	background-color: #fff\n"
@@ -187,11 +191,10 @@ class Ui_MainWindow(object):
 "\n"
 "QTabBar::close-button{\n"
 "	margin-left: 3px;\n"
-"	image: url(:/icons/icon/x-mark-4-32.ico);\n"
+"	image: url(:/icon/views/icon/x-mark-4-32.ico);\n"
 "}\n"
-"\n"
 "QTabBar::close-button:hover{\n"
-"	image: url(:/icons/icon/x-mark-4-48.ico);\n"
+"	image: url(:/icon/views/icon/x-mark-4-48.ico);\n"
 "}")
         self.tabWidget.setTabsClosable(True)
 
@@ -213,15 +216,15 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.btn_home.setText(QCoreApplication.translate("MainWindow", u"Qu\u1ea3n l\u00fd T\u00e0i Kho\u1ea3n", None))
-        self.btn_dashboard.setText(QCoreApplication.translate("MainWindow", u"Proxy", None))
+        self.btn_account.setText(QCoreApplication.translate("MainWindow", u"Qu\u1ea3n l\u00fd T\u00e0i Kho\u1ea3n", None))
+        self.btn_proxy.setText(QCoreApplication.translate("MainWindow", u"Proxy", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), QCoreApplication.translate("MainWindow", u"Gerneral", None))
-        self.btn_toyota.setText(QCoreApplication.translate("MainWindow", u"Toyota", None))
-        self.btn_lexus.setText(QCoreApplication.translate("MainWindow", u"Lexus", None))
-        self.btn_mazda.setText(QCoreApplication.translate("MainWindow", u"Mazda", None))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.page_4), QCoreApplication.translate("MainWindow", u"Car", None))
-        self.btn_youtube.setText(QCoreApplication.translate("MainWindow", u"Youtube", None))
-        self.btn_tumb.setText(QCoreApplication.translate("MainWindow", u"Tumb", None))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.page_5), QCoreApplication.translate("MainWindow", u"Social Media", None))
+        self.btn_group_scan.setText(QCoreApplication.translate("MainWindow", u"Qu\u00e9t nh\u00f3m", None))
+        self.btn_group_view.setText(QCoreApplication.translate("MainWindow", u"Danh s\u00e1ch nh\u00f3m", None))
+        self.btn_group_join.setText(QCoreApplication.translate("MainWindow", u"Tham gia nh\u00f3m", None))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.page_4), QCoreApplication.translate("MainWindow", u"T\u01b0\u01a1ng t\u00e1c Nh\u00f3m", None))
+        self.btn_youtube.setText(QCoreApplication.translate("MainWindow", u"Duy\u1ec7t b\u00e0i nh\u00f3m", None))
+        self.btn_tumb.setText(QCoreApplication.translate("MainWindow", u"\u0110\u0103ng b\u00e0i", None))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.page_5), QCoreApplication.translate("MainWindow", u"Schedule", None))
     # retranslateUi
 

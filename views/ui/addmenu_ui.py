@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'addmenu.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.3
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -17,12 +17,13 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QPushButton, QSizePolicy,
     QSpacerItem, QTextEdit, QVBoxLayout, QWidget)
+import resource_rc
 
 class Ui_Addaccount(object):
     def setupUi(self, Addaccount):
         if not Addaccount.objectName():
             Addaccount.setObjectName(u"Addaccount")
-        Addaccount.resize(401, 394)
+        Addaccount.resize(544, 364)
         self.verticalLayout = QVBoxLayout(Addaccount)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.label = QLabel(Addaccount)
@@ -55,6 +56,9 @@ class Ui_Addaccount(object):
         self.btn_save.setLayoutDirection(Qt.LeftToRight)
         self.btn_save.setAutoFillBackground(False)
         self.btn_save.setStyleSheet(u"")
+        icon = QIcon()
+        icon.addFile(u":/icons/views/icon/arrow-31-48.ico", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_save.setIcon(icon)
 
         self.verticalLayout.addWidget(self.btn_save)
 
@@ -66,7 +70,7 @@ class Ui_Addaccount(object):
 
     def retranslateUi(self, Addaccount):
         Addaccount.setWindowTitle(QCoreApplication.translate("Addaccount", u"Form", None))
-        self.label.setText(QCoreApplication.translate("Addaccount", u"\u0110\u1ecbnh d\u1ea1ng user|pass", None))
+        self.label.setText(QCoreApplication.translate("Addaccount", u"\u0110\u1ecbnh d\u1ea1ng user|pass Okie", None))
         self.lb_show_msg.setText("")
         self.btn_save.setText(QCoreApplication.translate("Addaccount", u"Save", None))
     # retranslateUi

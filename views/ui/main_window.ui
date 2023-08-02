@@ -78,6 +78,9 @@ border: none;</string>
        </property>
        <item row="0" column="0">
         <widget class="QToolBox" name="toolBox">
+         <property name="contextMenuPolicy">
+          <enum>Qt::NoContextMenu</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true">#toolBox {
 	color:  white;
@@ -111,6 +114,12 @@ border: none;</string>
 
 </string>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
          <property name="currentIndex">
           <number>0</number>
          </property>
@@ -119,13 +128,13 @@ border: none;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>201</width>
-            <height>549</height>
+            <width>180</width>
+            <height>579</height>
            </rect>
           </property>
           <attribute name="icon">
-           <iconset resource="resource.qrc">
-            <normaloff>:/icons/icon/home-4-48 (2).ico</normaloff>:/icons/icon/home-4-48 (2).ico</iconset>
+           <iconset resource="../../resource.qrc">
+            <normaloff>:/icon/views/icon/home-4-48 (2).ico</normaloff>:/icon/views/icon/home-4-48 (2).ico</iconset>
           </attribute>
           <attribute name="label">
            <string>Gerneral</string>
@@ -147,7 +156,7 @@ border: none;</string>
             <number>0</number>
            </property>
            <item>
-            <widget class="QPushButton" name="btn_home">
+            <widget class="QPushButton" name="btn_account">
              <property name="contextMenuPolicy">
               <enum>Qt::DefaultContextMenu</enum>
              </property>
@@ -155,19 +164,19 @@ border: none;</string>
               <string>Quản lý Tài Khoản</string>
              </property>
              <property name="icon">
-              <iconset resource="resource.qrc">
-               <normaloff>:/icons/icon/user-48.ico</normaloff>:/icons/icon/user-48.ico</iconset>
+              <iconset>
+               <normaloff>:/icons/views/icon/home-4-48 (2).ico</normaloff>:/icons/views/icon/home-4-48 (2).ico</iconset>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_dashboard">
+            <widget class="QPushButton" name="btn_proxy">
              <property name="text">
               <string>Proxy</string>
              </property>
              <property name="icon">
-              <iconset resource="resource.qrc">
-               <normaloff>:/icons/icon/globe-48.ico</normaloff>:/icons/icon/globe-48.ico</iconset>
+              <iconset>
+               <normaloff>:/icons/views/icon/group-48.ico</normaloff>:/icons/views/icon/group-48.ico</iconset>
              </property>
             </widget>
            </item>
@@ -192,15 +201,15 @@ border: none;</string>
             <x>0</x>
             <y>0</y>
             <width>180</width>
-            <height>570</height>
+            <height>579</height>
            </rect>
           </property>
           <attribute name="icon">
-           <iconset resource="resource.qrc">
+           <iconset>
             <normaloff>:/icons/icon/car-4-48.ico</normaloff>:/icons/icon/car-4-48.ico</iconset>
           </attribute>
           <attribute name="label">
-           <string>Car</string>
+           <string>Tương tác Nhóm</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <property name="spacing">
@@ -219,23 +228,23 @@ border: none;</string>
             <number>0</number>
            </property>
            <item>
-            <widget class="QPushButton" name="btn_toyota">
+            <widget class="QPushButton" name="btn_group_scan">
              <property name="text">
-              <string>Toyota</string>
+              <string>Quét nhóm</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_lexus">
+            <widget class="QPushButton" name="btn_group_view">
              <property name="text">
-              <string>Lexus</string>
+              <string>Danh sách nhóm</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_mazda">
+            <widget class="QPushButton" name="btn_group_join">
              <property name="text">
-              <string>Mazda</string>
+              <string>Tham gia nhóm</string>
              </property>
             </widget>
            </item>
@@ -259,16 +268,16 @@ border: none;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>180</width>
-            <height>570</height>
+            <width>137</width>
+            <height>68</height>
            </rect>
           </property>
           <attribute name="icon">
-           <iconset resource="resource.qrc">
+           <iconset>
             <normaloff>:/icons/icon/group-48.ico</normaloff>:/icons/icon/group-48.ico</iconset>
           </attribute>
           <attribute name="label">
-           <string>Social Media</string>
+           <string>Schedule</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <property name="spacing">
@@ -289,14 +298,14 @@ border: none;</string>
            <item>
             <widget class="QPushButton" name="btn_youtube">
              <property name="text">
-              <string>Youtube</string>
+              <string>Duyệt bài nhóm</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="btn_tumb">
              <property name="text">
-              <string>Tumb</string>
+              <string>Đăng bài</string>
              </property>
             </widget>
            </item>
@@ -340,6 +349,9 @@ border: none;</string>
        </property>
        <item>
         <widget class="QTabWidget" name="tabWidget">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
          </property>
@@ -350,11 +362,10 @@ border: none;</string>
 
 QTabBar::close-button{
 	margin-left: 3px;
-	image: url(:/icons/icon/x-mark-4-32.ico);
+	image: url(:/icon/views/icon/x-mark-4-32.ico);
 }
-
 QTabBar::close-button:hover{
-	image: url(:/icons/icon/x-mark-4-48.ico);
+	image: url(:/icon/views/icon/x-mark-4-48.ico);
 }</string>
          </property>
          <property name="currentIndex">
@@ -372,7 +383,7 @@ QTabBar::close-button:hover{
   </widget>
  </widget>
  <resources>
-  <include location="resource.qrc"/>
+  <include location="../../resource.qrc"/>
  </resources>
  <connections/>
 </ui>

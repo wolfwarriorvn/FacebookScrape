@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>401</width>
-    <height>394</height>
+    <width>544</width>
+    <height>364</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Định dạng user|pass</string>
+      <string>Định dạng user|pass Okie</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -78,10 +78,16 @@
      <property name="text">
       <string>Save</string>
      </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/icons/views/icon/arrow-31-48.ico</normaloff>:/icons/views/icon/arrow-31-48.ico</iconset>
+     </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

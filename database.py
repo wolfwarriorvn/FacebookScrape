@@ -15,6 +15,5 @@ class Database:
             return False
 
         query = QtSql.QSqlQuery()
-        query.exec("CREATE TABLE IF NOT EXISTS expenses (ID integer primary key AUTOINCREMENT, Date VARCHAR(20), "
-                   "Category VARCHAR(20), Description VARCHAR(20), Balance REAL, Status VARCHAR(20))")
+        query.exec("CREATE TABLE IF NOT EXISTS accounts (ID integer primary key, UserID VARCHAR(20) UNIQUE, Password VARCHAR(20), ProxyID integer)")
         return True

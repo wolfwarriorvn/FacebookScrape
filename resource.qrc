@@ -1,0 +1,17 @@
+<RCC>
+  <qresource prefix="icon">
+    <file>views/icon/arrow-31-48.ico</file>
+    <file>views/icon/arrow-96-48.ico</file>
+    <file>views/icon/car-4-48.ico</file>
+    <file>views/icon/globe-48.ico</file>
+    <file>views/icon/group-48.ico</file>
+    <file>views/icon/home-4-48 (2).ico</file>
+    <file>views/icon/redeem-32.ico</file>
+    <file>views/icon/redeem-48.ico</file>
+    <file>views/icon/redeem-64.ico</file>
+    <file>views/icon/search-3-48.ico</file>
+    <file>views/icon/user-48.ico</file>
+    <file>views/icon/x-mark-4-32.ico</file>
+    <file>views/icon/x-mark-4-48.ico</file>
+  </qresource>
+</RCC>

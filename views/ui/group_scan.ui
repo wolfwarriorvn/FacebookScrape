@@ -20,7 +20,7 @@
       <string notr="true">font-size: 20pt;</string>
      </property>
      <property name="text">
-      <string>Toyota</string>
+      <string>Group Scan</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

@@ -1,10 +1,10 @@
 from PySide6.QtWidgets import QWidget
 
-from views.ui.pages.ui_lexus import Ui_Form
+from views.ui.group_view_ui import Ui_Form
 
-class Lexus(QWidget):
+class GroupView(QWidget):
     def __init__(self):
-        super(Lexus, self).__init__()
+        super(GroupView, self).__init__()
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         

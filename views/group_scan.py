@@ -1,10 +1,10 @@
 from PySide6.QtWidgets import QWidget
 
-from views.ui.pages.ui_dashboard import Ui_Form
+from views.ui.group_scan_ui import Ui_Form
 
-class Dashboard(QWidget):
+class GroupScan(QWidget):
     def __init__(self):
-        super(Dashboard, self).__init__()
+        super(GroupScan, self).__init__()
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         
