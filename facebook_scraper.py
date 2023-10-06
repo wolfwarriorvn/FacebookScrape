@@ -63,7 +63,7 @@ class FacebookScraper:
         options.add_argument(
             r'--user-data-dir='+ CHROME_PROFILES+ fr'{self.uid}')
         # options.add_argument("--start-maximized")
-        options.add_experimental_option('excludeSwitches', ['disable-popup-blocking', 'enable-automation'])
+        # options.add_experimental_option('excludeSwitches', ['disable-popup-blocking', 'enable-automation'])
         options.add_argument("--window-size=300,500")
         # options.add_argument("--headless --disable-gpu")
         options.add_argument("--disable-notifications")

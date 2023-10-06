@@ -4,7 +4,7 @@ from time import sleep
 from random import randrange
 
 
-class ScanGroupWorker(BaseWorker):
+class ScanJoinedGroupWorker(BaseWorker):
     def __init__(self, page_id, semaphore_id, uid, password, proxy=None, secret_2fa=None) -> None:
         super().__init__(semaphore_id, uid, password, proxy, secret_2fa)
         self._pageid = page_id

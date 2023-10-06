@@ -9,7 +9,7 @@ from controllers.worker.seeding_worker import SeedingWorker
 from controllers.worker.scan_post_history_worker import ScanPostHistoryWorker
 from controllers.worker.scan_group_keyword_worker import ScanGroupKeywordWorker
 from controllers.worker.check_approval_post_worker import CheckApprovalPost
-from controllers.worker.scan_group_worker import ScanGroupWorker
+from controllers.worker.scan_joined_group_worker import ScanJoinedGroupWorker
 from controllers.worker.check_allow_page_worker import CheckGroupAllowPage
 from controllers.worker.post_group_worker import PostGroupWorker
 
@@ -46,9 +46,7 @@ class MySignals(QObject):
 
     # facebook
     post_event = Signal(object, object)
-    post_group = Signal(object, object, object, object,
-                        object, object, object, object)
-    scan_group = Signal(object, object)
+    scan_joined_group = Signal(object, object)
     scan_group_by_keyword = Signal(str, str, int)
     check_approval_post = Signal(str, object)
     check_group_allow_page = Signal(str, object)
@@ -83,8 +81,7 @@ class MainController(QObject):
         self.signals.check_group_allow_page.connect(
             self.init_thread_check_group_allow_page)
 
-        self.signals.scan_group.connect(self.scan_group)
-        self.signals.post_group.connect(self.post_group)
+        self.signals.scan_joined_group.connect(self.scan_joined_group)
         self.signals.post_event.connect(self.init_thread_post)
         self.signals.scan_group_by_keyword.connect(self.scan_group_by_keyword)
         self.signals.scan_post_history.connect(self.on_scan_post_history)
@@ -100,63 +97,10 @@ class MainController(QObject):
             print("create_table error: ", e)
             pass
 
-    Slot(object, object, object, object, object, object, object, object)
-
-    def post_group(self, uids, pageids, max_posts, post_start, post_stop, contents, photo_dir, _type):
-        pool = QThreadPool.globalInstance()
-
-        table_joined_groups = 'groups_tita'
-        free_group_links = self._model.get_group_free(_type)
-        post_number = len(uids) * max_posts
-        if (len(uids) * max_posts) > len(free_group_links):
-            print("Hết nick free oi")
-            self.signals.outof_free_groups.emit(len(free_group_links))
-            return
-        set_free_groups = set(free_group_links)
-        set_picked = set()
-
-        # for idx_uid in uids:
-        #     select_groups = random.sample(sorted(set_free_groups.difference(set_picked)), max_posts)
-        #     set_picked.update(select_groups)
-        #     print('len available_groups', len(available_groups))
-        #     print(select_groups)
-        #     print("-------------------")
-
-        try:
-            for idx_uid, page_id in zip(uids, pageids):
-                uid, pw, proxy = self._model.get_account_info(idx_uid)
-                proxy_extension = self._model.get_proxy_extension(proxy)
-                print("uid: ", uid)
-                print("pass: ", pw)
-                print("proxy_extension: ", proxy_extension)
-                pageID = self._model.get_account_pageid(idx_uid)
-                activeID = uid if pageID == '' else pageID
-
-                select_groups = random.sample(
-                    sorted(set_free_groups.difference(set_picked)), max_posts)
-                set_picked.update(select_groups)
-
-                worker = PostGroupWorker(contents, photo_dir, select_groups, post_start,
-                                         post_stop, table_joined_groups, idx_uid, page_id, pw, proxy_extension)
-                worker.setAutoDelete(True)
-                worker.signals.posted_group_completed.connect(
-                    self.post_completed)
-                pool.start(worker)
-        except Exception as e:
-            print("create_table error: ", e)
-            pass
-
-    def post_completed(self, pageid, group_link, status):
-        try:
-            self._model.update_group_posted_status(pageid, group_link, status)
-        except Exception as e:
-            print("ppost_completed error", )
-            pass
-    def init_thread_post(self, uids, post_setting:PostSetting):
-        sema_id = uuid.uuid4()
-        semaphore[sema_id] = QSemaphore(post_setting.threads)
-        free_group_links = self._model.get_group_free(post_setting.type_group)
-        total_post = len(uids) * post_setting.post_count
+    def init_thread_post(self, uids, setting: PostSetting):
+        sema_id = self.genarate_semaphore(setting.threads)
+        free_group_links = self._model.get_group_free(setting.type_group)
+        total_post = len(uids) * setting.post_count
         if total_post > len(free_group_links):
             print("Emit hết nick nha")
             return
@@ -172,12 +116,13 @@ class MainController(QObject):
                 print("proxy_extension: ", proxy_extension)
                 pageID = self._model.get_account_pageid(uid)
                 activeID = uid if pageID == '' else pageID
-                
+
                 select_groups = random.sample(
-                    sorted(set_free_groups.difference(set_picked)), post_setting.post_count)
+                    sorted(set_free_groups.difference(set_picked)), setting.post_count)
                 set_picked.update(select_groups)
 
-                worker = PostGroupWorker(select_groups, post_setting, activeID, sema_id, uid, pw, proxy_extension)
+                worker = PostGroupWorker(
+                    select_groups, setting, activeID, sema_id, uid, pw, proxy_extension)
                 worker.setAutoDelete(True)
                 worker.signals.update_status.connect(
                     self.update_status_dashboard)
@@ -193,11 +138,17 @@ class MainController(QObject):
                 print(e)
                 continue
 
-    def init_thread_seeding_action(self, uids, seeding_setting: SeedingSetting):
-        sema_id = uuid.uuid4()
-        semaphore[sema_id] = QSemaphore(seeding_setting.threads)
-        if seeding_setting.auto_getlink:
-            seeding_setting.posted_links = self._model.get_post_approved_link()
+    def post_completed(self, pageid, group_link, status):
+        try:
+            self._model.update_group_posted_status(pageid, group_link, status)
+        except Exception as e:
+            print("ppost_completed error", )
+            pass
+
+    def init_thread_seeding_action(self, uids, setting: SeedingSetting):
+        sema_id = self.genarate_semaphore(setting.threads)
+        if setting.auto_getlink:
+            setting.posted_links = self._model.get_post_approved_link()
         for uid in uids:
             try:
                 liked_links = self._model.get_seeding_liked_link(uid)
@@ -209,17 +160,17 @@ class MainController(QObject):
                 print("proxy_extension: ", proxy_extension)
 
                 set_available_links = set(
-                    seeding_setting.posted_links).difference(set(liked_links))
-                if len(set_available_links) < seeding_setting.seedings:
+                    setting.posted_links).difference(set(liked_links))
+                if len(set_available_links) < setting.seedings:
                     self.update_mesage_dashboard(
                         uid, 'Không đủ link để like. Số link còn lại: {}'.format(len(set_available_links)))
                     continue
 
                 available_links = random.sample(
-                    sorted(set_available_links), seeding_setting.seedings)
+                    sorted(set_available_links), setting.seedings)
 
                 worker = SeedingWorker(
-                    available_links, seeding_setting, sema_id, uid, pw, proxy_extension)
+                    available_links, setting, sema_id, uid, pw, proxy_extension)
                 worker.signals.update_status.connect(
                     self.update_status_dashboard)
                 worker.signals.update_message.connect(
@@ -244,8 +195,7 @@ class MainController(QObject):
             pass
 
     def init_thread_check_group_allow_page(self, uid, group_links):
-        sema_id = uuid.uuid4()
-        semaphore[sema_id] = QSemaphore(1)
+        sema_id = self.genarate_semaphore(1)
         try:
             uid, pw, proxy = self._model.get_account_info(uid)
             active_id = self._model.get_account_pageid(uid)
@@ -254,12 +204,17 @@ class MainController(QObject):
             print("pass: ", pw)
             print("proxy_extension: ", proxy_extension)
 
-            pool = QThreadPool.globalInstance()
-            worker = CheckGroupAllowPage(group_links,sema_id, uid, pw, proxy_extension)
+            worker = CheckGroupAllowPage(
+                group_links, sema_id, uid, pw, proxy_extension)
             worker.setAutoDelete(True)
             worker.signals.allow_page_group.connect(
                 self.on_update_allow_page_status)
-            pool.start(worker)
+            #command signal
+            worker.signals.update_status.connect(
+                self.update_status_dashboard)
+            worker.signals.update_message.connect(
+                self.update_mesage_dashboard)
+            self.pool.start(worker)
         except Exception as e:
             print("create_table error: ", e)
             pass
@@ -272,8 +227,7 @@ class MainController(QObject):
             pass
 
     def init_thread_check_approval_post(self, uid, pending_posts):
-        sema_id = uuid.uuid4()
-        semaphore[sema_id] = QSemaphore(1)
+        sema_id = self.genarate_semaphore(1)
         try:
             uid, pw, proxy = self._model.get_account_info(uid)
             active_id = self._model.get_account_pageid(uid)
@@ -282,11 +236,17 @@ class MainController(QObject):
             print("pass: ", pw)
             print("proxy_extension: ", proxy_extension)
 
-            pool = QThreadPool.globalInstance()
-            worker = CheckApprovalPost(pending_posts, sema_id, uid, pw, proxy_extension)
+            worker = CheckApprovalPost(
+                pending_posts, sema_id, uid, pw, proxy_extension)
             worker.setAutoDelete(True)
             worker.signals.approved_post.connect(self.on_update_approve_status)
-            pool.start(worker)
+
+            #command signal
+            worker.signals.update_status.connect(
+                self.update_status_dashboard)
+            worker.signals.update_message.connect(
+                self.update_mesage_dashboard)
+            self.pool.start(worker)
         except Exception as e:
             print("create_table error: ", e)
             pass
@@ -299,8 +259,7 @@ class MainController(QObject):
             pass
 
     def on_scan_post_history(self, user_ids, loop_scan, sync_nick):
-        sema_id = uuid.uuid4()
-        semaphore[sema_id] = QSemaphore(sync_nick)
+        sema_id = self.genarate_semaphore(sync_nick)
         try:
             for user_id in user_ids:
                 uid, pw, proxy = self._model.get_account_info(user_id)
@@ -310,16 +269,18 @@ class MainController(QObject):
                 print("pass: ", pw)
                 print("proxy_extension: ", proxy_extension)
 
-                pool = QThreadPool.globalInstance()
-                worker = ScanPostHistoryWorker(active_id, loop_scan, sema_id, uid, pw, proxy_extension)
-                worker.setAutoDelete(True)
+                worker = ScanPostHistoryWorker(
+                    active_id, loop_scan, sema_id, uid, pw, proxy_extension)
+                worker.signals.scan_post_history.connect(
+                    self.on_save_post_history)
+                
+                #command signal
                 worker.signals.update_status.connect(
                     self.update_status_dashboard)
                 worker.signals.update_message.connect(
                     self.update_mesage_dashboard)
-                worker.signals.scan_post_history.connect(
-                    self.on_save_post_history)
-                pool.start(worker)
+                worker.setAutoDelete(True)
+                self.pool.start(worker)
         except Exception as e:
             print("create_table error: ", e)
             pass
@@ -350,10 +311,7 @@ class MainController(QObject):
             pool.start(worker)
 
     def open_chrome(self, selected_uids):
-        sema_id = uuid.uuid4()
-        semaphore[sema_id] = QSemaphore(1)
-        print(selected_uids)
-        pool = QThreadPool.globalInstance()
+        sema_id = self.genarate_semaphore(100)
         for id in selected_uids:
             try:
                 uid, pw, proxy = self._model.get_account_info(id)
@@ -368,7 +326,8 @@ class MainController(QObject):
                 worker.signals.update_message.connect(
                     self.update_mesage_dashboard)
                 worker.setAutoDelete(True)
-                pool.start(worker)
+                self.pool.start(worker)
+
             except Exception as e:
                 print("open_chrome: ", e)
 
@@ -389,8 +348,7 @@ class MainController(QObject):
             pass
 
     def scan_group_by_keyword(self, user_id, keyword, loop_scan):
-        sema_id = uuid.uuid4()
-        semaphore[sema_id] = QSemaphore(1)
+        sema_id = self.genarate_semaphore(1)
         try:
             uid, pw, proxy = self._model.get_account_info(user_id)
             proxy_extension = self._model.get_proxy_extension(proxy)
@@ -398,13 +356,12 @@ class MainController(QObject):
             print("pass: ", pw)
             print("proxy_extension: ", proxy_extension)
 
-            pool = QThreadPool.globalInstance()
             worker = ScanGroupKeywordWorker(
-                keyword, loop_scan,sema_id, uid, pw, proxy_extension)
+                keyword, loop_scan, sema_id, uid, pw, proxy_extension)
             worker.setAutoDelete(True)
             worker.signals.scan_keyword_completed.connect(
                 self.scan_keyword_completed)
-            pool.start(worker)
+            self.pool.start(worker)
         except Exception as e:
             print("create_table error: ", e)
             pass
@@ -422,9 +379,8 @@ class MainController(QObject):
 
     Slot(object, object)
 
-    def scan_group(self, uids, page_ids):
-        sema_id = uuid.uuid4()
-        semaphore[sema_id] = QSemaphore(1)
+    def scan_joined_group(self, uids, page_ids):
+        sema_id = self.genarate_semaphore(1)
         try:
             for idx_uid, idx_page_id in zip(uids, page_ids):
                 uid, pw, proxy = self._model.get_account_info(idx_uid)
@@ -433,12 +389,11 @@ class MainController(QObject):
                 print("pass: ", pw)
                 print("proxy_extension: ", proxy_extension)
 
-                pool = QThreadPool.globalInstance()
-                worker = ScanGroupWorker(
-                    idx_page_id ,sema_id, idx_uid, pw, proxy_extension)
+                worker = ScanJoinedGroupWorker(
+                    idx_page_id, sema_id, idx_uid, pw, proxy_extension)
                 worker.setAutoDelete(True)
                 worker.signals.scan_complted.connect(self.scan_completed)
-                pool.start(worker)
+                self.pool.start(worker)
         except Exception as e:
             print("create_table error: ", e)
             pass
@@ -453,7 +408,6 @@ class MainController(QObject):
         except Exception as e:
             print("save group data failed: ", e)
             pass
-
 
     Slot(str)
 
@@ -507,11 +461,6 @@ class MainController(QObject):
     def update_table_view(self):
         self.signals.table_get_completed.emit(self._model._get_table())
 
-    Slot()
-
-    def update_account(self):
-        pass
-
     Slot(object, list)
 
     def delete_account(self, tb_model, acc_index):
@@ -521,3 +470,8 @@ class MainController(QObject):
             ids.append(id)
         self._model.delete_account(ids)
         self.signals.table_get_completed.emit(self._model._get_table())
+
+    def genarate_semaphore(self, resources):
+        sema_id = uuid.uuid4()
+        semaphore[sema_id] = QSemaphore(resources)
+        return sema_id

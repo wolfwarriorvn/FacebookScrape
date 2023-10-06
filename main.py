@@ -12,11 +12,9 @@ from model.model import Model
 from views.dashboard import DashBoard
 from views.account import Account
 from views.proxy import Proxy
-from views.fanpage_view import FanpageView
 from views.group_view import GroupView
 from views.group_join import GroupJoin
 from views.group_scan import GroupScan
-from views.group_post import GroupPost
 from views.tumbr import Tumbr
 from views.youtube import Youtube
 from database import Database
