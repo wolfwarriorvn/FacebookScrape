@@ -1,6 +1,5 @@
-from PySide6.QtCore import QRunnable
-from PySide6.QtCore import Signal, Slot
-from PySide6.QtCore import QRunnable, Slot, QThreadPool, QObject,QThread,QMutex,QSemaphore
+from PySide6.QtCore import Signal
+from PySide6.QtCore import QRunnable, QObject,QMutex,QSemaphore
 from facebook_scraper import FacebookScraper
 
 semaphore = {}

@@ -68,7 +68,7 @@ class Ui_Form(object):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.btn_refresh.setText(QCoreApplication.translate("Form", u"Refresh", None))
         self.btn_add_accounts.setText(QCoreApplication.translate("Form", u"Add account", None))
-        self.pushButton_3.setText(QCoreApplication.translate("Form", u"PushButton", None))
+        self.pushButton_3.setText(QCoreApplication.translate("Form", u"OKKKK", None))
         self.pushButton_4.setText(QCoreApplication.translate("Form", u"PushButton", None))
     # retranslateUi
 

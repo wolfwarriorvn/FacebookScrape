@@ -1,6 +1,6 @@
 from PySide6.QtCore import QObject
 from PySide6.QtCore import Signal, Slot
-from PySide6.QtCore import Slot, QThreadPool, QSemaphore
+from PySide6.QtCore import QThreadPool, QSemaphore
 
 from model.model import Model
 
