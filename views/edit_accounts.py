@@ -13,7 +13,7 @@ class EditAccount(QWidget, Ui_Form):
         self.model = model
         self.raw_idx = raw_idx
         self.setupUi(self)
-        self.btn_save.clicked.connect(self.on_btn_save)
+        # self.btn_save.clicked.connect(self.on_btn_save)
         
         self._indexs = indexs  
         if len(indexs) == 1:
@@ -27,17 +27,6 @@ class EditAccount(QWidget, Ui_Form):
         self.le_uid.setText(account_info.uid)
         self.le_pass.setText(account_info.pw)
         self.le_proxy.setText(str(account_info.proxy))
-
-    def on_btn_save(self):
-        if self.le_uid.isEnabled():
-            self._controller.save_account_info(AccountInfo(self.le_uid.text(), self.le_pass.text(), self.le_proxy.text()), self._indexs[0])
-        else:
-            #TODO: save it in controller  
-            for selected_row in self.raw_idx:
-                print(selected_row.row())
-                self.model.setData(self.model.index(selected_row.row(),3),self.le_proxy.text())
-                self.model.submitAll()
-            self.close()
             
     def on_save_account_completed(self):
         self.close()

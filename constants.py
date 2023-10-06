@@ -4,7 +4,7 @@ Created on Fri Sep 16 15:38:38 2022
 
 @author: vietc
 """
-
+DELAY_OPEN_CHROME_IN_SECOND = 2
 POST_NUMBER = 2
 DEFAULT_PROFILES = "D:\Python\FB_GUI_TEMP\profiles.txt"
 DEFAULT_PROFILES_CSV = "D:\Python\FB_GUI_TEMP\profiles.csv"
@@ -31,7 +31,9 @@ FB_XPATH_DECLINE = ".//div[@aria-label='Từ chối' or @aria-label='Decline']"
 FB_XPATH_POSTER = ".//h3[starts-with(@id,'jsc_c_')]"
 
 
-FB_XPATH_GROUP = '//div[@aria-label="List of groups"]'
-FB_GROUP_TAB = "//div[@aria-label='List of groups']"
+# FB_XPATH_GROUP = '//div[@aria-label="List of groups"]'
+# FB_GROUP_TAB = "//div[@aria-label='List of groups']"
 FB_XPATH_SCROLLBAR = "//div[@aria-label='Preview of a group']"
+FB_XPATH_GROUP_LIST = "//div[@role='list']"
 FB_XPATH_GROUP_LINKS = "//a[starts-with(@href,'https://www.facebook.com/groups/')]"
+

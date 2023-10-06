@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>widget_table</class>
+ <widget class="QWidget" name="widget_table">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>690</width>
+    <height>475</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTableView" name="tableView">
+     <property name="styleSheet">
+      <string notr="true">QTableView {
+background-color: transparent;
+border: 1px solid rgba(255,1,1,40);
+border-radius: 7px;
+color: black;
+border-bottom-right-radius: 7px; 
+border-bottom-left-radius: 7px; 
+}
+QHeaderView{
+background-color: transparent;
+font-weight: bold;
+border-bottom: 1px solid rgba(255,1,1,40);
+}
+
+QHeaderView::section{
+background-color: transparent;
+height: 50px;
+}
+QTableView::item {
+	font-size: 11pt;
+    border-bottom: 1px solid rgba(255,1,1,40);
+}
+QTableView::item:selected{
+	border: none;
+    background-color: rgba(255, 1, 1, 50);
+}
+
+
+</string>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="showGrid">
+      <bool>false</bool>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="horizontalHeaderCascadingSectionResizes">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>100</number>
+     </attribute>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>10</number>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

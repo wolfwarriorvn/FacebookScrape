@@ -133,8 +133,8 @@ border: none;</string>
            </rect>
           </property>
           <attribute name="icon">
-           <iconset resource="../../resource.qrc">
-            <normaloff>:/icon/views/icon/home-4-48 (2).ico</normaloff>:/icon/views/icon/home-4-48 (2).ico</iconset>
+           <iconset resource="../../icon.qrc">
+            <normaloff>:/app/views/icon/app/home.png</normaloff>:/app/views/icon/app/home.png</iconset>
           </attribute>
           <attribute name="label">
            <string>Gerneral</string>
@@ -156,6 +156,41 @@ border: none;</string>
             <number>0</number>
            </property>
            <item>
+            <widget class="QPushButton" name="btn_dashboard">
+             <property name="contextMenuPolicy">
+              <enum>Qt::DefaultContextMenu</enum>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Dashboard</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../icon.qrc">
+               <normaloff>:/app/views/icon/app/dashboard.png</normaloff>:/app/views/icon/app/dashboard.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
+             <property name="default">
+              <bool>false</bool>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="btn_account">
              <property name="contextMenuPolicy">
               <enum>Qt::DefaultContextMenu</enum>
@@ -164,8 +199,14 @@ border: none;</string>
               <string>Quản lý Tài Khoản</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>:/icons/views/icon/home-4-48 (2).ico</normaloff>:/icons/views/icon/home-4-48 (2).ico</iconset>
+              <iconset resource="../../icon.qrc">
+               <normaloff>:/app/views/icon/app/account.png</normaloff>:/app/views/icon/app/account.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -175,8 +216,14 @@ border: none;</string>
               <string>Proxy</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>:/icons/views/icon/group-48.ico</normaloff>:/icons/views/icon/group-48.ico</iconset>
+              <iconset resource="../../icon.qrc">
+               <normaloff>:/app/views/icon/app/proxy.png</normaloff>:/app/views/icon/app/proxy.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -209,7 +256,7 @@ border: none;</string>
             <normaloff>:/icons/icon/car-4-48.ico</normaloff>:/icons/icon/car-4-48.ico</iconset>
           </attribute>
           <attribute name="label">
-           <string>Tương tác Nhóm</string>
+           <string>Tương tác Fanpage</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <property name="spacing">
@@ -228,23 +275,9 @@ border: none;</string>
             <number>0</number>
            </property>
            <item>
-            <widget class="QPushButton" name="btn_group_scan">
-             <property name="text">
-              <string>Quét nhóm</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QPushButton" name="btn_group_view">
              <property name="text">
               <string>Danh sách nhóm</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btn_group_join">
-             <property name="text">
-              <string>Tham gia nhóm</string>
              </property>
             </widget>
            </item>
@@ -268,8 +301,8 @@ border: none;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>137</width>
-            <height>68</height>
+            <width>180</width>
+            <height>579</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -383,7 +416,7 @@ QTabBar::close-button:hover{
   </widget>
  </widget>
  <resources>
-  <include location="../../resource.qrc"/>
+  <include location="../../icon.qrc"/>
  </resources>
  <connections/>
 </ui>

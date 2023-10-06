@@ -1,18 +1,22 @@
 # pylint: disable=comparison-with-itself
 import sys
 import signal
-from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow, QSystemTrayIcon
 from PySide6 import QtWidgets
 from views.ui.main_window_ui import Ui_MainWindow
+from PySide6.QtGui import QIcon
 
 from controllers.main_ctrl import MainController
 from model.model import Model
 
+from views.dashboard import DashBoard
 from views.account import Account
 from views.proxy import Proxy
+from views.fanpage_view import FanpageView
 from views.group_view import GroupView
 from views.group_join import GroupJoin
 from views.group_scan import GroupScan
+from views.group_post import GroupPost
 from views.tumbr import Tumbr
 from views.youtube import Youtube
 from database import Database
@@ -22,17 +26,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, model, main_controller):
         super(MainWindow, self).__init__()
         self.setupUi(self)
-
+        self.setWindowTitle("Kungfu Seeding")
+        self.setWindowIcon(QIcon(":/icon/views/icon/panda (1).png"))
         self._model = model
         self._main_controller = main_controller
 
         "Create a dick for menu button and tab windows"
         self.menu_btn_dict = {
+            self.btn_dashboard: DashBoard(self._main_controller),
             self.btn_account: Account(self._main_controller),
-            self.btn_proxy: Proxy(),
-            self.btn_group_scan: GroupScan(),
-            self.btn_group_view: GroupView(),
-            self.btn_group_join: GroupJoin(),
+            self.btn_proxy: Proxy(self._main_controller),
+            self.btn_group_view: GroupView(self._main_controller),
             self.btn_youtube: Youtube(),
             self.btn_tumb: Tumbr()
         }
@@ -41,24 +45,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         "Connect signal and slot"
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
-
+        self.btn_dashboard.clicked.connect(self.show_home_window)
         self.btn_account.clicked.connect(self.show_selected_window)
         self.btn_proxy.clicked.connect(self.show_selected_window)
-        self.btn_group_scan.clicked.connect(self.show_selected_window)
         self.btn_group_view.clicked.connect(self.show_selected_window)
-        self.btn_group_join.clicked.connect(self.show_selected_window)
         self.btn_tumb.clicked.connect(self.show_selected_window)
         self.btn_youtube.clicked.connect(self.show_selected_window)
 
     def show_home_window(self):
-        result = self.open_tab_flag(self.btn_account.text())
-        self.set_btn_checked(self.btn_account)
+        result = self.open_tab_flag(self.btn_dashboard.text())
+        self.set_btn_checked(self.btn_dashboard)
 
         if result[0]:
             self.tabWidget.setCurrentIndex(result[1])
         else:
-            tab_title = self.btn_account.text()
-            curIndex = self.tabWidget.addTab(self.menu_btn_dict[self.btn_account], tab_title)
+            tab_title = self.btn_dashboard.text()
+            curIndex = self.tabWidget.addTab(self.menu_btn_dict[self.btn_dashboard], tab_title)
             self.tabWidget.setCurrentIndex(curIndex)
             self.tabWidget.setVisible(True)
 

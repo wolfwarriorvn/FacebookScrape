@@ -22,7 +22,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Định dạng user|pass Okie</string>
+      <string>Định dạng: user|pass|2fa|email|pass</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

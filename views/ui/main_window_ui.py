@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QMainWindow, QPushButton, QSizePolicy, QSpacerItem,
     QTabWidget, QToolBox, QVBoxLayout, QWidget)
-import resource_rc
+import icon_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -92,20 +92,36 @@ class Ui_MainWindow(object):
         self.verticalLayout.setSpacing(4)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(5, 0, 5, 0)
+        self.btn_dashboard = QPushButton(self.page_3)
+        self.btn_dashboard.setObjectName(u"btn_dashboard")
+        self.btn_dashboard.setContextMenuPolicy(Qt.DefaultContextMenu)
+        self.btn_dashboard.setLayoutDirection(Qt.LeftToRight)
+        self.btn_dashboard.setAutoFillBackground(False)
+        icon = QIcon()
+        icon.addFile(u":/app/views/icon/app/dashboard.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_dashboard.setIcon(icon)
+        self.btn_dashboard.setIconSize(QSize(16, 16))
+        self.btn_dashboard.setAutoDefault(False)
+        self.btn_dashboard.setFlat(False)
+
+        self.verticalLayout.addWidget(self.btn_dashboard)
+
         self.btn_account = QPushButton(self.page_3)
         self.btn_account.setObjectName(u"btn_account")
         self.btn_account.setContextMenuPolicy(Qt.DefaultContextMenu)
-        icon = QIcon()
-        icon.addFile(u":/icons/views/icon/home-4-48 (2).ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_account.setIcon(icon)
+        icon1 = QIcon()
+        icon1.addFile(u":/app/views/icon/app/account.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_account.setIcon(icon1)
+        self.btn_account.setIconSize(QSize(16, 16))
 
         self.verticalLayout.addWidget(self.btn_account)
 
         self.btn_proxy = QPushButton(self.page_3)
         self.btn_proxy.setObjectName(u"btn_proxy")
-        icon1 = QIcon()
-        icon1.addFile(u":/icons/views/icon/group-48.ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_proxy.setIcon(icon1)
+        icon2 = QIcon()
+        icon2.addFile(u":/app/views/icon/app/proxy.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_proxy.setIcon(icon2)
+        self.btn_proxy.setIconSize(QSize(16, 16))
 
         self.verticalLayout.addWidget(self.btn_proxy)
 
@@ -113,9 +129,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
-        icon2 = QIcon()
-        icon2.addFile(u":/icon/views/icon/home-4-48 (2).ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolBox.addItem(self.page_3, icon2, u"Gerneral")
+        icon3 = QIcon()
+        icon3.addFile(u":/app/views/icon/app/home.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.toolBox.addItem(self.page_3, icon3, u"Gerneral")
         self.page_4 = QWidget()
         self.page_4.setObjectName(u"page_4")
         self.page_4.setGeometry(QRect(0, 0, 180, 579))
@@ -123,31 +139,21 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setSpacing(4)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(5, 0, 5, 0)
-        self.btn_group_scan = QPushButton(self.page_4)
-        self.btn_group_scan.setObjectName(u"btn_group_scan")
-
-        self.verticalLayout_2.addWidget(self.btn_group_scan)
-
         self.btn_group_view = QPushButton(self.page_4)
         self.btn_group_view.setObjectName(u"btn_group_view")
 
         self.verticalLayout_2.addWidget(self.btn_group_view)
 
-        self.btn_group_join = QPushButton(self.page_4)
-        self.btn_group_join.setObjectName(u"btn_group_join")
-
-        self.verticalLayout_2.addWidget(self.btn_group_join)
-
         self.verticalSpacer_2 = QSpacerItem(20, 381, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_2.addItem(self.verticalSpacer_2)
 
-        icon3 = QIcon()
-        icon3.addFile(u":/icons/icon/car-4-48.ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolBox.addItem(self.page_4, icon3, u"T\u01b0\u01a1ng t\u00e1c Nh\u00f3m")
+        icon4 = QIcon()
+        icon4.addFile(u":/icons/icon/car-4-48.ico", QSize(), QIcon.Normal, QIcon.Off)
+        self.toolBox.addItem(self.page_4, icon4, u"T\u01b0\u01a1ng t\u00e1c Fanpage")
         self.page_5 = QWidget()
         self.page_5.setObjectName(u"page_5")
-        self.page_5.setGeometry(QRect(0, 0, 137, 68))
+        self.page_5.setGeometry(QRect(0, 0, 180, 579))
         self.verticalLayout_3 = QVBoxLayout(self.page_5)
         self.verticalLayout_3.setSpacing(4)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -166,9 +172,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addItem(self.verticalSpacer_3)
 
-        icon4 = QIcon()
-        icon4.addFile(u":/icons/icon/group-48.ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolBox.addItem(self.page_5, icon4, u"Schedule")
+        icon5 = QIcon()
+        icon5.addFile(u":/icons/icon/group-48.ico", QSize(), QIcon.Normal, QIcon.Off)
+        self.toolBox.addItem(self.page_5, icon5, u"Schedule")
 
         self.gridLayout.addWidget(self.toolBox, 0, 0, 1, 1)
 
@@ -208,6 +214,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.toolBox.setCurrentIndex(0)
+        self.btn_dashboard.setDefault(False)
         self.tabWidget.setCurrentIndex(-1)
 
 
@@ -216,13 +223,12 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.btn_dashboard.setText(QCoreApplication.translate("MainWindow", u"Dashboard", None))
         self.btn_account.setText(QCoreApplication.translate("MainWindow", u"Qu\u1ea3n l\u00fd T\u00e0i Kho\u1ea3n", None))
         self.btn_proxy.setText(QCoreApplication.translate("MainWindow", u"Proxy", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), QCoreApplication.translate("MainWindow", u"Gerneral", None))
-        self.btn_group_scan.setText(QCoreApplication.translate("MainWindow", u"Qu\u00e9t nh\u00f3m", None))
         self.btn_group_view.setText(QCoreApplication.translate("MainWindow", u"Danh s\u00e1ch nh\u00f3m", None))
-        self.btn_group_join.setText(QCoreApplication.translate("MainWindow", u"Tham gia nh\u00f3m", None))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.page_4), QCoreApplication.translate("MainWindow", u"T\u01b0\u01a1ng t\u00e1c Nh\u00f3m", None))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.page_4), QCoreApplication.translate("MainWindow", u"T\u01b0\u01a1ng t\u00e1c Fanpage", None))
         self.btn_youtube.setText(QCoreApplication.translate("MainWindow", u"Duy\u1ec7t b\u00e0i nh\u00f3m", None))
         self.btn_tumb.setText(QCoreApplication.translate("MainWindow", u"\u0110\u0103ng b\u00e0i", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_5), QCoreApplication.translate("MainWindow", u"Schedule", None))

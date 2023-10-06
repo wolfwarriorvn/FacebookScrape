@@ -1,0 +1,17 @@
+<RCC>
+  <qresource prefix="icon">
+    <file>views/icon/panda.png</file>
+    <file>views/icon/options.png</file>
+    <file>views/icon/blog.png</file>
+    <file>views/icon/post.png</file>
+    <file>views/icon/chrome.png</file>
+    <file>views/icon/positive-vote.png</file>
+    <file>views/icon/facebook.png</file>
+  </qresource>
+  <qresource prefix="app">
+    <file>views/icon/app/account.png</file>
+    <file>views/icon/app/dashboard.png</file>
+    <file>views/icon/app/home.png</file>
+    <file>views/icon/app/proxy.png</file>
+  </qresource>
+</RCC>

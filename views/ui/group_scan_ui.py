@@ -15,23 +15,36 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QSizePolicy, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QPushButton,
+    QRadioButton, QSizePolicy, QWidget)
 
 class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(400, 300)
-        self.verticalLayout = QVBoxLayout(Form)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.label = QLabel(Form)
-        self.label.setObjectName(u"label")
-        self.label.setStyleSheet(u"font-size: 20pt;")
-        self.label.setAlignment(Qt.AlignCenter)
+        Form.resize(641, 444)
+        self.horizontalLayout = QHBoxLayout(Form)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.table_account = QWidget(Form)
+        self.table_account.setObjectName(u"table_account")
 
-        self.verticalLayout.addWidget(self.label)
+        self.horizontalLayout.addWidget(self.table_account)
 
+        self.frame_2 = QFrame(Form)
+        self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setFrameShape(QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QFrame.Raised)
+        self.pushButton = QPushButton(self.frame_2)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setGeometry(QRect(90, 140, 75, 24))
+        self.radioButton = QRadioButton(self.frame_2)
+        self.radioButton.setObjectName(u"radioButton")
+        self.radioButton.setGeometry(QRect(80, 190, 89, 20))
+
+        self.horizontalLayout.addWidget(self.frame_2)
+
+        self.horizontalLayout.setStretch(0, 1)
+        self.horizontalLayout.setStretch(1, 1)
 
         self.retranslateUi(Form)
 
@@ -40,6 +53,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.label.setText(QCoreApplication.translate("Form", u"Group Scan", None))
+        self.pushButton.setText(QCoreApplication.translate("Form", u"PushButton", None))
+        self.radioButton.setText(QCoreApplication.translate("Form", u"RadioButton", None))
     # retranslateUi
 

@@ -70,7 +70,7 @@ class Ui_Addaccount(object):
 
     def retranslateUi(self, Addaccount):
         Addaccount.setWindowTitle(QCoreApplication.translate("Addaccount", u"Form", None))
-        self.label.setText(QCoreApplication.translate("Addaccount", u"\u0110\u1ecbnh d\u1ea1ng user|pass Okie", None))
+        self.label.setText(QCoreApplication.translate("Addaccount", u"\u0110\u1ecbnh d\u1ea1ng: user|pass|2fa|email|pass", None))
         self.lb_show_msg.setText("")
         self.btn_save.setText(QCoreApplication.translate("Addaccount", u"Save", None))
     # retranslateUi
