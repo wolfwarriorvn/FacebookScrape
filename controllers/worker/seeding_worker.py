@@ -14,6 +14,7 @@ class SeedingWorker(BaseWorker):
     def run(self):
         if not self.take_semaphore_facebook():
             return
+        if not self.check_live_facebook(): return
 
         for href in self.available_links:
             if self.settings.like:
@@ -25,3 +26,4 @@ class SeedingWorker(BaseWorker):
             sleep(randrange(self.settings.idle_from, self.settings.idle_to))
 
         self.signals.update_message.emit(self._uid, 'Seeding completed!!!')
+        

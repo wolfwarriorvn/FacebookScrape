@@ -14,7 +14,7 @@ class ScanPostHistoryWorker(BaseWorker):
     def run(self):
         if not self.take_semaphore_facebook():
             return
-
+        if not self.check_live_facebook(): return
         post_links = self.fb_scraper.get_post_history(self.active_id, self.loop_scan)
 
         for post_link in post_links:

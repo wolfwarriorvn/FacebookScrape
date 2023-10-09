@@ -4,15 +4,7 @@ from PySide6.QtCore import QThreadPool, QSemaphore
 
 from model.model import Model
 
-from controllers.worker.facebook_worker import FacebookWorker
-from controllers.worker.seeding_worker import SeedingWorker
-from controllers.worker.scan_post_history_worker import ScanPostHistoryWorker
-from controllers.worker.scan_group_keyword_worker import ScanGroupKeywordWorker
-from controllers.worker.check_approval_post_worker import CheckApprovalPost
-from controllers.worker.scan_joined_group_worker import ScanJoinedGroupWorker
-from controllers.worker.check_allow_page_worker import CheckGroupAllowPage
-from controllers.worker.post_group_worker import PostGroupWorker
-
+from controllers.worker import *
 from lib_type import *
 
 import uuid
@@ -297,7 +289,7 @@ class MainController(QObject):
         self.signals.get_accounts_completed.emit(accounts)
 
     def login_chrome(self, selected_uids):
-        pool = QThreadPool.globalInstance()
+        sema_id = self.genarate_semaphore(1)
         for id in selected_uids:
             uid, pw, proxy = self._model.get_account_info(id)
             proxy_extension = self._model.get_proxy_extension(proxy)
@@ -306,9 +298,13 @@ class MainController(QObject):
             print("pass: ", pw)
             print("proxy_extension: ", proxy_extension)
 
-            worker = FacebookWorker(uid, pw, proxy_extension, secret_2fa)
+            worker = LoginFacebookWorker(sema_id, uid, pw, proxy_extension, secret_2fa)
+            worker.signals.update_status.connect(
+                    self.update_status_dashboard)
+            worker.signals.update_message.connect(
+                    self.update_mesage_dashboard)
             worker.setAutoDelete(True)
-            pool.start(worker)
+            self.pool.start(worker)
 
     def open_chrome(self, selected_uids):
         sema_id = self.genarate_semaphore(100)
@@ -316,11 +312,12 @@ class MainController(QObject):
             try:
                 uid, pw, proxy = self._model.get_account_info(id)
                 proxy_extension = self._model.get_proxy_extension(proxy)
+                secret_2fa = self._model.get_account_2fa(id)
                 print("uid: ", uid)
                 print("pass: ", pw)
                 print("proxy_extension: ", proxy_extension)
 
-                worker = FacebookWorker(sema_id, uid, pw, proxy_extension)
+                worker = FacebookWorker(sema_id, uid, pw, proxy_extension, secret_2fa)
                 worker.signals.update_status.connect(
                     self.update_status_dashboard)
                 worker.signals.update_message.connect(

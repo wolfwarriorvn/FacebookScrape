@@ -11,7 +11,7 @@ class SqlUtils:
 
     def create_connection(self):
         db = QtSql.QSqlDatabase.addDatabase('QSQLITE')
-        db.setDatabaseName('fbscrape.db')
+        db.setDatabaseName(r'H:\fbtools\fbscrape.db')
 
         if not db.open():
             QtWidgets.QMessageBox.critical(None, "Cannot open database",
@@ -20,6 +20,7 @@ class SqlUtils:
 
         query = QtSql.QSqlQuery()
         query.exec("CREATE TABLE IF NOT EXISTS accounts (ID integer primary key, UserID VARCHAR(20) UNIQUE, Password VARCHAR(20), ProxyID VARCHAR(20))")
+        self.query = QtSql.QSqlQuery()
         return True
 
     def excute(self, sql_query):

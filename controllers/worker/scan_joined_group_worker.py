@@ -13,7 +13,7 @@ class ScanJoinedGroupWorker(BaseWorker):
     def run(self):
         if not self.take_semaphore_facebook():
             return
-        
+        if not self.check_live_facebook(): return
         groups = self.fb_scraper.scan_group_of_page()
         if groups:
             active_id = self._uid if self._pageid == '' else self._pageid

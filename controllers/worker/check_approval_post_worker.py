@@ -13,8 +13,12 @@ class CheckApprovalPost(BaseWorker):
     def run(self):
         if not self.take_semaphore_facebook():
             return
+        if not self.check_live_facebook():
+            return
         
         for post in self.pending_posts:
             is_approved = self.fb_scraper.check_approval_post(post)
             if is_approved:
                 self.signals.approved_post.emit(post, 'Approved')
+            else:
+                self.signals.approved_post.emit(post, 'Pending')

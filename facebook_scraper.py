@@ -2,11 +2,6 @@
 from constants import (
     CHROME_DRIVER,
     CHROME_PROFILES,
-    FB_XPATH_ARTICLE,
-    FB_XPATH_APPROVE,
-    FB_XPATH_DECLINE,
-    FB_XPATH_POSTER,
-    FB_XPATH_SCROLLBAR,
     FB_XPATH_GROUP_LIST,
     FB_XPATH_GROUP_LINKS,
     PROXY_PATH
@@ -14,11 +9,8 @@ from constants import (
 )
 import os
 import re
-import pandas as pd
-import time
 from enum import Enum
 from time import sleep
-from PySide6.QtCore import QMutex
 import pyotp
 
 import utils
@@ -29,7 +21,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
@@ -85,7 +76,7 @@ class FacebookScraper:
         service_obj.creation_flags = CREATE_NO_WINDOW
         self.driver = webdriver.Chrome(service=service_obj, options=options)
         # self.driver.minimize_window()
-        # self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(randrange(2, 5))
 
 
         # self.driver.get("https://www.facebook.com/")
@@ -103,9 +94,12 @@ class FacebookScraper:
         sleep(5)
         self.driver.refresh()
 
+    def checkpoint(self):
+        if "checkpoint" in self.driver.current_url:
+            return True
+        return False
     def check_login(self):
-        self.driver.get("https://www.facebook.com/")
-
+        self.open_url("https://www.facebook.com/")
         # for cookie in cookies:
         #     self.driver.add_cookie(cookie)
         # print("Cookie la: ",self.driver.get_cookies())
@@ -115,13 +109,11 @@ class FacebookScraper:
             return True
 
     def login_with_userpass(self, _2fa = None):
-        if self.check_login():
-            print("Already loggin!")
-            return
-        sleep(1)
-        self.driver.get("https://mbasic.facebook.com/")
-
-        sleep(2)
+        # if self.check_login():
+        #     print("Already logging!")
+        #     return
+        # sleep(1)
+        self.open_url("https://mbasic.facebook.com/")
         try:
             uid_input = self.driver.find_element(By.XPATH, '//*[@type="text"]')
             uid_input.send_keys(self.uid)
@@ -146,10 +138,8 @@ class FacebookScraper:
             next_btn2 = self.driver.find_element(By.XPATH, "//input[@id='checkpointSubmitButton-actual-button']")
             next_btn2.click()
             sleep(2)
-
         except Exception:
-            print(
-                'Some exception occurred while trying to find username or password field')
+            pass
     def login(self):
         try:
             uid_input = self.driver.find_element(By.XPATH, '//*[@id="email"]')
@@ -232,8 +222,7 @@ class FacebookScraper:
     def close(self):
         try:
             self.driver.quit()
-        except (WebDriverException, NoSuchWindowException) as e:
-            print("Close error: ", e)
+        except Exception as e:
             pass    
     # def __del__(self):
         # try:

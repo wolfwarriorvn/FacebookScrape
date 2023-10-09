@@ -16,6 +16,7 @@ class PostGroupWorker(BaseWorker):
     def run(self):
         if not self.take_semaphore_facebook():
             return
+        if not self.check_live_facebook(): return
         
         for index, group_link in enumerate(self.group_links, 1):
             content = random.choices(self.settings.contents)
