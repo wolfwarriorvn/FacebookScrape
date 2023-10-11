@@ -53,6 +53,8 @@ class DbSignals(QObject):
     proxy_add = Signal(str, str)
     proxy_add_completed = Signal()
     proxy_detete = Signal(object)
+    get_free_group = Signal(str)
+    get_free_group_completed = Signal(int)
 
 
 class MainController(QObject):
@@ -78,8 +80,13 @@ class MainController(QObject):
         self.signals.scan_group_by_keyword.connect(self.scan_group_by_keyword)
         self.signals.scan_post_history.connect(self.on_scan_post_history)
         self.signals.seeding_action.connect(self.init_thread_seeding_action)
+        self.db_signals.get_free_group.connect(self.on_get_free_group)
 
         self.db_signals.proxy_add.connect(self.on_add_proxy)
+
+    def on_get_free_group(self, type_groups):
+        free_group_links = self._model.get_group_free(type_groups)
+        self.db_signals.get_free_group_completed.emit(len(free_group_links))
 
     def on_add_proxy(self, proxy, proxy_zip):
         try:
@@ -134,7 +141,7 @@ class MainController(QObject):
         try:
             self._model.update_group_posted_status(pageid, group_link, status)
         except Exception as e:
-            print("ppost_completed error", )
+            print("post_completed error", e)
             pass
 
     def init_thread_seeding_action(self, uids, setting: SeedingSetting):

@@ -10,18 +10,9 @@ class FacebookWorker(BaseWorker):
     def run(self):
         if not self.take_semaphore_facebook(): return
 
-        try:
-            if self.fb_scraper.check_login():
-                if self.fb_scraper.checkpoint():
-                    self.signals.update_message.emit(self._uid, 'Checkpoint!')
-            else:
-                self.signals.update_message.emit(self._uid, 'Đang Logging chrome...')
-                self.fb_scraper.login_with_userpass(self._secret_2fa)
-                self.check_live_facebook()
-
-        except Exception as e:
-            print("Thread error: ", e)
-
+        if not self.check_live_facebook():
+            pass
+        
         while True:
             if self.fb_scraper.is_brower_closed():
                 break

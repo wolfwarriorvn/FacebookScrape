@@ -97,13 +97,13 @@ class GroupView(QWidget):
         self.on_init()
 
     def scan_post_history(self):
-        uid = self.ui.cb_uids.currentText()
+        selected_ids = []
+        selected_ids.append(self.ui.cb_uids.currentText())
         loop_scan, ok = QInputDialog.getInt(self, "Quét history post",
                                         "Loop Scan:", 1, 1, 100, 1)
-        QInputDialog.g
         if not ok:
             return
-        self._controller.signals.scan_post_history.emit(uid , loop_scan)
+        self._controller.signals.scan_post_history.emit(selected_ids , loop_scan, 1)
     def header_popup(self, pos) :
         self.header_right_click_column =  self.horizontalHeader.logicalIndexAt(pos)
         menu = QMenu()

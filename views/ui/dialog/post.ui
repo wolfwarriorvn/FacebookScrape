@@ -44,6 +44,9 @@
         </item>
         <item>
          <widget class="QSpinBox" name="sp_numposts">
+          <property name="maximum">
+           <number>999</number>
+          </property>
           <property name="singleStep">
            <number>2</number>
           </property>
@@ -66,6 +69,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLabel" name="le_free_groups">
+          <property name="text">
+           <string>Rãnh: </string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -75,6 +85,16 @@
           <width>16777215</width>
           <height>300</height>
          </size>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Xưởng Thêu Vi Tính Tita chuyên các mặc hàng quần áo, giày dép, balo, túi xách từ hàng chợ đến hàng shop, xuất khẩu. Anh chị có nhu cầu thêu hàng nhanh chóng, đẹp, hợp túi tiền thì liên hệ xưởng bên em nhé ! Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên nhận thêu QUẦN ÁO, GIÀY DÉP, BALO, TÚI XÁCH..., có kinh nghiệm lâu năm trong nghề, thêu hàng nhanh chóng lấy hàng 1-2 ngày, giá cả phải chăng. LH SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên nhận thêu vi tính, mẫu mã chất lượng, uý tín. Lh em SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA nhận thêu vi tính các loại mặt hàng, từ quần áo đến giày dép. Kinh nghiệm lâu năm - làm ăn chuyện nghiệp - giá hợp lý. LH ngay SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA cần tìm nguồn thêu số lượng lớn, hàng quanh năm. Đảm bảo thêu hàng bao chất lượng, uy tín, làm việc nhanh chóng. LH SĐT/ZALO: 0354.777.297 |Xưởng thêu vi tính TITA chuyên nhận thêu từ hàng chợ đến hàng shop, xuất khẩu, làm việc nhanh, thêu hàng chất lượng, đúng tiến độ. LH ngay SDT/ZALO 0354.777.297 |Xưởng thêu vi tính TITA chuyên nhận thêu vi tính các mặt hàng thời trang từ hàng chợ đến hàng shop, xuất khẩu. Thêu hàng nhanh chóng, đẹp, hợp túi tiền. LH ngay SĐT/ZALO: 0354.777.297 |Xưởng Thêu Vi Tính Tita chuyên các mặc hàng quần áo, giày dép, balo, túi xách từ hàng chợ đến hàng shop, xuất khẩu. Anh chị có nhu cầu thêu hàng nhanh chóng, đẹp, hợp túi tiền thì liên hệ xưởng bên em nhé ! Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng thêu vi tính TITA chuyên nhận Thêu Vi Tính các loại mặt hàng, từ quần áo đến giày dép. Kinh nghiệm lâu năm - làm ăn chuyện nghiệp - giá hợp lý. Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH ở quận 12, làm việc tận tâm, uy tín. Em cần tìm tìm nguồn hàng gia công hợp tác lâu dài. SĐT/ZALO: 0354.777.297 |Xưởng thêu vi tính TITA chuyên nhận thêu tất cả mặc hàng thời trang. Ai cần THÊU VI TÍNH lấy hàng trong ngày, giá mềm thì hãy tìm đến em. Làm ăn với em thì chỉ có yên tâm LH ngay 0354.777.297 |Xưởng THÊU VI TÍNH TITA với kinh nghiệm lâu năm, tư vấn nhiệt tình, giá mềm. Cần thêu liên hệ em STĐ/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên nhận thêu các mặt hàng quần áo, balo, túi xách. Mẫu mã đẹp, chất lượng, uy tín. Cần thêu liên hệ STĐ/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên nhận thêu vi tính theo yêu cầu, giá mềm, đảm bảo chất lượng. Cần thêu liên hệ STĐ/ZALO:0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên thêu các loại hàng thời trang, xuất khẩu, ba lô, túi xách, mũ nón… trên các loại chất liệu như vải, simili, da…Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên nhận thêu đảm bảo yêu cầu về chất lượng. Giá cả hợp lý. Nhận thiết kế mẫu thêu vi tính. Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên thêu vi tính tất cả các mặt hàng giày dép, quần áo, logo các loại GIÁ CẠNH TRANH . Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên nhận Thêu Vi Tính - Thêu Logo - Thiêu Nhãn - Thêu theo yêu cầu - Thiết kế logo. Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên thêu đồng phục công ty, từ mẫu cơ bản đến nâng cao. Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên nhận Thêu Vi Tính, giá cả hợp lý, đúng tiến độ, giao hàng đúng hẹn. Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên nhận Thêu Vi Tính. Đảm bảo hàng thêu chất lượng, đường kim mũi chỉ mềm mại, logo khi thêu lên không bị rút chỉ, nhăn vải. Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên thêu đồng phục công ty, từ mẫu cơ bản đến nâng cao. Giá cả hợp lý, đúng tiến độ, giao hàng đúng hẹn. Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên thêu đồng phục công ty. Đảm bảo hàng thêu chất lượng, đường kim mũi chỉ mềm mại, logo khi thêu lên không bị rút chỉ, nhăn vải. Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên nhận Thêu Vi Tính từ hàng chợ đến hàng shop, xuất khẩu, làm việc nhanh, thêu hàng chất lượng, đúng tiến độ, giá cả hợp lý. Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên thêu đồng phục công ty. Anh chị có nhu cầu thêu hàng nhanh chóng, đẹp, hợp túi tiền thì liên hệ xưởng bên em nhé. Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA chuyên nhận Thêu Vi Tính. Kinh nghiệm lâu năm - làm ăn chuyện nghiệp - giá hợp lý. Liên hệ SĐT/ZALO: 0354.777.297 |Xưởng THÊU VI TÍNH TITA Chuyên THÊU VI TÍNH trên giày dép, balo, túi xách, quần áo, khẩu trang. Liên hệ SĐT/ZALO: 0354.777.297 để được những mẫu mã đẹp, chất lượng. |Xưởng THÊU VI TÍNH TITA chuyên thêu giày dép, balo, túi xách, quần áo, khẩu trang. Liên hệ SĐT/ZALO: 0354.777.297 để được những mẫu mã đẹp, chất lượng&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="placeholderText">
          <string>Nội dung theo định dạng {a | b c|...}</string>
@@ -87,6 +107,9 @@
          <widget class="QRadioButton" name="rb_image_enable">
           <property name="text">
            <string>Đăng ảnh</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -124,6 +147,9 @@
           </property>
           <property name="text">
            <string>Đổi MD5 image</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -200,7 +226,7 @@
            <number>10</number>
           </property>
           <property name="value">
-           <number>10</number>
+           <number>100</number>
           </property>
          </widget>
         </item>
@@ -232,7 +258,7 @@
            <number>10</number>
           </property>
           <property name="value">
-           <number>60</number>
+           <number>200</number>
           </property>
          </widget>
         </item>

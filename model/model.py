@@ -84,7 +84,7 @@ class Model(QObject):
         self.sql_utils.excute(sql_query)
 
     def update_group_posted_status(self, pageid, link, status):
-        sql_query = f"""UPDATE groups_tita SET Status='{status}', Post_Time=datetime('now','localtime'), Posted_Page='{pageid}' WHERE Group_Link={link}"""
+        sql_query = f"""UPDATE groups_tita SET Status='{status}', Post_Time=datetime('now','localtime'), Posted_Page='{pageid}' WHERE Group_Link='{link}'"""
         self.sql_utils.excute(sql_query)
 
     def delete_account(self, id):

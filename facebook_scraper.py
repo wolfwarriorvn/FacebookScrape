@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+from selenium.common.exceptions import (
+    TimeoutException,
+    NoSuchWindowException,
+    WebDriverException
+)
 from constants import (
     CHROME_DRIVER,
     CHROME_PROFILES,
@@ -27,38 +32,43 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from subprocess import CREATE_NO_WINDOW
 
-from selenium.common.exceptions import (
-    TimeoutException,
-    NoSuchWindowException,
-    WebDriverException
-)
+
+class NoLoginException(Exception):
+    """ Thrown when do not login facebook or be logged out """
+
+
+class CheckpointException(Exception):
+    """Thrown when the facebook account be checkpointed with 282 or 595 link"""
+
 
 class GetElement(Enum):
     ONE = 0
     MORE = 1
 
+
 class GroupInfo():
-    def __init__(self, name, link, category=None, members = None, details = None):
+    def __init__(self, name, link, category=None, members=None, details=None):
         self.name = name
         self.link = link
         self.category = category
         self.members = members
         self.details = details
 
+
 class FacebookScraper:
-    def __init__(self, uid, password, zip_proxy = None):
+    def __init__(self, uid, password, zip_proxy=None):
         self.uid = uid
         self.password = password
 
         options = webdriver.ChromeOptions()
         options.add_argument(
-            r'--user-data-dir='+ CHROME_PROFILES+ fr'{self.uid}')
-        # options.add_argument("--start-maximized")
+            r'--user-data-dir=' + CHROME_PROFILES + fr'{self.uid}')
+        options.add_argument("--start-maximized")
         # options.add_experimental_option('excludeSwitches', ['disable-popup-blocking', 'enable-automation'])
-        options.add_argument("--window-size=300,500")
+        # options.add_argument("--window-size=300,500")
         # options.add_argument("--headless --disable-gpu")
         options.add_argument("--disable-notifications")
-        
+
         # options.add_argument("--enable-file-cookies")
         # options.add_argument(r'--profile-directory=12')
 
@@ -76,17 +86,14 @@ class FacebookScraper:
         service_obj.creation_flags = CREATE_NO_WINDOW
         self.driver = webdriver.Chrome(service=service_obj, options=options)
         # self.driver.minimize_window()
-        self.driver.implicitly_wait(randrange(2, 5))
+        # self.driver.implicitly_wait(randrange(2, 5))
 
+    def maximize(self):
+        self.driver.maximize_window()
 
-        # self.driver.get("https://www.facebook.com/")
-        # if self.check_login():
-        #     print("Already loggin!")
-        # else:
-        #     raise Exception("Login {} lại nhé!!!".format(self.uid))
-            # self.login_with_userpass()
     def get_cookies(self):
         return self.driver.get_cookies()
+
     def login_with_cookies(self, cookies):
         # self.driver.get("https://www.facebook.com/")
         for cookie in cookies:
@@ -94,27 +101,28 @@ class FacebookScraper:
         sleep(5)
         self.driver.refresh()
 
-    def checkpoint(self):
+    def is_checkpointed(self):
         if "checkpoint" in self.driver.current_url:
             return True
         return False
+
     def check_login(self):
-        self.open_url("https://www.facebook.com/")
-        # for cookie in cookies:
-        #     self.driver.add_cookie(cookie)
-        # print("Cookie la: ",self.driver.get_cookies())
-        if self.driver.title in ['Facebook – log in or sign up', 'Facebook - log in or sign up', 'Facebook - Đăng nhập hoặc đăng ký'] :
+        if self.driver.title in ['Facebook – log in or sign up', 'Facebook - log in or sign up', 'Facebook - Đăng nhập hoặc đăng ký']:
             return False
         else:
             return True
 
-    def login_with_userpass(self, _2fa = None):
-        # if self.check_login():
-        #     print("Already logging!")
-        #     return
-        # sleep(1)
-        self.open_url("https://mbasic.facebook.com/")
+    def is_user_logged_in(self):
+        if self.driver.title in ['Facebook – log in or sign up', 'Facebook - log in or sign up', 'Facebook - Đăng nhập hoặc đăng ký']:
+            return False
+        return True
+
+    def login_with_userpass(self, _2fa=None):
         try:
+            self.driver.get("https://mbasic.facebook.com/")
+            self.wait_fully_load()
+            sleep(randrange(2, 5))
+            
             uid_input = self.driver.find_element(By.XPATH, '//*[@type="text"]')
             uid_input.send_keys(self.uid)
             sleep(1)
@@ -125,21 +133,25 @@ class FacebookScraper:
             password_input.send_keys(Keys.ENTER)
             sleep(3)
 
-            #input 2fa code
+            # input 2fa code
             if _2fa is None:
                 return
-            input_2fa =  self.driver.find_element(By.XPATH, "//input[@type='text']")
+            input_2fa = self.driver.find_element(
+                By.XPATH, "//input[@type='text']")
             code_2fa = pyotp.TOTP(_2fa)
             input_2fa.send_keys(code_2fa.now())
             sleep(1)
-            next_btn = self.driver.find_element(By.XPATH, "//input[@id='checkpointSubmitButton-actual-button']")
+            next_btn = self.driver.find_element(
+                By.XPATH, "//input[@id='checkpointSubmitButton-actual-button']")
             next_btn.click()
             sleep(2)
-            next_btn2 = self.driver.find_element(By.XPATH, "//input[@id='checkpointSubmitButton-actual-button']")
+            next_btn2 = self.driver.find_element(
+                By.XPATH, "//input[@id='checkpointSubmitButton-actual-button']")
             next_btn2.click()
             sleep(2)
         except Exception:
             pass
+
     def login(self):
         try:
             uid_input = self.driver.find_element(By.XPATH, '//*[@id="email"]')
@@ -159,14 +171,20 @@ class FacebookScraper:
         isClosed = False
         try:
             self.driver.title
-        except (WebDriverException, NoSuchWindowException) as e:
+        except:
             isClosed = True
         return isClosed
+
     def open_url(self, url):
         self.driver.get(url)
         self.wait_fully_load()
-        
-        sleep(randrange(2, 5))
+
+        # sleep(randrange(2, 5))
+
+        if not self.is_user_logged_in():
+            raise NoLoginException()
+        if self.is_checkpointed():
+            raise CheckpointException()
 
     def wait_fully_load(self):
         WebDriverWait(self.driver, 20).until(
@@ -200,6 +218,7 @@ class FacebookScraper:
             except Exception as e:
                 print("lỗi là: ", e)
                 break
+
     def scroll_down_byelement(self, element):
         max_scroll = 0
         while True:
@@ -222,15 +241,14 @@ class FacebookScraper:
     def close(self):
         try:
             self.driver.quit()
-        except Exception as e:
-            pass    
+        except (WebDriverException, NoSuchWindowException) as e:
+            print("Close error: ", e)
+            pass 
     # def __del__(self):
         # try:
         #     self.driver.close()
         # except (WebDriverException, NoSuchWindowException) as e:
         #     pass
-
-
 
     def check_xpath(self, webelement, xpath, xpath_name, get_element: GetElement, timeout=10):
         try:
@@ -273,52 +291,56 @@ class FacebookScraper:
         posted_id = href.split('multi_permalinks=')[1].split('&__cft__')[0]
         print(posted_id)
         return group_url+posted_id
-    
+
     def get_post_history(self, pageid, loop_scan):
         pending_post = []
-        history_url = "https://www.facebook.com/{}/allactivity?activity_history=false&category_key=GROUPPOSTS&manage_mode=false&should_load_landing_page=false".format(pageid)
+        history_url = "https://www.facebook.com/{}/allactivity?activity_history=false&category_key=GROUPPOSTS&manage_mode=false&should_load_landing_page=false".format(
+            pageid)
         self.open_url(history_url)
 
         FB_XPATH_GROUPS_MAIN = "//div[@role='main']"
-        group_main_element =  self.check_xpath(self.driver, FB_XPATH_GROUPS_MAIN,
-                                    "FB_XPATH_GROUPS_MAIN", GetElement.ONE)
+        group_main_element = self.check_xpath(self.driver, FB_XPATH_GROUPS_MAIN,
+                                              "FB_XPATH_GROUPS_MAIN", GetElement.ONE)
         if group_main_element is None:
             return []
         self.scroll_down_element(group_main_element, loop_scan)
-        
+
         FB_XPATH_TODAY_POSTS = "(//div[@role='main']//a[contains(@href, 'permalink') or contains(@href, 'pending_posts')])//self::div/div/div/div[3]/span/div/div/div[2]/div/span/div/span[text()='Nhóm công khai']//ancestor::a"
 
         post_elements = self.check_xpath(self.driver, FB_XPATH_TODAY_POSTS,
-                                    "FB_XPATH_TODAY_POSTS", GetElement.MORE)
+                                         "FB_XPATH_TODAY_POSTS", GetElement.MORE)
         if post_elements is None:
             return []
-        
+
         for post_element in post_elements:
-            pending_post.append(post_element.get_attribute('href').replace('pending_posts', 'posts').replace('permalink', 'posts'))
-        
+            pending_post.append(post_element.get_attribute('href').replace(
+                'pending_posts', 'posts').replace('permalink', 'posts'))
+
         return pending_post
 
     def get_post_today(self, pageid):
         pending_post = []
-        history_url = "https://www.facebook.com/{}/allactivity?activity_history=false&category_key=GROUPPOSTS&manage_mode=false&should_load_landing_page=false".format(pageid)
+        history_url = "https://www.facebook.com/{}/allactivity?activity_history=false&category_key=GROUPPOSTS&manage_mode=false&should_load_landing_page=false".format(
+            pageid)
         self.open_url(history_url)
 
         FB_XPATH_GROUPS_MAIN = "//div[@role='main']"
-        group_main_element =  self.check_xpath(self.driver, FB_XPATH_GROUPS_MAIN,
-                                    "FB_XPATH_GROUPS_MAIN", GetElement.ONE)
+        group_main_element = self.check_xpath(self.driver, FB_XPATH_GROUPS_MAIN,
+                                              "FB_XPATH_GROUPS_MAIN", GetElement.ONE)
         if group_main_element is None:
             return []
         self.scroll_down_element(group_main_element, 2)
         FB_XPATH_TODAY_POSTS = "(//div[@role='main']/div/div[2]//a[contains(@href, 'permalink') or contains(@href, 'pending_posts')])//self::div/div/div/div[3]/span/div/div/div[2]/div/span/div/span[text()='Nhóm công khai']//ancestor::a"
 
         post_elements = self.check_xpath(self.driver, FB_XPATH_TODAY_POSTS,
-                                    "FB_XPATH_TODAY_POSTS", GetElement.MORE)
+                                         "FB_XPATH_TODAY_POSTS", GetElement.MORE)
         if post_elements is None:
             return []
-        
+
         for post_element in post_elements:
-            pending_post.append(post_element.get_attribute('href').replace('pending_posts', 'posts').replace('permalink', 'posts'))
-        
+            pending_post.append(post_element.get_attribute('href').replace(
+                'pending_posts', 'posts').replace('permalink', 'posts'))
+
         return pending_post
 
     def check_approval_post(self, pending_post):
@@ -326,7 +348,8 @@ class FacebookScraper:
 
         FB_XPATH_POST_PRESENCE = "//div[@aria-posinset='1']"
         try:
-            element = WebDriverWait(self.driver, 0).until(EC.presence_of_element_located((By.XPATH, FB_XPATH_POST_PRESENCE)))
+            element = WebDriverWait(self.driver, 0).until(
+                EC.presence_of_element_located((By.XPATH, FB_XPATH_POST_PRESENCE)))
         except Exception as e:
             return False
 
@@ -337,18 +360,19 @@ class FacebookScraper:
 
         FB_XPATH_WRITE_POST_PRESENCE = "//*[text()='Write something...' or text()='Bạn viết gì đi...']"
         try:
-            element = WebDriverWait(self.driver, 0).until(EC.presence_of_element_located((By.XPATH, FB_XPATH_WRITE_POST_PRESENCE)))
+            element = WebDriverWait(self.driver, 0).until(
+                EC.presence_of_element_located((By.XPATH, FB_XPATH_WRITE_POST_PRESENCE)))
         except Exception as e:
             return False
-        
+
         return True
-    
+
     def like_url_posted(self, url):
         self.open_url(url)
 
         FB_XPATH_LIKE = "//div[@aria-label='Like' or @aria-label='Thích']"
         btn_like_element = self.check_xpath(self.driver, FB_XPATH_LIKE,
-                                    "FB_XPATH_LIKE", GetElement.ONE)
+                                            "FB_XPATH_LIKE", GetElement.ONE)
         if btn_like_element is None:
             return False
         btn_like_element.click()
@@ -361,7 +385,6 @@ class FacebookScraper:
         # group_url = "https://www.facebook.com/groups/1400319690267642/"
         # group_url = utils.get_available_groups_link()[0]
         self.open_url(group_url)
-        print(group_url)
         FB_XPATH_TAB_LIST = '//*[@role="tablist"]'
         tab_list = self.check_xpath(self.driver, FB_XPATH_TAB_LIST,
                                     "FB_XPATH_TAB_LIST", GetElement.ONE)
@@ -396,21 +419,20 @@ class FacebookScraper:
 
         FB_XPATH_PHOTO_MODE = '//div[@aria-label="Ảnh/video"]'
         photo_mode = self.check_xpath(self.driver, FB_XPATH_PHOTO_MODE,
-                                       "FB_XPATH_PHOTO", GetElement.ONE)
+                                      "FB_XPATH_PHOTO", GetElement.ONE)
         if photo_mode is None:
             return post_status
         photo_mode.click()
-        sleep(randrange(2,5))
-        print(photos)
+        sleep(randrange(2, 5))
 
         FB_XPATH_PHOTO = "//input[@type='file' and @multiple]"
 
         for photo in photos:
             photo_input = self.check_xpath(self.driver, FB_XPATH_PHOTO,
-                                       "FB_XPATH_PHOTO", GetElement.ONE)
+                                           "FB_XPATH_PHOTO", GetElement.ONE)
             if photo_input is None:
                 return post_status
-            
+
             photo_input.send_keys(photo)
             sleep(randrange(5, 10))
 
@@ -419,7 +441,7 @@ class FacebookScraper:
         #                                 "FB_XPATH_CLOSE_POST", GetElement.ONE)
         # if close_post is None: return
         # close_post.click()
-        sleep(randrange(5,10))
+        sleep(randrange(5, 10))
 
         FB_XPATH_POST_BTN = '//div[@aria-label="Post" or @aria-label="Đăng"]'
         post_btn = self.check_xpath(self.driver, FB_XPATH_POST_BTN,
@@ -429,14 +451,11 @@ class FacebookScraper:
         post_btn.click()
         sleep(randrange(2, 5))
 
-
         # FB_XPATH_POST_STATUS = "//a[starts-with(@href,'https://www.facebook.com/groups/1824383134456259/pending_posts')]"
 
         # FB_XPATH_POST_STATUS = "//div[@role='article'][1]/div/div/div/div/div/div[2]/div/div/div[1]/div[1]/div/div[2]/div/div[1]/span/h3/span/span/a"
 
         # FB_XPATH_POST_STATUS = "//div[@role='article'][1]//following::h3/span/span/a"
-
-
 
         # FB_XPATH_POST_STATUS = "//div[@role='article'][1]//following::span/a[starts-with(@href,'https://www.facebook.com/groups/1824383134456259/posts') or starts-with(@href,'https://www.facebook.com/groups/1824383134456259/pendin')]"
         # post_status = self.check_xpath(self.driver, FB_XPATH_POST_STATUS,
@@ -451,42 +470,49 @@ class FacebookScraper:
 
     def scan_group_by_keyword(self, keyword, loop_scan):
         groups = []
-        url = "https://www.facebook.com/groups/search/groups/?q=" + keyword.replace(' ', '%20')
+        url = "https://www.facebook.com/groups/search/groups/?q=" + \
+            keyword.replace(' ', '%20')
         self.open_url(url)
 
         FB_XPATH_GROUPS_MAIN = "//div[@role='main']"
-        group_main_element =  self.check_xpath(self.driver, FB_XPATH_GROUPS_MAIN,
-                                    "FB_XPATH_GROUPS_MAIN", GetElement.ONE)
+        group_main_element = self.check_xpath(self.driver, FB_XPATH_GROUPS_MAIN,
+                                              "FB_XPATH_GROUPS_MAIN", GetElement.ONE)
         if group_main_element is None:
             return []
         self.scroll_down_element(group_main_element, loop_scan)
-        
+
         FB_XPATH_GROUPS = "//a[@role='presentation']"
         group_elements = self.check_xpath(self.driver, FB_XPATH_GROUPS,
-                                    "FB_XPATH_GROUPS", GetElement.MORE)
+                                          "FB_XPATH_GROUPS", GetElement.MORE)
         if group_elements is None:
             return []
-        
+
         for group_element in group_elements:
             g_link = group_element.get_attribute('href')
             g_name = group_element.get_attribute('innerText')
 
-            XPATH_INFO = ".//parent::div//parent::span//parent::div//following-sibling::div[1]".format(g_link)
-            group_info_element = self.check_xpath(group_element, XPATH_INFO, 'XPATH_INFO', GetElement.ONE)
+            XPATH_INFO = ".//parent::div//parent::span//parent::div//following-sibling::div[1]".format(
+                g_link)
+            group_info_element = self.check_xpath(
+                group_element, XPATH_INFO, 'XPATH_INFO', GetElement.ONE)
 
-            if group_info_element: 
+            if group_info_element:
                 info_text = group_info_element.get_property('innerText')
-                category, members_text, details = utils.extract_raw_group_info(info_text)
+                category, members_text, details = utils.extract_raw_group_info(
+                    info_text)
 
-                members_in_K = members_text.replace(' thành viên', '').replace(',', '.').replace(' ', '')
+                members_in_K = members_text.replace(
+                    ' thành viên', '').replace(',', '.').replace(' ', '')
                 members = utils.convert_str_to_number(members_in_K)
-                groups.append(GroupInfo(g_name, g_link, category, members, details))
-                
+                groups.append(GroupInfo(g_name, g_link,
+                              category, members, details))
+
         return groups
 
     def scan_group_of_page(self):
         groups = []
-        self.open_url('https://www.facebook.com/groups/joins/?nav_source=tab&ordering=viewer_added')
+        self.open_url(
+            'https://www.facebook.com/groups/joins/?nav_source=tab&ordering=viewer_added')
 
         group_list = self.driver.find_elements(By.XPATH, FB_XPATH_GROUP_LIST)
 
@@ -495,13 +521,13 @@ class FacebookScraper:
             return groups
         joined_group_list = group_list[len(group_list) - 1]
 
-
         self.scroll_down_byelement(joined_group_list)
 
         if len(joined_group_list.find_elements(By.XPATH, FB_XPATH_GROUP_LINKS)) == 0:
             log(LogLevel.ERROR, "FB_XPATH_GROUP_LINKS is not found")
             return groups
-        joined_group_links = joined_group_list.find_elements(By.XPATH, FB_XPATH_GROUP_LINKS)
+        joined_group_links = joined_group_list.find_elements(
+            By.XPATH, FB_XPATH_GROUP_LINKS)
 
         for joined_group_link in joined_group_links:
             link = joined_group_link.get_attribute('href')
@@ -509,10 +535,10 @@ class FacebookScraper:
             # check valid group url:https://www.facebook.com/groups/url/
             pattern_url = r'https://\S+/$'
             if re.match(pattern_url, link):
-                correct_group = joined_group_link.get_property('childElementCount')
+                correct_group = joined_group_link.get_property(
+                    'childElementCount')
                 if correct_group == 0:
                     group_name = joined_group_link.get_attribute('innerText')
-                    groups.append(GroupInfo(group_name,link))
-            
-        return groups
+                    groups.append(GroupInfo(group_name, link))
 
+        return groups

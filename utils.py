@@ -58,10 +58,11 @@ def random_metadata_image(img_file):
             img.modify_xmp({'Xmp.dc.subject': uuid.uuid4()})
     except Exception as e:
         pass
-def random_md5_image(img_file):
+def random_md5_images(img_files):
     #random pixel data at x,y: 0,0
-    img = Image.open(img_file)
-    value = (randrange(0,255), randrange(0,255), randrange(0,255))
-    img.putpixel((0,0), value)
-    img.save(img_file)
-    random_metadata_image(img_file)
+    for img_file in img_files:
+        img = Image.open(img_file)
+        value = (randrange(0,255), randrange(0,255), randrange(0,255))
+        img.putpixel((0,0), value)
+        img.save(img_file)
+        random_metadata_image(img_file)

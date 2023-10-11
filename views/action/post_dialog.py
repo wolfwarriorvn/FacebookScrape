@@ -20,10 +20,24 @@ class PostDialog(QWidget, Ui_Post):
 
         self.groups_model = QSqlTableModel(self)
         self.groups_model.setQuery('SELECT DISTINCT Type FROM groups_tita')
+        self.cb_group_type.currentTextChanged.connect(self.on_current_text_changed)
         self.cb_group_type.setModel(self.groups_model)
         self.cb_group_type.installEventFilter(self)
         self.btn_select_image.clicked.connect(self.choose_image_path)
+        self._controller.db_signals.get_free_group_completed.connect(self.update_label_free_groups)
+        self._controller.db_signals.get_free_group.emit(self.cb_group_type.currentText())
 
+    def on_current_text_changed(self):
+        group_type = self.cb_group_type.currentText()
+        self._controller.db_signals.get_free_group.emit(group_type)
+
+        if group_type == 'DEP':
+            self.le_image_path.setText(r'H:\fbtools\image\dep')
+        elif group_type == 'MAY':
+            self.le_image_path.setText(r'H:\fbtools\image\may')
+        
+    def update_label_free_groups(self, counts):
+        self.le_free_groups.setText('Rãnh: {} groups'.format(counts))
     def choose_image_path(self):
         dialog = QFileDialog()
         folder_path = dialog.getExistingDirectory(None, "Select Folder")
@@ -64,3 +78,5 @@ class PostDialog(QWidget, Ui_Post):
         )
         # print(', '.join("%s: %s" % item for item in vars(setting).items()))
         self._controller.signals.post_event.emit(self.selected_uid, setting)
+
+        self.close()

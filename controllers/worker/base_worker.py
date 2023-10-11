@@ -2,6 +2,10 @@ from PySide6.QtCore import Signal
 from PySide6.QtCore import QRunnable, QObject,QMutex,QSemaphore
 from facebook_scraper import FacebookScraper
 from time import sleep
+from facebook_scraper import (
+    NoLoginException,
+    CheckpointException
+)
 
 semaphore = {}
 chrome_mutex = QMutex()
@@ -41,19 +45,22 @@ class BaseWorker(QRunnable):
             return True
         return False
     def check_live_facebook(self):
+        status = False
         try:
-            if not self.fb_scraper.check_login():
-                self.signals.update_message.emit(self._uid, 'Chưa logging!')
-                return False
-            if self.fb_scraper.checkpoint():
-                self.signals.update_message.emit(self._uid, 'Checkpoint!')
-                return False
+            self.fb_scraper.open_url('https://www.facebook.com/')
+            
             self.signals.update_message.emit(self._uid, 'Already Logging!')
+            status = True
+        except NoLoginException:
+            self.signals.update_message.emit(self._uid, 'Login facebook again!')
+        except CheckpointException:
+            self.signals.update_message.emit(self._uid, 'Checkpoint!')
         except Exception as e:
-            return False
-        return True
+            self.signals.update_message.emit(self._uid, f'Error: {type(e).__name__}!')
+
+        return status
     def take_semaphore_facebook(self):
-        status = True
+        status = False
         self.signals.update_status.emit(self._uid, "Waiting")
         semaphore[self.sema_id].acquire()
         self.signals.update_status.emit(self._uid, 'Opening')
@@ -62,9 +69,10 @@ class BaseWorker(QRunnable):
             chrome_mutex.lock()
             self.signals.update_message.emit(self._uid, 'Đang mở chrome!')
             self.fb_scraper = FacebookScraper(self._uid, self._pw, self._proxy)
-        except Exception as e:
-            self.signals.update_message.emit(self._uid, 'Chrome error !')
-            status = False
+            status = True
+
+        except Exception as ex:
+            self.signals.update_message.emit(self._uid, f'Error: {type(ex).__name__}!')
         finally:
             chrome_mutex.unlock()
         return status
