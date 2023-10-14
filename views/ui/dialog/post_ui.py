@@ -148,7 +148,7 @@ class Ui_Post(object):
         self.sp_idle_from = QSpinBox(self.group_setting)
         self.sp_idle_from.setObjectName(u"sp_idle_from")
         self.sp_idle_from.setMaximumSize(QSize(100, 16777215))
-        self.sp_idle_from.setMaximum(999)
+        self.sp_idle_from.setMaximum(99999)
         self.sp_idle_from.setSingleStep(10)
         self.sp_idle_from.setValue(100)
 
@@ -163,7 +163,7 @@ class Ui_Post(object):
         self.sp_idle_to = QSpinBox(self.group_setting)
         self.sp_idle_to.setObjectName(u"sp_idle_to")
         self.sp_idle_to.setMaximumSize(QSize(100, 16777215))
-        self.sp_idle_to.setMaximum(999)
+        self.sp_idle_to.setMaximum(99999)
         self.sp_idle_to.setSingleStep(10)
         self.sp_idle_to.setValue(200)
 

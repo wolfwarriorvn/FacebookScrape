@@ -47,6 +47,7 @@ class MySignals(QObject):
     seeding_action = Signal(object, object)
     outof_free_groups = Signal(int)
 
+    #login
 
 class DbSignals(QObject):
     # Proxy table
@@ -81,7 +82,6 @@ class MainController(QObject):
         self.signals.scan_post_history.connect(self.on_scan_post_history)
         self.signals.seeding_action.connect(self.init_thread_seeding_action)
         self.db_signals.get_free_group.connect(self.on_get_free_group)
-
         self.db_signals.proxy_add.connect(self.on_add_proxy)
 
     def on_get_free_group(self, type_groups):
@@ -108,11 +108,7 @@ class MainController(QObject):
 
         for uid in uids:
             try:
-                uid, pw, proxy_index = self._model.get_account_info(uid)
-                proxy_extension = self._model.get_proxy_extension(proxy_index)
-                print("uid: ", uid)
-                print("pass: ", pw)
-                print("proxy_extension: ", proxy_extension)
+                account = self._model.get_account_info(uid)
                 pageID = self._model.get_account_pageid(uid)
                 activeID = uid if pageID == '' else pageID
 
@@ -121,7 +117,7 @@ class MainController(QObject):
                 set_picked.update(select_groups)
 
                 worker = PostGroupWorker(
-                    select_groups, setting, activeID, sema_id, uid, pw, proxy_extension)
+                    select_groups, setting, activeID, sema_id, account)
                 worker.setAutoDelete(True)
                 worker.signals.update_status.connect(
                     self.update_status_dashboard)
@@ -133,8 +129,8 @@ class MainController(QObject):
                     self.on_save_post_history)
                 self.pool.start(worker)
 
-            except Exception as e:
-                print(e)
+            except Exception as ex:
+                self.update_mesage_dashboard(uid, f'{type(ex).__name__}: {ex}')
                 continue
 
     def post_completed(self, pageid, group_link, status):
@@ -151,12 +147,7 @@ class MainController(QObject):
         for uid in uids:
             try:
                 liked_links = self._model.get_seeding_liked_link(uid)
-                uid, pw, proxy = self._model.get_account_info(uid)
-                active_id = self._model.get_account_pageid(uid)
-                proxy_extension = self._model.get_proxy_extension(proxy)
-                print("uid: ", uid)
-                print("pass: ", pw)
-                print("proxy_extension: ", proxy_extension)
+                account = self._model.get_account_info(uid)
 
                 set_available_links = set(
                     setting.posted_links).difference(set(liked_links))
@@ -169,7 +160,7 @@ class MainController(QObject):
                     sorted(set_available_links), setting.seedings)
 
                 worker = SeedingWorker(
-                    available_links, setting, sema_id, uid, pw, proxy_extension)
+                    available_links, setting, sema_id, account)
                 worker.signals.update_status.connect(
                     self.update_status_dashboard)
                 worker.signals.update_message.connect(
@@ -178,9 +169,9 @@ class MainController(QObject):
                     self.on_update_seeding_status)
                 worker.setAutoDelete(True)
                 self.pool.start(worker)
-            except Exception as e:
-                print("create_table error: ", e)
-                pass
+            except Exception as ex:
+                self.update_mesage_dashboard(uid, f'{type(ex).__name__}: {ex}')
+                continue
 
     def on_update_seeding_status(self, uid, href, action):
         try:
@@ -196,15 +187,10 @@ class MainController(QObject):
     def init_thread_check_group_allow_page(self, uid, group_links):
         sema_id = self.genarate_semaphore(1)
         try:
-            uid, pw, proxy = self._model.get_account_info(uid)
-            active_id = self._model.get_account_pageid(uid)
-            proxy_extension = self._model.get_proxy_extension(proxy)
-            print("uid: ", uid)
-            print("pass: ", pw)
-            print("proxy_extension: ", proxy_extension)
+            account = self._model.get_account_info(uid)
 
             worker = CheckGroupAllowPage(
-                group_links, sema_id, uid, pw, proxy_extension)
+                group_links, account)
             worker.setAutoDelete(True)
             worker.signals.allow_page_group.connect(
                 self.on_update_allow_page_status)
@@ -228,15 +214,10 @@ class MainController(QObject):
     def init_thread_check_approval_post(self, uid, pending_posts):
         sema_id = self.genarate_semaphore(1)
         try:
-            uid, pw, proxy = self._model.get_account_info(uid)
-            active_id = self._model.get_account_pageid(uid)
-            proxy_extension = self._model.get_proxy_extension(proxy)
-            print("uid: ", uid)
-            print("pass: ", pw)
-            print("proxy_extension: ", proxy_extension)
+            account = self._model.get_account_info(uid)
 
             worker = CheckApprovalPost(
-                pending_posts, sema_id, uid, pw, proxy_extension)
+                pending_posts, sema_id, account)
             worker.setAutoDelete(True)
             worker.signals.approved_post.connect(self.on_update_approve_status)
 
@@ -246,9 +227,9 @@ class MainController(QObject):
             worker.signals.update_message.connect(
                 self.update_mesage_dashboard)
             self.pool.start(worker)
-        except Exception as e:
-            print("create_table error: ", e)
-            pass
+            
+        except Exception as ex:
+            self.update_mesage_dashboard(uid, f'{type(ex).__name__}: {ex}')
 
     def on_update_approve_status(self, pending_post, status):
         try:
@@ -257,19 +238,15 @@ class MainController(QObject):
             print("on_update_approve_status: ", e)
             pass
 
-    def on_scan_post_history(self, user_ids, loop_scan, sync_nick):
+    def on_scan_post_history(self, uids, loop_scan, sync_nick):
         sema_id = self.genarate_semaphore(sync_nick)
-        try:
-            for user_id in user_ids:
-                uid, pw, proxy = self._model.get_account_info(user_id)
-                active_id = self._model.get_account_pageid(user_id)
-                proxy_extension = self._model.get_proxy_extension(proxy)
-                print("uid: ", uid)
-                print("pass: ", pw)
-                print("proxy_extension: ", proxy_extension)
+        for uid in uids:
+            try:
+                account = self._model.get_account_info(uid)
+                active_id = self._model.get_account_pageid(uid)
 
                 worker = ScanPostHistoryWorker(
-                    active_id, loop_scan, sema_id, uid, pw, proxy_extension)
+                    active_id, loop_scan, sema_id, account)
                 worker.signals.scan_post_history.connect(
                     self.on_save_post_history)
                 
@@ -280,9 +257,9 @@ class MainController(QObject):
                     self.update_mesage_dashboard)
                 worker.setAutoDelete(True)
                 self.pool.start(worker)
-        except Exception as e:
-            print("create_table error: ", e)
-            pass
+                
+            except Exception as ex:
+                self.update_mesage_dashboard(uid, f'{type(ex).__name__}: {ex}')
 
     def on_save_post_history(self, active_id, group_link, post_link, status):
         try:
@@ -297,34 +274,28 @@ class MainController(QObject):
 
     def login_chrome(self, selected_uids):
         sema_id = self.genarate_semaphore(1)
-        for id in selected_uids:
-            uid, pw, proxy = self._model.get_account_info(id)
-            proxy_extension = self._model.get_proxy_extension(proxy)
-            secret_2fa = self._model.get_account_2fa(id)
-            print("uid: ", uid)
-            print("pass: ", pw)
-            print("proxy_extension: ", proxy_extension)
+        for uid in selected_uids:
+            try:
+                account = self._model.get_account_info(uid)
 
-            worker = LoginFacebookWorker(sema_id, uid, pw, proxy_extension, secret_2fa)
-            worker.signals.update_status.connect(
-                    self.update_status_dashboard)
-            worker.signals.update_message.connect(
-                    self.update_mesage_dashboard)
-            worker.setAutoDelete(True)
-            self.pool.start(worker)
+                worker = LoginFacebookWorker(sema_id, account)
+                worker.signals.update_status.connect(
+                        self.update_status_dashboard)
+                worker.signals.update_message.connect(
+                        self.update_mesage_dashboard)
+                worker.setAutoDelete(True)
+                self.pool.start(worker)
+
+            except Exception as ex:
+                self.update_mesage_dashboard(uid, f'{type(ex).__name__}: {ex}')
 
     def open_chrome(self, selected_uids):
         sema_id = self.genarate_semaphore(100)
-        for id in selected_uids:
+        for uid in selected_uids:
             try:
-                uid, pw, proxy = self._model.get_account_info(id)
-                proxy_extension = self._model.get_proxy_extension(proxy)
-                secret_2fa = self._model.get_account_2fa(id)
-                print("uid: ", uid)
-                print("pass: ", pw)
-                print("proxy_extension: ", proxy_extension)
+                account = self._model.get_account_info(uid)
 
-                worker = FacebookWorker(sema_id, uid, pw, proxy_extension, secret_2fa)
+                worker = FacebookWorker(sema_id,account)
                 worker.signals.update_status.connect(
                     self.update_status_dashboard)
                 worker.signals.update_message.connect(
@@ -332,8 +303,8 @@ class MainController(QObject):
                 worker.setAutoDelete(True)
                 self.pool.start(worker)
 
-            except Exception as e:
-                print("open_chrome: ", e)
+            except Exception as ex:
+                self.update_mesage_dashboard(uid, f'{type(ex).__name__}: {ex}')
 
     def update_mesage_dashboard(self, uid, message):
         try:
@@ -351,24 +322,23 @@ class MainController(QObject):
             print("create_table error: ", e)
             pass
 
-    def scan_group_by_keyword(self, user_id, keyword, loop_scan):
+    def scan_group_by_keyword(self, uid, keyword, loop_scan):
         sema_id = self.genarate_semaphore(1)
         try:
-            uid, pw, proxy = self._model.get_account_info(user_id)
-            proxy_extension = self._model.get_proxy_extension(proxy)
-            print("uid: ", uid)
-            print("pass: ", pw)
-            print("proxy_extension: ", proxy_extension)
+            account = self._model.get_account_info(uid)
 
             worker = ScanGroupKeywordWorker(
-                keyword, loop_scan, sema_id, uid, pw, proxy_extension)
+                keyword, loop_scan, sema_id, account)
+            worker.signals.update_status.connect(
+                self.update_status_dashboard)
+            worker.signals.update_message.connect(
+                self.update_mesage_dashboard)
             worker.setAutoDelete(True)
             worker.signals.scan_keyword_completed.connect(
                 self.scan_keyword_completed)
             self.pool.start(worker)
-        except Exception as e:
-            print("create_table error: ", e)
-            pass
+        except Exception as ex:
+            self.update_mesage_dashboard(uid, f'{type(ex).__name__}: {ex}')
 
     def scan_keyword_completed(self, uid, groups):
         talbe_name = 'groups_' + uid
@@ -376,7 +346,6 @@ class MainController(QObject):
             self._model.create_group_table(talbe_name)
             self._model.add_group_scan(talbe_name,
                                        groups)
-            # self.signals.scan_group_completed.emit()
         except Exception as e:
             print("save group data failed: ", e)
             pass
@@ -387,20 +356,15 @@ class MainController(QObject):
         sema_id = self.genarate_semaphore(1)
         try:
             for idx_uid, idx_page_id in zip(uids, page_ids):
-                uid, pw, proxy = self._model.get_account_info(idx_uid)
-                proxy_extension = self._model.get_proxy_extension(proxy)
-                print("uid: ", uid)
-                print("pass: ", pw)
-                print("proxy_extension: ", proxy_extension)
+                account = self._model.get_account_info(idx_uid)
 
                 worker = ScanJoinedGroupWorker(
-                    idx_page_id, sema_id, idx_uid, pw, proxy_extension)
+                    idx_page_id, sema_id, account)
                 worker.setAutoDelete(True)
                 worker.signals.scan_complted.connect(self.scan_completed)
                 self.pool.start(worker)
-        except Exception as e:
-            print("create_table error: ", e)
-            pass
+        except Exception as ex:
+            self.update_mesage_dashboard(uid, f'{type(ex).__name__}: {ex}')
 
     def scan_completed(self, activeID, group_list):
         talbe_name = 'groups_' + activeID
@@ -414,7 +378,6 @@ class MainController(QObject):
             pass
 
     Slot(str)
-
     def create_table(self, talbe_name):
         try:
             self._model.create_table(talbe_name)
@@ -422,7 +385,6 @@ class MainController(QObject):
             print("create_table error: ", e)
             pass
     Slot(str)
-
     def get_account_info(self, indexs):
         try:
             if len(indexs) == 1:
@@ -434,7 +396,6 @@ class MainController(QObject):
             pass
 
     Slot(str)
-
     def add_new_account(self, raw_input):
         accs_raw = raw_input.splitlines()
         try:

@@ -45,7 +45,6 @@ class GetElement(Enum):
     ONE = 0
     MORE = 1
 
-
 class GroupInfo():
     def __init__(self, name, link, category=None, members=None, details=None):
         self.name = name
@@ -56,15 +55,14 @@ class GroupInfo():
 
 
 class FacebookScraper:
-    def __init__(self, uid, password, zip_proxy=None):
+    def __init__(self, uid, password, proxy_extension=None, cookie=None):
         self.uid = uid
         self.password = password
-
         options = webdriver.ChromeOptions()
         options.add_argument(
             r'--user-data-dir=' + CHROME_PROFILES + fr'{self.uid}')
         options.add_argument("--start-maximized")
-        # options.add_experimental_option('excludeSwitches', ['disable-popup-blocking', 'enable-automation'])
+        options.add_experimental_option('excludeSwitches', ['disable-popup-blocking', 'enable-automation'])
         # options.add_argument("--window-size=300,500")
         # options.add_argument("--headless --disable-gpu")
         options.add_argument("--disable-notifications")
@@ -76,11 +74,11 @@ class FacebookScraper:
         # options.add_experimental_option("detach", True)
 
         # login proxy
-        if zip_proxy:
-            # proxy_path = os.path.join(PROXY_PATH, zip_proxy + '_extension.zip')
-            proxy_path = PROXY_PATH + zip_proxy + '_extension.zip'
+        if proxy_extension:
+            proxy_path = f'''{PROXY_PATH}{proxy_extension}{'_extension.zip'}'''
             if os.path.exists(proxy_path):
                 options.add_extension(proxy_path)
+
 
         service_obj = Service(CHROME_DRIVER)
         service_obj.creation_flags = CREATE_NO_WINDOW
@@ -88,18 +86,25 @@ class FacebookScraper:
         # self.driver.minimize_window()
         # self.driver.implicitly_wait(randrange(2, 5))
 
+        #auto load cookie
+        if cookie:
+            self.add_cookies(cookies=cookie)
+
     def maximize(self):
         self.driver.maximize_window()
 
+    def add_cookies(self, cookies):
+        try:
+            self.driver.get('https://www.facebook.com/')
+            for cokie in cookies.split('; '):
+                name, value = cokie.split('=')
+                self.driver.add_cookie({"name": name, "value": value})
+            self.driver.refresh()
+        except Exception as e:
+            print(e)
+
     def get_cookies(self):
         return self.driver.get_cookies()
-
-    def login_with_cookies(self, cookies):
-        # self.driver.get("https://www.facebook.com/")
-        for cookie in cookies:
-            self.driver.add_cookie(cookie)
-        sleep(5)
-        self.driver.refresh()
 
     def is_checkpointed(self):
         if "checkpoint" in self.driver.current_url:

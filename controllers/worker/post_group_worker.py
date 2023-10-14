@@ -6,8 +6,8 @@ import random
 from lib_type import PostSetting
 
 class PostGroupWorker(BaseWorker):
-    def __init__(self, group_links, settings: PostSetting, page_id, semaphore_id, uid, password, proxy=None, secret_2fa=None) -> None:
-        super().__init__(semaphore_id, uid, password, proxy, secret_2fa)
+    def __init__(self, group_links, settings: PostSetting, page_id, semaphore_id, account) -> None:
+        super().__init__(semaphore_id,account)
         self.page_id = page_id
         self.group_links = group_links
         self.settings = settings

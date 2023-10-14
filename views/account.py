@@ -169,7 +169,6 @@ class Account(QWidget, Ui_Form):
         #         print('Row %d is selected' % index.row())
         # elif action == openAction:
         #     print('Quyt')
-
     def delete_selected_row(self):
         sql_query = "DELETE FROM accounts WHERE ID IN ({})".format(",".join([str(id) for id in self.seleted_id]))
         self.model.setQuery(sql_query)
@@ -243,3 +242,4 @@ class Account(QWidget, Ui_Form):
         self.table_accounts.ui.tableView.resizeColumnsToContents()
 
         self.table_accounts.ui.tableView.setColumnWidth(4,100)
+        self.table_accounts.ui.tableView.setColumnWidth(5,100)

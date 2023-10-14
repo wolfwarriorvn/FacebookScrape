@@ -1,6 +1,7 @@
 from PySide6.QtCore import Signal
 from PySide6.QtCore import QRunnable, QObject,QMutex,QSemaphore
 from facebook_scraper import FacebookScraper
+from model.model import AccountInfo
 from time import sleep
 from facebook_scraper import (
     NoLoginException,
@@ -9,6 +10,7 @@ from facebook_scraper import (
 
 semaphore = {}
 chrome_mutex = QMutex()
+login_mutex = QMutex()
 post_mutex = QMutex()
 open_chrom_sem = QSemaphore(2)
 
@@ -26,15 +28,16 @@ class Signals(QObject):
     pending_post = Signal(str, str, str)
     scan_today_posts= Signal(str, str, str, str)
 
+
 class BaseWorker(QRunnable):
-    def __init__(self, semaphore_id, uid, password, proxy, secret_2fa) -> None:
+    def __init__(self, semaphore_id, accounts: AccountInfo) -> None:
         super().__init__()
         self.sema_id = semaphore_id
-        self._uid = uid
-        self._pw = password
-        self._proxy = proxy
-        self._secret_2fa = secret_2fa
-
+        self._uid = accounts.uid
+        self._pw = accounts.password
+        self._proxy = accounts.proxy
+        self._secret_2fa = accounts.secret_2fa
+        self.cookie = accounts.cookie
         self.signals = Signals()
     def checkpoint(self):
         try:
@@ -47,6 +50,7 @@ class BaseWorker(QRunnable):
     def check_live_facebook(self):
         status = False
         try:
+            login_mutex.lock()
             self.fb_scraper.open_url('https://www.facebook.com/')
             
             self.signals.update_message.emit(self._uid, 'Already Logging!')
@@ -55,8 +59,10 @@ class BaseWorker(QRunnable):
             self.signals.update_message.emit(self._uid, 'Login facebook again!')
         except CheckpointException:
             self.signals.update_message.emit(self._uid, 'Checkpoint!')
-        except Exception as e:
-            self.signals.update_message.emit(self._uid, f'Error: {type(e).__name__}!')
+        except Exception as ex:
+            self.signals.update_message.emit(self._uid, f'{type(ex).__name__}: {ex}!')
+        finally:
+            login_mutex.unlock()
 
         return status
     def take_semaphore_facebook(self):
@@ -68,15 +74,16 @@ class BaseWorker(QRunnable):
         try:
             chrome_mutex.lock()
             self.signals.update_message.emit(self._uid, 'Đang mở chrome!')
-            self.fb_scraper = FacebookScraper(self._uid, self._pw, self._proxy)
+            self.fb_scraper = FacebookScraper(self._uid, self._pw, self._proxy, self.cookie)
             status = True
 
         except Exception as ex:
-            self.signals.update_message.emit(self._uid, f'Error: {type(ex).__name__}!')
+            self.signals.update_message.emit(self._uid, f'{type(ex).__name__}: {ex}!')
         finally:
             chrome_mutex.unlock()
         return status
     def __del__(self):
         self.signals.update_status.emit(self._uid, 'Closed')
         semaphore[self.sema_id].release()
-        self.fb_scraper.close()
+        if self.fb_scraper:
+            self.fb_scraper.close()

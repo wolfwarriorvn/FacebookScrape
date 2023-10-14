@@ -135,7 +135,7 @@
            </size>
           </property>
           <property name="maximum">
-           <number>999</number>
+           <number>99999</number>
           </property>
           <property name="singleStep">
            <number>10</number>
@@ -167,7 +167,7 @@
            </size>
           </property>
           <property name="maximum">
-           <number>999</number>
+           <number>99999</number>
           </property>
           <property name="singleStep">
            <number>10</number>
@@ -261,10 +261,6 @@
     </widget>
    </item>
   </layout>
-  <zorder>groupBox_2</zorder>
-  <zorder>groupBox</zorder>
-  <zorder>layoutWidget</zorder>
-  <zorder></zorder>
  </widget>
  <resources/>
  <connections>

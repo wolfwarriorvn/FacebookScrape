@@ -5,8 +5,8 @@ from random import randrange
 
 
 class SeedingWorker(BaseWorker):
-    def __init__(self, available_links, settings, semaphore_id, uid, password, proxy=None, secret_2fa=None) -> None:
-        super().__init__(semaphore_id, uid, password, proxy, secret_2fa)
+    def __init__(self, available_links, settings, semaphore_id, account) -> None:
+        super().__init__(semaphore_id, account)
         self.available_links = available_links
         self.settings = settings
 

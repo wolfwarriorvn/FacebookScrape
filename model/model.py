@@ -2,6 +2,13 @@ from PySide6.QtCore import QObject
 from PySide6.QtSql import QSqlTableModel
 from model.sqlutils import SqlUtils
 
+class AccountInfo():
+    def __init__(self, uid, password, proxy, secret_2fa, cookie) -> None:
+        self.uid = uid
+        self.password = password
+        self.proxy = proxy
+        self.secret_2fa = secret_2fa
+        self.cookie = cookie
 
 class Model(QObject):
     def __init__(self):
@@ -21,7 +28,9 @@ class Model(QObject):
         self.sql_utils.create_groups_table(table_name)
 
     def get_account_info(self, uid):
-        return self.sql_utils.get_accounts(uid)
+        uid, password, proxy, secret_2fa, cookie  = self.sql_utils.get_accounts(uid)
+        proxy_extension = self.get_proxy_extension(proxy)
+        return AccountInfo(uid, password, proxy_extension, secret_2fa, cookie)
 
     def get_account_userids(self):
         sql_query = f"""SELECT UserID FROM accounts"""
@@ -33,6 +42,10 @@ class Model(QObject):
 
     def get_account_pageid(self, uid):
         sql_query = f"""SELECT PageID FROM accounts WHERE UserID='{uid}'"""
+        return self.sql_utils.get_excute(sql_query)
+    
+    def get_account_cookie(self, uid):
+        sql_query = f"""SELECT Cookie FROM accounts WHERE UserID='{uid}'"""
         return self.sql_utils.get_excute(sql_query)
 
     def add_account_info(self, uid, pwd, code2FA=None, email=None):

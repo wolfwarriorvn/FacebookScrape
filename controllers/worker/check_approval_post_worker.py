@@ -5,8 +5,8 @@ from random import randrange
 
 
 class CheckApprovalPost(BaseWorker):
-    def __init__(self,pending_posts, semaphore_id, uid, password, proxy=None, secret_2fa=None) -> None:
-        super().__init__(semaphore_id, uid, password, proxy, secret_2fa)
+    def __init__(self,pending_posts, semaphore_id, account) -> None:
+        super().__init__(semaphore_id, account)
         self.pending_posts = pending_posts
 
     @Slot()

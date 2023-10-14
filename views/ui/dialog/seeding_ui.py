@@ -106,7 +106,7 @@ class Ui_Seeding(object):
         self.sp_idle_from = QSpinBox(self.groupBox_2)
         self.sp_idle_from.setObjectName(u"sp_idle_from")
         self.sp_idle_from.setMaximumSize(QSize(100, 16777215))
-        self.sp_idle_from.setMaximum(999)
+        self.sp_idle_from.setMaximum(99999)
         self.sp_idle_from.setSingleStep(10)
         self.sp_idle_from.setValue(10)
 
@@ -121,7 +121,7 @@ class Ui_Seeding(object):
         self.sp_idle_to = QSpinBox(self.groupBox_2)
         self.sp_idle_to.setObjectName(u"sp_idle_to")
         self.sp_idle_to.setMaximumSize(QSize(100, 16777215))
-        self.sp_idle_to.setMaximum(999)
+        self.sp_idle_to.setMaximum(99999)
         self.sp_idle_to.setSingleStep(10)
         self.sp_idle_to.setValue(60)
 
@@ -187,8 +187,6 @@ class Ui_Seeding(object):
 
         self.verticalLayout_3.addWidget(self.groupBox_2)
 
-        self.groupBox_2.raise_()
-        self.groupBox.raise_()
 
         self.retranslateUi(Seeding)
         self.ckb_autogetlink.clicked["bool"].connect(self.txt_links.setDisabled)

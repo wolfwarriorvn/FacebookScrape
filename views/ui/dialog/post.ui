@@ -220,7 +220,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </size>
           </property>
           <property name="maximum">
-           <number>999</number>
+           <number>99999</number>
           </property>
           <property name="singleStep">
            <number>10</number>
@@ -252,7 +252,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </size>
           </property>
           <property name="maximum">
-           <number>999</number>
+           <number>99999</number>
           </property>
           <property name="singleStep">
            <number>10</number>
