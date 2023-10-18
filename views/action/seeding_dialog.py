@@ -1,7 +1,7 @@
 
 from PySide6.QtWidgets import QWidget
 from views.ui.dialog.seeding_ui import Ui_Seeding
-from lib_type import SeedingSetting
+from common import SeedingSetting
 
 
 

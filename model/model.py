@@ -48,8 +48,8 @@ class Model(QObject):
         sql_query = f"""SELECT Cookie FROM accounts WHERE UserID='{uid}'"""
         return self.sql_utils.get_excute(sql_query)
 
-    def add_account_info(self, uid, pwd, code2FA=None, email=None):
-        sql_query = f"""INSERT INTO accounts ( UserID, Password, Code2FA, Email ) VALUES ({uid}, '{pwd}', '{code2FA}', '{email}')"""
+    def add_account_info(self, uid, pwd, category='', code2FA='', cookie='', token='', email='', pass_email='', birthday=''):
+        sql_query = "INSERT INTO accounts ( UserID, Password, Category, Code2FA, Cookie, Token, Email, PassEmail, Birthday ) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(uid, pwd, category, code2FA, cookie, token, email, pass_email, birthday)
         self.sql_utils.excute(sql_query)
 
     def update_account_message(self, uid, message):

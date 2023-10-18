@@ -35,7 +35,7 @@ class DashBoard(QWidget, Ui_DashBoard):
         self.table_accounts.proxy.setSourceModel(self.model)
         self.tableView.setModel(self.table_accounts.proxy)
 
-        self.btn_reload.clicked.connect(self.refresh)
+        self.btn_refresh.clicked.connect(self.refresh)
 
         self.refresh()
 

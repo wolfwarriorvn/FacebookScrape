@@ -6,59 +6,139 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>973</width>
-    <height>545</height>
+    <width>679</width>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="topMargin">
+    <number>9</number>
+   </property>
    <item>
     <widget class="QWidget" name="widget" native="true">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>50</height>
+       <height>30</height>
       </size>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QPushButton" name="btn_refresh">
-        <property name="text">
-         <string>Refresh</string>
-        </property>
-       </widget>
-      </item>
-      <item>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="2">
        <widget class="QPushButton" name="btn_add_accounts">
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+	 color: rgb(255, 255, 255);
+     background-color: qlineargradient(spread:pad, x1:0 y1:0, x2:1, y2:3, stop:0 #0081A7, stop:1 #00AFB9);;
+     border: 1px solid rgba(255,255,255,40);
+     border-radius:7px;
+	width: 150;
+	height: 30;
+}
+QPushButton:hover{
+background-color: #0081A7
+}
+QPushButton:pressed{
+background-color: #00AFB9
+}</string>
+        </property>
         <property name="text">
-         <string>Add account</string>
+         <string>Thêm Tài Khoản </string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../icon.qrc">
+          <normaloff>:/icon/views/icon/user-plus.svg</normaloff>:/icon/views/icon/user-plus.svg</iconset>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_3">
+      <item row="0" column="1">
+       <widget class="QPushButton" name="btn_refresh">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">	* {background-color: rgba(192, 209, 231, 1);
+	border: 1px solid rgba(192, 209, 231, 1);
+	border-radius: 7px;
+	color: black;
+	width: 40;
+	height: 30;
+}
+QPushButton:hover{
+background-color: #b8e7ea;
+}
+QPushButton:pressed{
+background-color:rgba(227, 80, 168, 1)
+}</string>
+        </property>
         <property name="text">
-         <string>OKKKK</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../icon.qrc">
+          <normaloff>:/icon/views/icon/refresh.png</normaloff>:/icon/views/icon/refresh.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_4">
-        <property name="text">
-         <string>PushButton</string>
+      <item row="0" column="0">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
-       </widget>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>436</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>
    </item>
    <item>
-    <widget class="QFrame" name="f_account"/>
+    <widget class="QFrame" name="f_account">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../icon.qrc"/>
+ </resources>
  <connections/>
 </ui>

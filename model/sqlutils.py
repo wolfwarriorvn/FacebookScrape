@@ -11,7 +11,7 @@ class SqlUtils:
 
     def create_connection(self):
         db = QtSql.QSqlDatabase.addDatabase('QSQLITE')
-        db.setDatabaseName(r'H:\fbtools\fbscrape.db')
+        db.setDatabaseName(r'H:\fbtools\fbdev.db')
 
         if not db.open():
             QtWidgets.QMessageBox.critical(None, "Cannot open database",

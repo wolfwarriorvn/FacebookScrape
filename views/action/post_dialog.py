@@ -7,7 +7,7 @@ import glob
 from PySide6.QtSql import QSqlTableModel
 from views.ui.dialog.post_ui import Ui_Post
 from views.connection import Connection
-from lib_type import PostSetting
+from common import PostSetting
 
 
 class PostDialog(QWidget, Ui_Post):

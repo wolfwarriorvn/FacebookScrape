@@ -39,9 +39,7 @@ class Ui_MainWindow(object):
         font = QFont()
         font.setPointSize(11)
         self.menu_widget.setFont(font)
-        self.menu_widget.setStyleSheet(u"background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 0.5, x3: 0 y3: 1,\n"
-"                                     stop: 0 #ABCD44, stop: 0.5 #ABCD44,\n"
-"                                     stop: 0.5 #A1C72E, stop: 1.0 #9CC322);\n"
+        self.menu_widget.setStyleSheet(u"background-color: qlineargradient(spread:pad, x1:0 y1:0, x2:1, y2:0, stop:0 #0081A7, stop:1 #00AFB9);\n"
 "color: #fff;\n"
 "font-size: 11pt;\n"
 "border: none;")
@@ -69,9 +67,9 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "#toolBox QPushButton {\n"
-"	padding:5px 0px 5px 20px;\n"
+"	padding:5px 0px 5px 10px;\n"
 "	text-align:left;\n"
-"	border-radius: 3px;\n"
+"	border-radius: 5px;\n"
 "}\n"
 "\n"
 "#toolBox QPushButton:hover {\n"
@@ -91,16 +89,16 @@ class Ui_MainWindow(object):
         self.verticalLayout = QVBoxLayout(self.page_3)
         self.verticalLayout.setSpacing(4)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(5, 0, 5, 0)
+        self.verticalLayout.setContentsMargins(0, 0, 5, 0)
         self.btn_dashboard = QPushButton(self.page_3)
         self.btn_dashboard.setObjectName(u"btn_dashboard")
         self.btn_dashboard.setContextMenuPolicy(Qt.DefaultContextMenu)
         self.btn_dashboard.setLayoutDirection(Qt.LeftToRight)
         self.btn_dashboard.setAutoFillBackground(False)
         icon = QIcon()
-        icon.addFile(u":/app/views/icon/app/dashboard.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/new/views/icon/new/dashboard.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_dashboard.setIcon(icon)
-        self.btn_dashboard.setIconSize(QSize(16, 16))
+        self.btn_dashboard.setIconSize(QSize(20, 20))
         self.btn_dashboard.setAutoDefault(False)
         self.btn_dashboard.setFlat(False)
 
@@ -109,19 +107,21 @@ class Ui_MainWindow(object):
         self.btn_account = QPushButton(self.page_3)
         self.btn_account.setObjectName(u"btn_account")
         self.btn_account.setContextMenuPolicy(Qt.DefaultContextMenu)
+        self.btn_account.setLayoutDirection(Qt.LeftToRight)
         icon1 = QIcon()
-        icon1.addFile(u":/app/views/icon/app/account.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u":/new/views/icon/new/profiles.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_account.setIcon(icon1)
-        self.btn_account.setIconSize(QSize(16, 16))
+        self.btn_account.setIconSize(QSize(20, 20))
+        self.btn_account.setFlat(False)
 
         self.verticalLayout.addWidget(self.btn_account)
 
         self.btn_proxy = QPushButton(self.page_3)
         self.btn_proxy.setObjectName(u"btn_proxy")
         icon2 = QIcon()
-        icon2.addFile(u":/app/views/icon/app/proxy.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon2.addFile(u":/new/views/icon/new/proxy.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_proxy.setIcon(icon2)
-        self.btn_proxy.setIconSize(QSize(16, 16))
+        self.btn_proxy.setIconSize(QSize(20, 20))
 
         self.verticalLayout.addWidget(self.btn_proxy)
 
@@ -130,7 +130,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addItem(self.verticalSpacer)
 
         icon3 = QIcon()
-        icon3.addFile(u":/app/views/icon/app/home.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon3.addFile(u":/new/views/icon/new/home.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.toolBox.addItem(self.page_3, icon3, u"Gerneral")
         self.page_4 = QWidget()
         self.page_4.setObjectName(u"page_4")
@@ -183,6 +183,21 @@ class Ui_MainWindow(object):
 
         self.main_widget = QWidget(self.centralwidget)
         self.main_widget.setObjectName(u"main_widget")
+        self.main_widget.setStyleSheet(u"\n"
+"QPushButton{\n"
+"	 color: rgb(255, 255, 255);\n"
+"     background-color: qlineargradient(spread:pad, x1:0 y1:0, x2:1, y2:3, stop:0 #0081A7, stop:1 #00AFB9);;\n"
+"     border: 1px solid rgba(255,255,255,40);\n"
+"     border-radius:7px;\n"
+"	width: 150;\n"
+"	height: 30;\n"
+"}\n"
+"QPushButton:hover{\n"
+"background-color: #0081A7\n"
+"}\n"
+"QPushButton:pressed{\n"
+"background-color: #00AFB9\n"
+"}")
         self.verticalLayout_4 = QVBoxLayout(self.main_widget)
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -192,7 +207,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setEnabled(True)
         self.tabWidget.setFocusPolicy(Qt.NoFocus)
         self.tabWidget.setStyleSheet(u"#tabWidget{\n"
-"	background-color: #fff\n"
+"   font:  10pt \"Segoe UI\";\n"
 "}\n"
 "\n"
 "QTabBar::close-button{\n"

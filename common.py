@@ -34,3 +34,12 @@ class PostSetting(BaseSetting):
         self.md5_enalbe = md5_enalbe
         self.photo_count = photo_count
         self.photos = photos
+
+
+class AccountFormat:
+    """Set of format account user input."""
+
+    UID_PASS = "Uid | Pass"
+    CUSTOM1 = "Uid | Pass | 2FA | Email | Pass Mail | Cookie | Token | Birthday"
+    CUSTOM2 = "UID | Pass | 2FA | Cookie | Token | Email | Pass Mail | Birthday"
+    COOKIE = "Cookie"

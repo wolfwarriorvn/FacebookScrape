@@ -5,6 +5,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QSystemTrayIcon
 from PySide6 import QtWidgets
 from views.ui.main_window_ui import Ui_MainWindow
 from PySide6.QtGui import QIcon
+from PySide6.QtCore import QStandardPaths, QSettings
 
 from controllers.main_ctrl import MainController
 from model.model import Model
@@ -18,7 +19,7 @@ from views.group_scan import GroupScan
 from views.tumbr import Tumbr
 from views.youtube import Youtube
 from database import Database
-
+from setting import main_setting
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, model, main_controller):
@@ -106,15 +107,17 @@ class App(QApplication):
     def __init__(self, sys_argv):
         super(App, self).__init__(sys_argv)
         #connect mvc structure
+        self.db = Database()
         self.model = Model()
         self.main_ctrl = MainController(self.model)
         self.main_view = MainWindow(self.model, self.main_ctrl)
-        self.main_view.show()
+        self.main_view.showMaximized()
+
 
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    # create connection database
-    Database()
+    
     app = App(sys.argv)
     sys.exit(app.exec())
+    

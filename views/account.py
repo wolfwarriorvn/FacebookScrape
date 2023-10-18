@@ -237,9 +237,9 @@ class Account(QWidget, Ui_Form):
     def refresh(self):
         self.model.setTable('accounts')
         self.model.select()
-        self.header.moveSection(9,3)
+        # self.header.moveSection(9,3)
 
-        self.table_accounts.ui.tableView.resizeColumnsToContents()
-
+        # self.table_accounts.ui.tableView.resizeColumnsToContents()
+        self.table_accounts.ui.tableView.setColumnWidth(1,120)
         self.table_accounts.ui.tableView.setColumnWidth(4,100)
-        self.table_accounts.ui.tableView.setColumnWidth(5,100)
+        self.table_accounts.ui.tableView.setColumnWidth(5,120)

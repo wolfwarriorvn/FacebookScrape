@@ -12,7 +12,6 @@ class FacebookWorker(BaseWorker):
 
         if not self.check_live_facebook():
             pass
-        
         while True:
             if self.fb_scraper.is_brower_closed():
                 break

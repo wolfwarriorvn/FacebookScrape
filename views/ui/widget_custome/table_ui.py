@@ -28,17 +28,16 @@ class Ui_widget_table(object):
         self.tableView = QTableView(widget_table)
         self.tableView.setObjectName(u"tableView")
         self.tableView.setStyleSheet(u"QTableView {\n"
-"background-color: transparent;\n"
-"border: 1px solid rgba(255,1,1,40);\n"
-"border-radius: 7px;\n"
+"font: 10pt \"Segoe UI\";\n"
+"background-color: white;\n"
+"border: 1px solid rgba(192, 209, 231, 1);\n"
+"border-radius: 15px;\n"
 "color: black;\n"
-"border-bottom-right-radius: 7px; \n"
-"border-bottom-left-radius: 7px; \n"
 "}\n"
 "QHeaderView{\n"
 "background-color: transparent;\n"
 "font-weight: bold;\n"
-"border-bottom: 1px solid rgba(255,1,1,40);\n"
+"border-bottom: 1px solid rgba(192, 209, 231, 1);\n"
 "}\n"
 "\n"
 "QHeaderView::section{\n"
@@ -47,11 +46,11 @@ class Ui_widget_table(object):
 "}\n"
 "QTableView::item {\n"
 "	font-size: 11pt;\n"
-"    border-bottom: 1px solid rgba(255,1,1,40);\n"
+"    border-bottom: 1px solid rgba(192, 209, 231, 1);\n"
 "}\n"
 "QTableView::item:selected{\n"
 "	border: none;\n"
-"    background-color: rgba(255, 1, 1, 50);\n"
+"    background-color:  #0081A7;\n"
 "}\n"
 "\n"
 "\n"
@@ -61,7 +60,7 @@ class Ui_widget_table(object):
         self.tableView.setSortingEnabled(True)
         self.tableView.horizontalHeader().setCascadingSectionResizes(True)
         self.tableView.horizontalHeader().setMinimumSectionSize(100)
-        self.tableView.horizontalHeader().setDefaultSectionSize(10)
+        self.tableView.horizontalHeader().setDefaultSectionSize(100)
         self.tableView.horizontalHeader().setStretchLastSection(True)
         self.tableView.verticalHeader().setVisible(False)
 

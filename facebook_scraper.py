@@ -31,7 +31,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from subprocess import CREATE_NO_WINDOW
-
+from setting import main_setting
 
 class NoLoginException(Exception):
     """ Thrown when do not login facebook or be logged out """
@@ -60,7 +60,7 @@ class FacebookScraper:
         self.password = password
         options = webdriver.ChromeOptions()
         options.add_argument(
-            r'--user-data-dir=' + CHROME_PROFILES + fr'{self.uid}')
+            r'--user-data-dir=' + main_setting.chrome_profiles + fr'{self.uid}')
         options.add_argument("--start-maximized")
         options.add_experimental_option('excludeSwitches', ['disable-popup-blocking', 'enable-automation'])
         # options.add_argument("--window-size=300,500")
@@ -75,12 +75,12 @@ class FacebookScraper:
 
         # login proxy
         if proxy_extension:
-            proxy_path = f'''{PROXY_PATH}{proxy_extension}{'_extension.zip'}'''
+            proxy_path = f'''{main_setting.proxy}{proxy_extension}{'_extension.zip'}'''
             if os.path.exists(proxy_path):
                 options.add_extension(proxy_path)
 
 
-        service_obj = Service(CHROME_DRIVER)
+        service_obj = Service(main_setting.chrome_driver)
         service_obj.creation_flags = CREATE_NO_WINDOW
         self.driver = webdriver.Chrome(service=service_obj, options=options)
         # self.driver.minimize_window()

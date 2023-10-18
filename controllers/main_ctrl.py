@@ -5,7 +5,7 @@ from PySide6.QtCore import QThreadPool, QSemaphore
 from model.model import Model
 
 from controllers.worker import *
-from lib_type import *
+from common import *
 
 import uuid
 import random
@@ -56,7 +56,9 @@ class DbSignals(QObject):
     proxy_detete = Signal(object)
     get_free_group = Signal(str)
     get_free_group_completed = Signal(int)
-
+    #account table
+    account_add = Signal(str, str, str)
+    account_add_response = Signal()
 
 class MainController(QObject):
     # sg_wrong_user_input = Signal()
@@ -83,6 +85,34 @@ class MainController(QObject):
         self.signals.seeding_action.connect(self.init_thread_seeding_action)
         self.db_signals.get_free_group.connect(self.on_get_free_group)
         self.db_signals.proxy_add.connect(self.on_add_proxy)
+        self.db_signals.account_add.connect(self.on_account_add)
+
+    def on_account_add(self, input_accounts, category, acc_format):
+        accs_raw = input_accounts.splitlines()
+        try:
+            for acc in accs_raw:
+                elements = acc.split('|')
+                if acc_format in AccountFormat.UID_PASS:
+                    uid, pwd = acc.split('|')
+                    self._model.add_account_info(uid, pwd)
+
+                elif acc_format in AccountFormat.CUSTOM1:
+                    uid, pwd, code2fa, email, pass_email, cookie, token, birthday, _ = acc.split('|')
+                    self._model.add_account_info(uid, pwd, category, code2fa, cookie, token,email, pass_email , birthday)
+                    self.signals.add_user_completed.emit()
+
+                elif acc_format in AccountFormat.CUSTOM2:
+                    uid, pwd, code2fa, cookie, token,email, pass_email , birthday, _ = acc.split('|')
+                    self._model.add_account_info(uid, pwd, category, code2fa, cookie, token,email, pass_email , birthday)
+                    self.signals.add_user_completed.emit()
+
+                else:
+                    print("Input khong dung format")
+                    self.signals.add_user_error.emit()
+
+        except Exception as e:
+            print("Error is {}".format(e))
+            self.signals.add_user_error.emit()
 
     def on_get_free_group(self, type_groups):
         free_group_links = self._model.get_group_free(type_groups)
@@ -400,7 +430,9 @@ class MainController(QObject):
         accs_raw = raw_input.splitlines()
         try:
             for acc in accs_raw:
-                if len(acc.split('|')) == 2:
+                lenght_elements = acc.split('|')
+
+                if acc in AccountFormat.UID_PASS:
                     uid, pwd = acc.split('|')
                     self._model.add_account_info(uid, pwd)
                     self.signals.add_user_completed.emit()

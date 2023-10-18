@@ -7,8 +7,8 @@ from facebook_scraper import (
 )
 
 class LoginFacebookWorker(BaseWorker):
-    def __init__(self, semaphore_id, uid, password, proxy, secret_2fa) -> None:
-        super().__init__(semaphore_id, uid, password, proxy, secret_2fa)
+    def __init__(self, semaphore_id, account) -> None:
+        super().__init__(semaphore_id, account)
 
     @Slot()
     def run(self):

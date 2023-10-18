@@ -53,9 +53,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 0.5, x3: 0 y3: 1,
-                                     stop: 0 #ABCD44, stop: 0.5 #ABCD44,
-                                     stop: 0.5 #A1C72E, stop: 1.0 #9CC322);
+       <string notr="true">background-color: qlineargradient(spread:pad, x1:0 y1:0, x2:1, y2:0, stop:0 #0081A7, stop:1 #00AFB9);
 color: #fff;
 font-size: 11pt;
 border: none;</string>
@@ -99,9 +97,9 @@ border: none;</string>
 }
 
 #toolBox QPushButton {
-	padding:5px 0px 5px 20px;
+	padding:5px 0px 5px 10px;
 	text-align:left;
-	border-radius: 3px;
+	border-radius: 5px;
 }
 
 #toolBox QPushButton:hover {
@@ -134,7 +132,7 @@ border: none;</string>
           </property>
           <attribute name="icon">
            <iconset resource="../../icon.qrc">
-            <normaloff>:/app/views/icon/app/home.png</normaloff>:/app/views/icon/app/home.png</iconset>
+            <normaloff>:/new/views/icon/new/home.svg</normaloff>:/new/views/icon/new/home.svg</iconset>
           </attribute>
           <attribute name="label">
            <string>Gerneral</string>
@@ -144,7 +142,7 @@ border: none;</string>
             <number>4</number>
            </property>
            <property name="leftMargin">
-            <number>5</number>
+            <number>0</number>
            </property>
            <property name="topMargin">
             <number>0</number>
@@ -171,12 +169,12 @@ border: none;</string>
              </property>
              <property name="icon">
               <iconset resource="../../icon.qrc">
-               <normaloff>:/app/views/icon/app/dashboard.png</normaloff>:/app/views/icon/app/dashboard.png</iconset>
+               <normaloff>:/new/views/icon/new/dashboard.svg</normaloff>:/new/views/icon/new/dashboard.svg</iconset>
              </property>
              <property name="iconSize">
               <size>
-               <width>16</width>
-               <height>16</height>
+               <width>20</width>
+               <height>20</height>
               </size>
              </property>
              <property name="autoDefault">
@@ -195,18 +193,24 @@ border: none;</string>
              <property name="contextMenuPolicy">
               <enum>Qt::DefaultContextMenu</enum>
              </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
              <property name="text">
               <string>Quản lý Tài Khoản</string>
              </property>
              <property name="icon">
               <iconset resource="../../icon.qrc">
-               <normaloff>:/app/views/icon/app/account.png</normaloff>:/app/views/icon/app/account.png</iconset>
+               <normaloff>:/new/views/icon/new/profiles.svg</normaloff>:/new/views/icon/new/profiles.svg</iconset>
              </property>
              <property name="iconSize">
               <size>
-               <width>16</width>
-               <height>16</height>
+               <width>20</width>
+               <height>20</height>
               </size>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -217,12 +221,12 @@ border: none;</string>
              </property>
              <property name="icon">
               <iconset resource="../../icon.qrc">
-               <normaloff>:/app/views/icon/app/proxy.png</normaloff>:/app/views/icon/app/proxy.png</iconset>
+               <normaloff>:/new/views/icon/new/proxy.svg</normaloff>:/new/views/icon/new/proxy.svg</iconset>
              </property>
              <property name="iconSize">
               <size>
-               <width>16</width>
-               <height>16</height>
+               <width>20</width>
+               <height>20</height>
               </size>
              </property>
             </widget>
@@ -364,6 +368,23 @@ border: none;</string>
     </item>
     <item>
      <widget class="QWidget" name="main_widget" native="true">
+      <property name="styleSheet">
+       <string notr="true">
+QPushButton{
+	 color: rgb(255, 255, 255);
+     background-color: qlineargradient(spread:pad, x1:0 y1:0, x2:1, y2:3, stop:0 #0081A7, stop:1 #00AFB9);;
+     border: 1px solid rgba(255,255,255,40);
+     border-radius:7px;
+	width: 150;
+	height: 30;
+}
+QPushButton:hover{
+background-color: #0081A7
+}
+QPushButton:pressed{
+background-color: #00AFB9
+}</string>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <property name="spacing">
         <number>0</number>
@@ -390,7 +411,7 @@ border: none;</string>
          </property>
          <property name="styleSheet">
           <string notr="true">#tabWidget{
-	background-color: #fff
+   font:  10pt &quot;Segoe UI&quot;;
 }
 
 QTabBar::close-button{
