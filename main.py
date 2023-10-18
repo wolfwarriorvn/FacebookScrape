@@ -20,12 +20,12 @@ from views.tumbr import Tumbr
 from views.youtube import Youtube
 from database import Database
 from setting import main_setting
-
+from common import VERSION
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, model, main_controller):
         super(MainWindow, self).__init__()
         self.setupUi(self)
-        self.setWindowTitle("Kungfu Seeding")
+        self.setWindowTitle(f'Kungfu {VERSION}')
         self.setWindowIcon(QIcon(":/icon/views/icon/panda (1).png"))
         self._model = model
         self._main_controller = main_controller
@@ -112,6 +112,8 @@ class App(QApplication):
         self.main_ctrl = MainController(self.model)
         self.main_view = MainWindow(self.model, self.main_ctrl)
         self.main_view.showMaximized()
+        self.setApplicationVersion("1.0")
+        print(self.applicationVersion())
 
 
 

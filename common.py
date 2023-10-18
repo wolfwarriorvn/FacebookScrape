@@ -1,5 +1,6 @@
 import glob
 
+VERSION = 'v18.10.23'
 
 class BaseSetting():
     def __init__(self, idle_from, idle_to, threads) -> None:

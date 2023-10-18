@@ -27,6 +27,7 @@ class Ui_widget_table(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.tableView = QTableView(widget_table)
         self.tableView.setObjectName(u"tableView")
+        self.tableView.setFocusPolicy(Qt.NoFocus)
         self.tableView.setStyleSheet(u"QTableView {\n"
 "font: 10pt \"Segoe UI\";\n"
 "background-color: white;\n"
@@ -51,6 +52,7 @@ class Ui_widget_table(object):
 "QTableView::item:selected{\n"
 "	border: none;\n"
 "    background-color:  #0081A7;\n"
+"	color: white;\n"
 "}\n"
 "\n"
 "\n"

@@ -16,6 +16,9 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTableView" name="tableView">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true">QTableView {
 font: 10pt &quot;Segoe UI&quot;;
@@ -41,6 +44,7 @@ QTableView::item {
 QTableView::item:selected{
 	border: none;
     background-color:  #0081A7;
+	color: white;
 }
 
 
