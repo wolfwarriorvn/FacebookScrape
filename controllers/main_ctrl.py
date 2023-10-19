@@ -30,7 +30,7 @@ class MySignals(QObject):
     wrong_user_input = Signal()
     table_get_completed = Signal(object)
     add_user_completed = Signal()
-    add_user_error = Signal()
+    add_user_error = Signal(object)
 
     # Pages Manage
     get_accounts = Signal()
@@ -95,14 +95,15 @@ class MainController(QObject):
                 if acc_format in AccountFormat.UID_PASS:
                     uid, pwd = acc.split('|')
                     self._model.add_account_info(uid, pwd)
+                    self.signals.add_user_completed.emit()
 
                 elif acc_format in AccountFormat.CUSTOM1:
-                    uid, pwd, code2fa, email, pass_email, cookie, token, birthday, _ = acc.split('|')
+                    uid, pwd, code2fa, email, pass_email, cookie, token, birthday, *stuff = acc.split('|')
                     self._model.add_account_info(uid, pwd, category, code2fa, cookie, token,email, pass_email , birthday)
                     self.signals.add_user_completed.emit()
 
                 elif acc_format in AccountFormat.CUSTOM2:
-                    uid, pwd, code2fa, cookie, token,email, pass_email , birthday, _ = acc.split('|')
+                    uid, pwd, code2fa, cookie, token,email, pass_email , birthday, *stuff = acc.split('|')
                     self._model.add_account_info(uid, pwd, category, code2fa, cookie, token,email, pass_email , birthday)
                     self.signals.add_user_completed.emit()
 
@@ -111,8 +112,8 @@ class MainController(QObject):
                     self.signals.add_user_error.emit()
 
         except Exception as e:
-            print("Error is {}".format(e))
-            self.signals.add_user_error.emit()
+            # print("Error is {}".format(e))
+            self.signals.add_user_error.emit(e)
 
     def on_get_free_group(self, type_groups):
         free_group_links = self._model.get_group_free(type_groups)

@@ -57,7 +57,7 @@ class Account(QWidget, Ui_Form):
         #     self.on_reload_table_view)
         self._controller.signals.add_user_completed.connect(
             self.on_add_user_completed)
-        # self._controller.signals.add_user_error.connect(self.on_add_user_error)
+        self._controller.signals.add_user_error.connect(self.on_add_user_error)
         self._controller.signals.save_account_completed.connect(self.on_save_account_completed)
 
         # self._controller.signals.table_on_load.emit()
@@ -118,7 +118,7 @@ class Account(QWidget, Ui_Form):
         
     def on_add_user_completed(self):
         self.refresh()
-        self.add_dialog.close()
+        # self.add_dialog.close()
 
     def add_new_accounts(self):
         self.add_dialog = AddAccount(self._controller)
@@ -228,10 +228,10 @@ class Account(QWidget, Ui_Form):
         self._controller.signals.table_on_load.emit()
         self.edit_dialog.close()
 
-    Slot()
-    def on_add_user_error(self):
-        QtWidgets.QMessageBox.critical(None, "Cannot open database",
-                                       "Click Cancel to exit.", QtWidgets.QMessageBox.Cancel)
+    Slot(object)
+    def on_add_user_error(self, err_msg):
+        QtWidgets.QMessageBox.critical(None, "Error",
+                                       str(err_msg), QtWidgets.QMessageBox.Cancel)
 
 
     def refresh(self):
