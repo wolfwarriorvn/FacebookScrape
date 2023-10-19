@@ -3,7 +3,8 @@ from controllers.worker.base_worker import BaseWorker
 from time import sleep
 from random import randrange
 import random
-from common import PostSetting
+from common.payload import PostSetting
+
 
 class PostGroupWorker(BaseWorker):
     def __init__(self, group_links, settings: PostSetting, page_id, semaphore_id, account) -> None:

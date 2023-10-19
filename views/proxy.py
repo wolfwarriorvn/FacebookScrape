@@ -5,7 +5,7 @@ from PySide6.QtSql import QSqlTableModel
 from views.ui.proxy_ui import Ui_Form
 
 import parse
-from extension import proxies
+from common.extension import proxies
 class Proxy(QWidget, Ui_Form):
     def __init__(self, controller):
         super(Proxy, self).__init__()

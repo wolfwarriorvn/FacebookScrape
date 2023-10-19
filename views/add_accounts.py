@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Signal, QObject
 from views.ui.addmenu_ui import Ui_Addaccount
 from views.connection import Connection
-from common import AccountFormat
+from common.payload import AccountFormat
 
 
 class AddAccount(QWidget, Ui_Addaccount):

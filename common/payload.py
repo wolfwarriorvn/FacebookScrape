@@ -1,7 +1,3 @@
-import glob
-
-VERSION = 'v18.10.23'
-
 class BaseSetting():
     def __init__(self, idle_from, idle_to, threads) -> None:
         self.idle_from = idle_from
@@ -44,3 +40,4 @@ class AccountFormat:
     CUSTOM1 = "Uid | Pass | 2FA | Email | Pass Mail | Cookie | Token | Birthday"
     CUSTOM2 = "UID | Pass | 2FA | Cookie | Token | Email | Pass Mail | Birthday"
     COOKIE = "Cookie"
+

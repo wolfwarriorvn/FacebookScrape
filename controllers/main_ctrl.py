@@ -5,7 +5,7 @@ from PySide6.QtCore import QThreadPool, QSemaphore
 from model.model import Model
 
 from controllers.worker import *
-from common import *
+from common.payload import *
 
 import uuid
 import random

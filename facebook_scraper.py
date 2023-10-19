@@ -4,23 +4,12 @@ from selenium.common.exceptions import (
     NoSuchWindowException,
     WebDriverException
 )
-from constants import (
-    CHROME_DRIVER,
-    CHROME_PROFILES,
-    FB_XPATH_GROUP_LIST,
-    FB_XPATH_GROUP_LINKS,
-    PROXY_PATH
-
-)
 import os
 import re
-from enum import Enum
 from time import sleep
 import pyotp
-
 import utils
 from utils import LogLevel, log
-
 from random import randrange
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -32,6 +21,8 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from subprocess import CREATE_NO_WINDOW
 from setting import main_setting
+from common.fbxpath import FbXpath
+
 
 class NoLoginException(Exception):
     """ Thrown when do not login facebook or be logged out """
@@ -41,9 +32,10 @@ class CheckpointException(Exception):
     """Thrown when the facebook account be checkpointed with 282 or 595 link"""
 
 
-class GetElement(Enum):
+class GetElement():
     ONE = 0
     MORE = 1
+
 
 class GroupInfo():
     def __init__(self, name, link, category=None, members=None, details=None):
@@ -52,7 +44,6 @@ class GroupInfo():
         self.category = category
         self.members = members
         self.details = details
-
 
 class FacebookScraper:
     def __init__(self, uid, password, proxy_extension=None, cookie=None):
@@ -519,7 +510,7 @@ class FacebookScraper:
         self.open_url(
             'https://www.facebook.com/groups/joins/?nav_source=tab&ordering=viewer_added')
 
-        group_list = self.driver.find_elements(By.XPATH, FB_XPATH_GROUP_LIST)
+        group_list = self.driver.find_elements(By.XPATH, FbXpath.GROUP_LIST)
 
         if len(group_list) == 0:
             log(LogLevel.ERROR, "FB_XPATH_SCROLLBAR is not found")
@@ -528,11 +519,11 @@ class FacebookScraper:
 
         self.scroll_down_byelement(joined_group_list)
 
-        if len(joined_group_list.find_elements(By.XPATH, FB_XPATH_GROUP_LINKS)) == 0:
-            log(LogLevel.ERROR, "FB_XPATH_GROUP_LINKS is not found")
+        if len(joined_group_list.find_elements(By.XPATH, FbXpath.GROUP_LINKS)) == 0:
+            log(LogLevel.ERROR, "FbXpath.GROUP_LINKS is not found")
             return groups
         joined_group_links = joined_group_list.find_elements(
-            By.XPATH, FB_XPATH_GROUP_LINKS)
+            By.XPATH, FbXpath.GROUP_LINKS)
 
         for joined_group_link in joined_group_links:
             link = joined_group_link.get_attribute('href')

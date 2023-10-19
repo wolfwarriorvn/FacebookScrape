@@ -7,13 +7,13 @@ import glob
 from PySide6.QtSql import QSqlTableModel
 from views.ui.dialog.post_ui import Ui_Post
 from views.connection import Connection
-from common import PostSetting
+from common.payload import PostSetting
 
 
 from views.ui.dialog.dialog_scan_posted_history_ui import Ui_DialogScanPost
 from views.ui.dialog.seeding_ui import Ui_Seeding
 from views.connection import Connection
-from common import SeedingSetting
+from common.payload import SeedingSetting
 
 class ScanPostDialog(QWidget, Ui_DialogScanPost):
     trigger = Signal()

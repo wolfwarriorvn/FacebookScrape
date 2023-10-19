@@ -16,11 +16,11 @@ from views.proxy import Proxy
 from views.group_view import GroupView
 from views.group_join import GroupJoin
 from views.group_scan import GroupScan
-from views.tumbr import Tumbr
-from views.youtube import Youtube
-from database import Database
-from setting import main_setting
-from common import VERSION
+from common.database import Database
+# from setting import main_setting
+
+VERSION = 'v18.10.23'
+
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, model, main_controller):
         super(MainWindow, self).__init__()
@@ -36,8 +36,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.btn_account: Account(self._main_controller),
             self.btn_proxy: Proxy(self._main_controller),
             self.btn_group_view: GroupView(self._main_controller),
-            self.btn_youtube: Youtube(),
-            self.btn_tumb: Tumbr()
         }
         "Show home window"
         self.show_home_window()
@@ -48,8 +46,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btn_account.clicked.connect(self.show_selected_window)
         self.btn_proxy.clicked.connect(self.show_selected_window)
         self.btn_group_view.clicked.connect(self.show_selected_window)
-        self.btn_tumb.clicked.connect(self.show_selected_window)
-        self.btn_youtube.clicked.connect(self.show_selected_window)
 
     def show_home_window(self):
         result = self.open_tab_flag(self.btn_dashboard.text())
@@ -112,8 +108,7 @@ class App(QApplication):
         self.main_ctrl = MainController(self.model)
         self.main_view = MainWindow(self.model, self.main_ctrl)
         self.main_view.showMaximized()
-        self.setApplicationVersion("1.0")
-        print(self.applicationVersion())
+        # self.setApplicationVersion("1.0")
 
 
 

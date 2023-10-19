@@ -1,5 +1,6 @@
 import zipfile
-from constants import PROXY_PATH
+from setting import main_setting
+
 
 def proxies(username, password, endpoint, port, extension):
     manifest_json = """
@@ -56,7 +57,7 @@ def proxies(username, password, endpoint, port, extension):
 
     extension_zip = extension + '_extension.zip'
 
-    with zipfile.ZipFile(PROXY_PATH + extension_zip, 'w') as zp:
+    with zipfile.ZipFile(main_setting.proxy + extension_zip, 'w') as zp:
         zp.writestr("manifest.json", manifest_json)
         zp.writestr("background.js", background_js)
 

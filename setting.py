@@ -2,7 +2,7 @@ from PySide6.QtCore import QStandardPaths, QSettings
 import os
 import re
 import glob
-from constants import CHROME_PROFILES
+
 class Setting:
     def __init__(self) -> None:
         self.app_name = "KungFB"
