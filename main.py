@@ -19,7 +19,7 @@ from views.group_scan import GroupScan
 from common.database import Database
 # from setting import main_setting
 
-VERSION = 'v18.10.23'
+VERSION = '2023-10-25'
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, model, main_controller):
