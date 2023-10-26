@@ -51,7 +51,8 @@ class BaseWorker(QRunnable):
         status = False
         try:
             login_mutex.lock()
-            self.fb_scraper.open_url('https://www.facebook.com/')
+            # self.fb_scraper.open_url('https://www.facebook.com/')
+            self.fb_scraper.check_live()
             
             self.signals.update_message.emit(self._uid, 'Already Logging!')
             status = True

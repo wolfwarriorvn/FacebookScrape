@@ -49,6 +49,8 @@ class FacebookScraper:
     def __init__(self, uid, password, proxy_extension=None, cookie=None):
         self.uid = uid
         self.password = password
+        self.proxy_extension = proxy_extension
+        self.cookie = cookie
         options = webdriver.ChromeOptions()
         options.add_argument(
             r'--user-data-dir=' + main_setting.chrome_profiles + fr'{self.uid}')
@@ -77,19 +79,19 @@ class FacebookScraper:
         # self.driver.minimize_window()
         # self.driver.implicitly_wait(randrange(2, 5))
 
-        #auto load cookie
-        if cookie:
-            self.add_cookies(cookies=cookie)
 
     def maximize(self):
         self.driver.maximize_window()
 
     def add_cookies(self, cookies):
         try:
-            self.driver.get('https://www.facebook.com/')
-            for cokie in cookies.split('; '):
-                name, value = cokie.split('=')
-                self.driver.add_cookie({"name": name, "value": value})
+            # self.driver.get('https://www.facebook.com/')
+            for cokie in cookies.replace(' ', '').split(';'):
+                print("cookie is: ", cokie)
+                if '=' in cokie:
+                    name, value = cokie.split('=')
+                    print(name, value)
+                    self.driver.add_cookie({"name": name, "value": value})
             self.driver.refresh()
         except Exception as e:
             print(e)
@@ -170,6 +172,18 @@ class FacebookScraper:
         except:
             isClosed = True
         return isClosed
+    
+    def check_live(self):
+        self.driver.get('https://www.facebook.com/')
+        if self.cookie:
+            self.add_cookies(cookies=self.cookie)
+
+        self.wait_fully_load()
+
+        if not self.is_user_logged_in():
+            raise NoLoginException()
+        if self.is_checkpointed():
+            raise CheckpointException() 
 
     def open_url(self, url):
         self.driver.get(url)
