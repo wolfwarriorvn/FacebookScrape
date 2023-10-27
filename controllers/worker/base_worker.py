@@ -36,6 +36,8 @@ class BaseWorker(QRunnable):
         self._uid = accounts.uid
         self._pw = accounts.password
         self._proxy = accounts.proxy
+        self.email = accounts.email
+        self.pass_email = accounts.pass_email
         self._secret_2fa = accounts.secret_2fa
         self.cookie = accounts.cookie
         self.signals = Signals()

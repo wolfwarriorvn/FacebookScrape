@@ -141,17 +141,22 @@ class Account(QWidget, Ui_Form):
 
         menu = QMenu()
         # menu.setStyleSheet
+        menu.setStyleSheet('font: 13px;')
         open_chrome = QtGui.QAction("Open Chrome", self)
         login_chrome = QtGui.QAction("Login Chrome", self)
+        checkpoint_956 = QtGui.QAction("Checkpoint 956", self)
         # edit_menu = QtGui.QAction("Edit", self)
         table_delete_action = QtGui.QAction("Delete: {}".format(len(self.seleted_id)), self)
 
         menu.addAction(open_chrome)
         menu.addAction(login_chrome)
+        checkpoint = menu.addMenu('Checkpoint')
+        checkpoint.addAction(checkpoint_956)
         # menu.addAction(edit_menu)
         menu.addAction(table_delete_action)
         open_chrome.triggered.connect(lambda: self.table_open_chrome(position))
         login_chrome.triggered.connect(self.on_login_chrome)
+        checkpoint_956.triggered.connect(self.on_checkpoint_956)
         # edit_menu.triggered.connect(self.on_open_edit_dialog)
         table_delete_action.triggered.connect(self.delete_selected_row)
         # table_delete_action.triggered.connect(lambda: self._controller.delete_account(
@@ -169,6 +174,13 @@ class Account(QWidget, Ui_Form):
         #         print('Row %d is selected' % index.row())
         # elif action == openAction:
         #     print('Quyt')
+
+    def on_checkpoint_956(self):
+        selected_indexs = self.table_accounts.ui.tableView.selectionModel().selectedRows(1) 
+        selected_ids = [self.table_accounts.ui.tableView.model().data(i) for i in selected_indexs]
+        print("Checkpoint 956")
+        self._controller.signals.checkpoint_956.emit(selected_ids)
+
     def delete_selected_row(self):
         sql_query = "DELETE FROM accounts WHERE ID IN ({})".format(",".join([str(id) for id in self.seleted_id]))
         self.model.setQuery(sql_query)

@@ -6,6 +6,7 @@ from selenium.common.exceptions import (
 )
 import os
 import re
+import time
 from time import sleep
 import pyotp
 import utils
@@ -29,7 +30,7 @@ class NoLoginException(Exception):
 
 
 class CheckpointException(Exception):
-    """Thrown when the facebook account be checkpointed with 282 or 595 link"""
+    """Thrown when the facebook account be checkpointed with 282 or 956 link"""
 
 
 class GetElement():
@@ -87,10 +88,8 @@ class FacebookScraper:
         try:
             # self.driver.get('https://www.facebook.com/')
             for cokie in cookies.replace(' ', '').split(';'):
-                print("cookie is: ", cokie)
                 if '=' in cokie:
                     name, value = cokie.split('=')
-                    print(name, value)
                     self.driver.add_cookie({"name": name, "value": value})
             self.driver.refresh()
         except Exception as e:
@@ -278,12 +277,14 @@ class FacebookScraper:
             else:
                 log(LogLevel.ERROR, xpath_name + " is not found")
                 return None
-        except Exception as e:
-            log(LogLevel.ERROR, xpath_name + " was Exception " + str(e))
-            return None
+            
         except TimeoutException as ex:
             log(LogLevel.ERROR, xpath_name + " was timeout " + str(ex))
             return None
+        except Exception as e:
+            log(LogLevel.ERROR, xpath_name + " was Exception " + str(e))
+            return None
+
 
     def get_posted_link(self, group_url):
         posted_link = None
@@ -552,3 +553,78 @@ class FacebookScraper:
                     groups.append(GroupInfo(group_name, link))
 
         return groups
+    
+    """
+    Follow these step to overcome checkpoint 956
+    1. //div[@aria-label='Start security steps']
+
+    2. //div[@aria-label='Next']
+
+    3. //*[contains(text(),'Get a code by email')]
+
+    4. //div[@aria-label='Get code']
+
+    5. //input[@type='text']
+
+    6. //div[@aria-label='Submit']
+    """
+    def click_xpath(self, xpath):
+        # TODO: raise exception in check_xpath
+        btn_element = self.check_xpath(self.driver, xpath,
+                                              xpath, GetElement.ONE)
+        btn_element.click()
+        sleep(randrange(1, 3))
+
+    def input_xpath(self, xpath, input):
+        # TODO: raise exception in check_xpath
+        input_element = self.check_xpath(self.driver, xpath,
+                                              xpath, GetElement.ONE)
+        input_element.send_keys(input)
+        sleep(randrange(1, 3))
+
+    def checkpoint_956(self, mail_reader):
+
+        STEPS = ["//div[@aria-label='Start security steps']",
+                 "//div[@aria-label='Next']",
+                 "//*[contains(text(),'Get a code by email')]",
+                 "//div[@aria-label='Get code']",
+                 "//input[@type='text']",
+                 "//div[@aria-label='Submit']",
+                 "//div[@aria-label='Next']",
+                 "//div[@aria-label='Next']",
+                 "//div[@aria-label='Next']",
+                 "//*[@aria-label='Back to Facebook']"]
+
+        self.click_xpath(STEPS[0])
+        self.click_xpath(STEPS[1])
+        self.click_xpath(STEPS[2])
+        self.click_xpath(STEPS[3])
+
+        start = time.time()
+        TIMEOUT_S = 60
+        fb_code = ''
+        while True:
+            print("đang đợi email: --->")
+            messages = mail_reader.get_email()
+            for msg in messages:
+                result = re.search('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]', msg)
+                if result:
+                    fb_code = result.group(0)
+                    break
+
+            if fb_code:
+                break
+            if (time.time() - start) > TIMEOUT_S:
+                #TODO: raise exception timeout
+                print("Timeout rồi")
+                return
+            else:
+                sleep(2)
+        print('fb_code: ', fb_code)
+
+        self.input_xpath(STEPS[4], fb_code)
+        self.click_xpath(STEPS[5])
+        self.click_xpath(STEPS[6])
+        self.click_xpath(STEPS[7])
+        self.click_xpath(STEPS[8])
+        self.click_xpath(STEPS[9])

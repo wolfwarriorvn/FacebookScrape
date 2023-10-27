@@ -48,6 +48,8 @@ class MySignals(QObject):
     outof_free_groups = Signal(int)
 
     #login
+    #checkpoint 
+    checkpoint_956 = Signal(object)
 
 class DbSignals(QObject):
     # Proxy table
@@ -72,6 +74,7 @@ class MainController(QObject):
         self.signals.table_on_load.connect(self.update_table_view)
 
         self.signals.get_accounts.connect(self.on_get_accounts)
+        self.signals.checkpoint_956.connect(self.init_thread_checkpoint_956)
         self.signals.create_table_db.connect(self.create_table)
         self.signals.check_approval_post.connect(
             self.init_thread_check_approval_post)
@@ -170,6 +173,23 @@ class MainController(QObject):
         except Exception as e:
             print("post_completed error", e)
             pass
+
+    def init_thread_checkpoint_956(self, list_uids):
+        sema_id = self.genarate_semaphore(1)
+        for uid in list_uids:
+            try:
+                account = self._model.get_account_info(uid)
+
+                worker = Checkpoint956(sema_id,account)
+                worker.signals.update_status.connect(
+                    self.update_status_dashboard)
+                worker.signals.update_message.connect(
+                    self.update_mesage_dashboard)
+                worker.setAutoDelete(True)
+                self.pool.start(worker)
+
+            except Exception as ex:
+                self.update_mesage_dashboard(uid, f'{type(ex).__name__}: {ex}')
 
     def init_thread_seeding_action(self, uids, setting: SeedingSetting):
         sema_id = self.genarate_semaphore(setting.threads)

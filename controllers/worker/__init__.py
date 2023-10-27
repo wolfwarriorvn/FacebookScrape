@@ -7,3 +7,4 @@ from controllers.worker.scan_joined_group_worker import ScanJoinedGroupWorker
 from controllers.worker.check_allow_page_worker import CheckGroupAllowPage
 from controllers.worker.post_group_worker import PostGroupWorker
 from controllers.worker.login_facebook_worker import LoginFacebookWorker
+from controllers.worker.checkpoint_956 import Checkpoint956

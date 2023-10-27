@@ -127,8 +127,8 @@ class SqlUtils:
 
     def get_accounts(self, id):
         query = QtSql.QSqlQuery()
-        UserID, Password, ProxyID, _2FA, Cookie = range(5)
-        sql_query = f"""SELECT UserID, Password, ProxyID, Code2FA, Cookie  FROM accounts WHERE UserID={id}"""
+        UserID, Password, ProxyID, _2FA, Cookie, Email, PassEmail = range(7)
+        sql_query = f"""SELECT UserID, Password, ProxyID, Code2FA, Cookie, Email, PassEmail FROM accounts WHERE UserID={id}"""
         query.prepare(sql_query)
         query.exec()
         while query.next():
@@ -136,7 +136,9 @@ class SqlUtils:
                         query.value(Password), 
                         query.value(ProxyID),
                         query.value(_2FA),
-                        query.value(Cookie)]
+                        query.value(Cookie),
+                        query.value(Email),
+                        query.value(PassEmail)]
 
         if query.lastError().isValid():
             raise Exception(query.lastError().text(), sql_query)
