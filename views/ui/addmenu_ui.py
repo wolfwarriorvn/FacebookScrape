@@ -180,8 +180,6 @@ class Ui_Addaccount(object):
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">100091593173069|ChiLinhen4|2IIJUI3GEJUJA24ZULR3NVOIRMSAMQKT|astoncilekt@outlook.com.br|qKk7dK14|c_user=100091593173069;xs=7:_a4pyg6FCRHu0Q:2:1695027669:-1:7761;fr=0wW7OWdM16BKq7vJu.AWVBY_ZdOvDkWcXj9YYomHk93mM.BlCBHU.ps.AAA.0.0.BlCBHU.AWW818G8MRc;datr=yBEIZYG5WYRdT2I-yvHiXEH0;|EAAAAUaZA8jlABOZCZBjKUVEvG4Wm4SBok1OJUlalnSp2hcUORtFW4ZBj8szzCWBy5jyK9fPwtltMEoaEWiStUFNQTCGG9FHdUemtlFNHcSr4Jv62ml5B0pZCPZBK6"
-                        "iWRhpHxwhe9Bu8pFQ6cgMV9MZCzr4F3irgQ6Y0M4EAZAbXwBZA3KGtuDkVZCknmwH4PeZAuSuz|08/13/1979|</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.label.setText(QCoreApplication.translate("Addaccount", u"Ph\u00e2n lo\u1ea1i t\u00e0i kho\u1ea3n:", None))
         self.cb_category.setItemText(0, QCoreApplication.translate("Addaccount", u"New", None))

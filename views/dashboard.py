@@ -106,3 +106,5 @@ class DashBoard(QWidget, Ui_DashBoard):
         self.model.select()
         # self.table_accounts.proxy.setSourceModel(self.model)
         # self.tableView.setModel(self.table_accounts.proxy)
+        self.table_accounts.ui.tableView.setColumnWidth(1,120)
+        self.table_accounts.ui.tableView.setColumnWidth(2,120)

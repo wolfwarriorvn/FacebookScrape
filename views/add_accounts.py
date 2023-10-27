@@ -15,7 +15,7 @@ class AddAccount(QWidget, Ui_Addaccount):
         self.cb_acc_format.addItems([AccountFormat.UID_PASS, 
                                      AccountFormat.CUSTOM1,
                                      AccountFormat.CUSTOM2,
-                                     AccountFormat.COOKIE])
+                                     AccountFormat.DUYAN_5K])
 
         # self.acc_db = Connection()
         self.btn_save.clicked.connect(self.on_add_account)

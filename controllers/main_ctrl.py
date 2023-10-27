@@ -110,6 +110,10 @@ class MainController(QObject):
                     self._model.add_account_info(uid, pwd, category, code2fa, cookie, token,email, pass_email , birthday)
                     self.signals.add_user_completed.emit()
 
+                elif acc_format in AccountFormat.DUYAN_5K:
+                    uid, pwd, code2fa, email, pass_email, _, birthday, cookie, token, *stuff = acc.split('|')
+                    self._model.add_account_info(uid, pwd, category, code2fa, cookie, token,email, pass_email , birthday)
+                    self.signals.add_user_completed.emit()
                 else:
                     print("Input khong dung format")
                     self.signals.add_user_error.emit()

@@ -39,5 +39,6 @@ class AccountFormat:
     UID_PASS = "Uid | Pass"
     CUSTOM1 = "Uid | Pass | 2FA | Email | Pass Mail | Cookie | Token | Birthday"
     CUSTOM2 = "UID | Pass | 2FA | Cookie | Token | Email | Pass Mail | Birthday"
-    COOKIE = "Cookie"
+    DUYAN_5K = "DUYAN_5K"
+    
 
