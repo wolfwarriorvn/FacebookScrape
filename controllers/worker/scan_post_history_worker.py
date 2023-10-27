@@ -12,13 +12,20 @@ class ScanPostHistoryWorker(BaseWorker):
 
     @Slot()
     def run(self):
-        if not self.take_semaphore_facebook():
-            return
-        if not self.check_live_facebook(): return
-        post_links = self.fb_scraper.get_post_history(self.active_id, self.loop_scan)
+        try:
+            if not self.take_semaphore_facebook():
+                return
+            if not self.check_live_facebook(): return
+            post_links = self.fb_scraper.get_post_history(self.active_id, self.loop_scan)
 
-        for post_link in post_links:
-            group_link = post_link[0:48]
-            self.signals.scan_post_history.emit(self.active_id, group_link, post_link, 'Pending')
+            for post_link in post_links:
+                group_link = post_link[0:48]
+                self.signals.scan_post_history.emit(self.active_id, group_link, post_link, 'Pending')
 
-        self.signals.update_message.emit(self._uid, 'Scan post history completed!!!')
+            self.signals.update_message.emit(self._uid, 'Scan post history completed!!!')
+            self.signals.update_status.emit(self._uid, 'Free')
+
+        except Exception as ex:
+            self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: {ex}')  
+        finally:
+            self.exit()

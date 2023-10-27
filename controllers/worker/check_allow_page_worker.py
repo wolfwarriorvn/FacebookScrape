@@ -11,13 +11,21 @@ class CheckGroupAllowPage(BaseWorker):
 
     @Slot()
     def run(self):
-        if not self.take_semaphore_facebook():
-            return
-        if not self.check_live_facebook():
-            return
-        
-        for group_url in self.group_links:
-            if self.fb_scraper.check_group_allow_post(group_url):
-                self.signals.allow_page_group.emit(group_url, 'Page')
-            else:
-                self.signals.allow_page_group.emit(group_url, 'Personal')  
+        try:
+            if not self.take_semaphore_facebook():
+                return
+            if not self.check_live_facebook():
+                return
+            
+            for group_url in self.group_links:
+                if self.fb_scraper.check_group_allow_post(group_url):
+                    self.signals.allow_page_group.emit(group_url, 'Page')
+                else:
+                    self.signals.allow_page_group.emit(group_url, 'Personal')
+            
+            self.signals.update_status.emit(self._uid, 'Free')
+
+        except Exception as ex:
+            self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: {ex}')  
+        finally:
+            self.exit()

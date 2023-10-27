@@ -9,18 +9,27 @@ class Checkpoint956(BaseWorker):
 
     @Slot()
     def run(self):
-        if not self.take_semaphore_facebook(): return
+        try:
+            if not self.take_semaphore_facebook(): 
+                return
 
-        if not self.check_live_facebook():
-            pass
+            mail = MailReader(self.email, self.pass_email)
+            mail.read_all()
+            self.fb_scraper.checkpoint_956(mail)
 
-        mail = MailReader(self.email, self.pass_email)
-        mail.read_all()
-        self.fb_scraper.checkpoint_956(mail)
+            if self.check_live_facebook():
+                self.signals.update_status.emit(self._uid, 'Free')
+                self.signals.update_status.emit(self._uid, 'Vượt checkpoint thành công')
+            else:
+                # self.signals.update_status.emit(self._uid, 'Free')
+                self.signals.update_status.emit(self._uid, 'Vượt checkpoint không được')
 
-        if not self.check_live_facebook():
-            pass
-        while True:
-            if self.fb_scraper.is_brower_closed():
-                break
-            sleep(1)
+            # while True:
+            #     if self.fb_scraper.is_brower_closed():
+            #         break
+            #     sleep(1)
+            
+        except Exception as ex:
+            self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: {ex}')  
+        finally:
+            self.exit()

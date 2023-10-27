@@ -12,18 +12,24 @@ class SeedingWorker(BaseWorker):
 
     @Slot()
     def run(self):
-        if not self.take_semaphore_facebook():
-            return
-        if not self.check_live_facebook(): return
+        try:
+            if not self.take_semaphore_facebook():
+                return
+            if not self.check_live_facebook(): return
 
-        for href in self.available_links:
-            if self.settings.like:
-                if self.fb_scraper.like_url_posted(href):
-                    self.signals.seeding_status.emit(self._uid, href, 'Liked')
-            if self.settings.comment:
-                pass
+            for href in self.available_links:
+                if self.settings.like:
+                    if self.fb_scraper.like_url_posted(href):
+                        self.signals.seeding_status.emit(self._uid, href, 'Liked')
+                if self.settings.comment:
+                    pass
 
-            sleep(randrange(self.settings.idle_from, self.settings.idle_to))
+                sleep(randrange(self.settings.idle_from, self.settings.idle_to))
 
-        self.signals.update_message.emit(self._uid, 'Seeding completed!!!')
-        
+            self.signals.update_message.emit(self._uid, 'Seeding completed!!!')
+            self.signals.update_status.emit(self._uid, 'Free')
+
+        except Exception as ex:
+            self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: {ex}')  
+        finally:
+            self.exit()

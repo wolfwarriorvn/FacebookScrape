@@ -12,9 +12,17 @@ class ScanGroupKeywordWorker(BaseWorker):
 
     @Slot()
     def run(self):
-        if not self.take_semaphore_facebook():
-            return
-        if not self.check_live_facebook(): return
-        groups = self.fb_scraper.scan_group_by_keyword(self.keyword, self.loop_scan)
-        if groups:
-            self.signals.scan_keyword_completed.emit(self._uid, groups)
+        try:
+            if not self.take_semaphore_facebook():
+                return
+            if not self.check_live_facebook(): return
+            groups = self.fb_scraper.scan_group_by_keyword(self.keyword, self.loop_scan)
+            if groups:
+                self.signals.scan_keyword_completed.emit(self._uid, groups)
+
+            self.signals.update_status.emit(self._uid, 'Free')
+
+        except Exception as ex:
+            self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: {ex}')  
+        finally:
+            self.exit()

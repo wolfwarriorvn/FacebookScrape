@@ -14,6 +14,7 @@ login_mutex = QMutex()
 post_mutex = QMutex()
 open_chrom_sem = QSemaphore(2)
 
+
 class Signals(QObject):
     scan_complted = Signal(str, object)
     scan_keyword_completed = Signal(str, object)
@@ -49,18 +50,22 @@ class BaseWorker(QRunnable):
         except Exception as e:
             return True
         return False
+    
     def check_live_facebook(self):
         status = False
         try:
             login_mutex.lock()
             # self.fb_scraper.open_url('https://www.facebook.com/')
             self.fb_scraper.check_live()
-            
+            self.signals.update_status.emit(self._uid, 'Busy')
             self.signals.update_message.emit(self._uid, 'Already Logging!')
+            
             status = True
         except NoLoginException:
+            self.signals.update_status.emit(self._uid, 'Unlogin')
             self.signals.update_message.emit(self._uid, 'Login facebook again!')
-        except CheckpointException:
+        except CheckpointException as ex:
+            self.signals.update_status.emit(self._uid, f'{ex}')
             self.signals.update_message.emit(self._uid, 'Checkpoint!')
         except Exception as ex:
             self.signals.update_message.emit(self._uid, f'{type(ex).__name__}: {ex}!')
@@ -68,11 +73,10 @@ class BaseWorker(QRunnable):
             login_mutex.unlock()
 
         return status
+    
     def take_semaphore_facebook(self):
         status = False
-        self.signals.update_status.emit(self._uid, "Waiting")
         semaphore[self.sema_id].acquire()
-        self.signals.update_status.emit(self._uid, 'Opening')
         
         try:
             chrome_mutex.lock()
@@ -85,8 +89,14 @@ class BaseWorker(QRunnable):
         finally:
             chrome_mutex.unlock()
         return status
-    def __del__(self):
-        self.signals.update_status.emit(self._uid, 'Closed')
+    
+    def exit(self):
+        # self.signals.update_status.emit(self._uid, 'Free')
         semaphore[self.sema_id].release()
         if self.fb_scraper:
-            self.fb_scraper.close()
+            self.fb_scraper.close()   
+    # def __del__(self):
+    #     self.signals.update_status.emit(self._uid, 'Free')
+    #     semaphore[self.sema_id].release()
+    #     if self.fb_scraper:
+    #         self.fb_scraper.close()

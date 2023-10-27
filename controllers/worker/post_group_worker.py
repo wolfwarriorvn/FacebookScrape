@@ -15,21 +15,29 @@ class PostGroupWorker(BaseWorker):
 
     @Slot()
     def run(self):
-        if not self.take_semaphore_facebook():
-            return
-        if not self.check_live_facebook(): return
-        
-        for index, group_link in enumerate(self.group_links, 1):
-            content = random.choices(self.settings.contents)
-            photo = random.sample(sorted(self.settings.photos), self.settings.photo_count)
+        try:
+            if not self.take_semaphore_facebook():
+                return
+            if not self.check_live_facebook(): return
+            
+            for index, group_link in enumerate(self.group_links, 1):
+                content = random.choices(self.settings.contents)
+                photo = random.sample(sorted(self.settings.photos), self.settings.photo_count)
 
-            print(photo, content)
+                print(photo, content)
 
-            status = self.fb_scraper.post_group(group_link, content, photo)
+                status = self.fb_scraper.post_group(group_link, content, photo)
 
-            status = 'Pending' if status else 'Error'
-            self.signals.posted_group_completed.emit( self.page_id, group_link, status)
+                status = 'Pending' if status else 'Error'
+                self.signals.posted_group_completed.emit( self.page_id, group_link, status)
 
-            self.signals.update_message.emit(self._uid, f'Post Group {index:02}/{len(self.group_links):02} - {status}')
-            if status:
-                sleep(random.randint(self.settings.idle_from, self.settings.threads))
+                self.signals.update_message.emit(self._uid, f'Post Group {index:02}/{len(self.group_links):02} - {status}')
+                if status:
+                    sleep(random.randint(self.settings.idle_from, self.settings.threads))
+
+            self.signals.update_status.emit(self._uid, 'Free')
+
+        except Exception as ex:
+            self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: {ex}')  
+        finally:
+            self.exit()

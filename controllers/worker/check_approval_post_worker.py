@@ -11,14 +11,22 @@ class CheckApprovalPost(BaseWorker):
 
     @Slot()
     def run(self):
-        if not self.take_semaphore_facebook():
-            return
-        if not self.check_live_facebook():
-            return
-        
-        for post in self.pending_posts:
-            is_approved = self.fb_scraper.check_approval_post(post)
-            if is_approved:
-                self.signals.approved_post.emit(post, 'Approved')
-            else:
-                self.signals.approved_post.emit(post, 'Pending')
+        try:
+            if not self.take_semaphore_facebook():
+                return
+            if not self.check_live_facebook():
+                return
+            
+            for post in self.pending_posts:
+                is_approved = self.fb_scraper.check_approval_post(post)
+                if is_approved:
+                    self.signals.approved_post.emit(post, 'Approved')
+                else:
+                    self.signals.approved_post.emit(post, 'Pending')
+
+            self.signals.update_status.emit(self._uid, 'Free')
+            
+        except Exception as ex:
+            self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: {ex}')  
+        finally:
+            self.exit()

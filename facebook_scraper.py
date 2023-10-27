@@ -181,19 +181,27 @@ class FacebookScraper:
 
         if not self.is_user_logged_in():
             raise NoLoginException()
-        if self.is_checkpointed():
-            raise CheckpointException() 
+        
+        if 'checkpoint/1501092823525282/' in self.driver.current_url:
+            raise CheckpointException('Checkpoint 282')
+        elif 'checkpoint/828281030927956/' in self.driver.current_url:
+            raise CheckpointException('Checkpoint 956')
+        elif 'checkpoint' in self.driver.current_url:
+            raise CheckpointException('Checkpoint')
 
     def open_url(self, url):
         self.driver.get(url)
         self.wait_fully_load()
 
-        # sleep(randrange(2, 5))
-
         if not self.is_user_logged_in():
             raise NoLoginException()
-        if self.is_checkpointed():
-            raise CheckpointException()
+        
+        if 'checkpoint/1501092823525282/' in self.driver.current_url:
+            raise CheckpointException('Checkpoint 282')
+        elif 'checkpoint/828281030927956/' in self.driver.current_url:
+            raise CheckpointException('Checkpoint 956')
+        elif 'checkpoint' in self.driver.current_url:
+            raise CheckpointException('Checkpoint')
 
     def wait_fully_load(self):
         WebDriverWait(self.driver, 20).until(
@@ -583,7 +591,6 @@ class FacebookScraper:
         sleep(randrange(1, 3))
 
     def checkpoint_956(self, mail_reader):
-
         STEPS = ["//div[@aria-label='Start security steps']",
                  "//div[@aria-label='Next']",
                  "//*[contains(text(),'Get a code by email')]",
