@@ -55,10 +55,10 @@ class PostDialog(QWidget, Ui_Post):
         photos = glob.glob( self.le_image_path.text() + '\*.jpg')
 
         if contents[0] == '':
-            print("Kiểm tra lại nội dung")
+            QtWidgets.QMessageBox.warning(None, "Kiểm tra lại nội dung.", QtWidgets.QMessageBox.Cancel)
             return
         if len(photos) < self.sp_image_count.value():
-            print("Kiểm ra lại thư mục hình")
+            QtWidgets.QMessageBox.warning(None, "Không có hình để đăng.", QtWidgets.QMessageBox.Cancel)
             return
         
         setting = PostSetting(
@@ -76,7 +76,5 @@ class PostDialog(QWidget, Ui_Post):
             self.sp_idle_to.value(),
             self.sp_threads.value()
         )
-        # print(', '.join("%s: %s" % item for item in vars(setting).items()))
         self._controller.signals.post_event.emit(self.selected_uid, setting)
-
         self.close()

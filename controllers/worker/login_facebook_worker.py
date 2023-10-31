@@ -1,5 +1,5 @@
 from PySide6.QtCore import Signal, Slot
-from controllers.worker.base_worker import BaseWorker
+from controllers.worker.base_worker import *
 from time import sleep
 from facebook_scraper import (
     NoLoginException,
@@ -34,7 +34,8 @@ class LoginFacebookWorker(BaseWorker):
                 self.signals.update_status.emit(self._uid, 'Free')
 
         except Exception as ex:
-            self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: {ex}')  
+            self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: Error')
+            logging.exception('')
         finally:
             self.exit()
 

@@ -25,8 +25,6 @@ class MailReader:
 
         # for each unseen email in the inbox
         for uid, message_data in self.server.fetch(messages, 'RFC822').items():
-            # print(uid, message_data)
-            # email_message = mailparser.parse_from_string(message_data[b'RFC822'])
             email_message = mailparser.parse_from_bytes(message_data[b'RFC822'])
             soup = BeautifulSoup(email_message.body, "html.parser")
             msg_body.append(soup.get_text())

@@ -163,22 +163,9 @@ class Account(QWidget, Ui_Form):
         #     self.tableView.model(), self.tableView.selectionModel().selectedRows()))
         action = menu.exec_(self.table_accounts.ui.tableView.mapToGlobal(position))
 
-        # if action == quitAction:
-        #     row = self.tableView.rowAt(position.y())
-        #     col = self.tableView.columnAt(position.x())
-        #     print(row,col)
-        #     index = self.tableView.model().index(row,col)
-        #     print(self.tableView.model().data(index))
-        #     indexes = self.tableView.selectionModel().selectedRows()
-        #     for index in sorted(indexes):
-        #         print('Row %d is selected' % index.row())
-        # elif action == openAction:
-        #     print('Quyt')
-
     def on_checkpoint_956(self):
         selected_indexs = self.table_accounts.ui.tableView.selectionModel().selectedRows(1) 
         selected_ids = [self.table_accounts.ui.tableView.model().data(i) for i in selected_indexs]
-        print("Checkpoint 956")
         self._controller.signals.checkpoint_956.emit(selected_ids)
 
     def delete_selected_row(self):
@@ -198,7 +185,6 @@ class Account(QWidget, Ui_Form):
         indexes = self.table_accounts.ui.tableView.selectionModel().selectedRows()
         # seleted_row_index = [index.row() for index in sorted(indexes)]
         idexs_sql = [self.table_accounts.ui.tableView.model().data(i) for i in sorted(indexes)]
-        print(idexs_sql)
         # for idx in indexes:
         #     record = self.model.record(idx.row())
         #     record.setValue("ProxyID","2")
@@ -210,31 +196,17 @@ class Account(QWidget, Ui_Form):
     def table_open_chrome(self, position):
         # index = self.ui.cb_pages.model().index(self.ui.cb_pages.currentIndex(),3)
         # self.activeUID = self.ui.cb_pages.model().data(index)
-        # print(self.activeUID)
     
         selected_indexs = self.table_accounts.ui.tableView.selectionModel().selectedRows(1) 
         selected_id_proxy = [self.table_accounts.ui.tableView.model().data(i) for i in selected_indexs]
 
         self._controller.open_chrome(selected_id_proxy)
 
-        # row = self.tableView.rowAt(position.y())
-        # col = self.tableView.columnAt(position.x())
-        # print(row, col)
-        # index = self.tableView.model().index(row, col)
-        # print("index is ", index)
-        # print(self.tableView.model().data(index))
-        # indexes = self.tableView.selectionModel().selectedRows()
-        # for index in sorted(indexes):
-        #     print('Row %d is selected' % index.row())
-
     def table_delete(self, position):
         indexes = self.table_accounts.ui.tableView.selectionModel().selectedRows()
 
         index = self.table_accounts.ui.tableView.selectedIndexes()[0]
         id = str(self.table_accounts.ui.tableView.model().data(index))
-        print("id is ", id)
-        for index in sorted(indexes):
-            print('Row %d is selected' % index.row())
         
     def on_save_account_completed(self):
         self._controller.signals.table_on_load.emit()

@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (QApplication, QMenu, QFrame, QVBoxLayout, QSizePo
 from views.ui.fanpages.joined_groups_ui import Ui_JoinedGroup
 from views.table_custome import TableCustome
 from controllers.main_ctrl import MainController
+import logging
 
 class CustomProxyModel(QtCore.QSortFilterProxyModel):
     def __init__(self, parent=None):
@@ -177,7 +178,7 @@ class GroupView(QWidget):
         sql_query = "DELETE FROM {}  WHERE {}.Group_Link  IN (SELECT Group_Link FROM groups_tita)".format(self.active_tb, self.active_tb)
         self.model.setQuery(sql_query)
         if self.model.lastError().isValid():
-            print(self.model.lastError().text())
+            logging.error(self.model.lastError().text())
         
         self.model.setQuery(sql_query)
         self.model.submitAll()
@@ -206,7 +207,7 @@ class GroupView(QWidget):
         sql_query = "INSERT INTO groups_tita(Group_Link,Group_Name,Category,Numbers,Details,Type) SELECT Group_Link,Group_Name,Category,Numbers,Details,Type FROM {} WHERE ID IN ({}) AND {}.Group_Link  NOT IN (SELECT Group_Link FROM groups_tita)".format(self.active_tb, ",".join([str(id) for id in self.seleted_id]), self.active_tb)
         self.model.setQuery(sql_query)
         if self.model.lastError().isValid():
-            print(self.model.lastError().text())
+            logging.error(self.model.lastError().text())
         
         self.model.setQuery(sql_query)
         self.model.submitAll()

@@ -1,6 +1,6 @@
 from PySide6 import QtWidgets, QtSql
 from PySide6.QtSql import QSqlError
-
+import logging
 
 class SqlUtils:
     def __init__(self) -> None:
@@ -94,9 +94,6 @@ class SqlUtils:
         result = query.exec()
         if query.lastError().isValid():
             raise Exception(query.lastError().text(), query.lastQuery())
-            print(query.lastError().type())
-            print(query.lastError().text())
-            # print(query.lastError())
 
 ################ ACCOUNT QUERY####################
 
@@ -177,7 +174,6 @@ class SqlUtils:
         query.prepare(sql_query)
         query.exec()
         while query.next():
-            print("data return: ", query.value(0))
             return query.value(0)
         return None
 
@@ -200,7 +196,6 @@ class SqlUtils:
         query = QtSql.QSqlQuery()
         sql_query = "INSERT INTO {} (Group_Link, Group_Name, Category, Numbers, Details) VALUES {}".format(table,
                                                                                                            ",".join(['(?,?,?,?,?)' for id in groups]))
-        # print(sql_query)
         query.prepare(sql_query)
         for group in groups:
             query.addBindValue(group.link)
@@ -216,7 +211,6 @@ class SqlUtils:
         query = QtSql.QSqlQuery()
         sql_query = "INSERT INTO {} (Group_Link, Group_Name) VALUES {}".format(page_tb,
                                                                                ",".join(['(?,?)' for id in groups]))
-        # print(sql_query)
         query.prepare(sql_query)
         for group in groups:
             query.addBindValue(group.link)

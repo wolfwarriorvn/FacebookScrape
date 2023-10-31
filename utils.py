@@ -6,19 +6,6 @@ import hashlib
 import pyexiv2
 import uuid
 
-class LogLevel(Enum):
-    NONE = 0
-    DEBUG = 1
-    ERROR = 2
-
-def log(log_level: LogLevel, data):
-    if log_level is LogLevel.DEBUG:
-        print(Fore.GREEN)
-        print(data)
-    elif log_level is LogLevel.ERROR:
-        print(Fore.RED)
-        print(data)
-    print(Style.RESET_ALL)
 
 def convert_str_to_number(x):
     total_stars = 0

@@ -4,7 +4,7 @@ from time import sleep
 from random import randrange
 import random
 from common.payload import PostSetting
-
+import logging
 
 class PostGroupWorker(BaseWorker):
     def __init__(self, group_links, settings: PostSetting, page_id, semaphore_id, account) -> None:
@@ -24,7 +24,7 @@ class PostGroupWorker(BaseWorker):
                 content = random.choices(self.settings.contents)
                 photo = random.sample(sorted(self.settings.photos), self.settings.photo_count)
 
-                print(photo, content)
+                logging.info(photo, content)
 
                 status = self.fb_scraper.post_group(group_link, content, photo)
 
@@ -38,6 +38,7 @@ class PostGroupWorker(BaseWorker):
             self.signals.update_status.emit(self._uid, 'Free')
 
         except Exception as ex:
-            self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: {ex}')  
+            self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: Error')
+            logging.exception('')
         finally:
             self.exit()

@@ -7,6 +7,7 @@ from facebook_scraper import (
     NoLoginException,
     CheckpointException
 )
+import logging
 
 semaphore = {}
 chrome_mutex = QMutex()

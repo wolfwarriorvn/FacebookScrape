@@ -20,7 +20,6 @@ import time
 from time import sleep
 import pyotp
 import utils
-from utils import LogLevel, log
 from random import randrange
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -96,14 +95,13 @@ class FacebookScraper:
 
     def add_cookies(self, cookies):
         try:
-            # self.driver.get('https://www.facebook.com/')
             for cokie in cookies.replace(' ', '').split(';'):
                 if '=' in cokie:
                     name, value = cokie.split('=')
                     self.driver.add_cookie({"name": name, "value": value})
             self.driver.refresh()
         except Exception as e:
-            print(e)
+            logging.exception('')
 
     def get_cookies(self):
         return self.driver.get_cookies()
@@ -157,7 +155,7 @@ class FacebookScraper:
             next_btn2.click()
             sleep(2)
         except Exception:
-            pass
+            logging.exception('')
 
     def login(self):
         try:
@@ -171,8 +169,8 @@ class FacebookScraper:
             password_input.send_keys(Keys.ENTER)
             sleep(3)
         except Exception:
-            print(
-                'Some exception occurred while trying to find username or password field')
+            logging.exception('Some exception occurred while trying to find username or password field')
+
 
     def is_brower_closed(self):
         isClosed = False
@@ -238,12 +236,11 @@ class FacebookScraper:
                 actions = ActionChains(self.driver)
                 actions.move_to_element(element).perform()
                 scroll_height = element.get_property('scrollHeight')
-                print("scroll_height: ", scroll_height)
                 if (scroll_height <= max_scroll):
                     break
                 max_scroll = scroll_height
             except Exception as e:
-                print("lỗi là: ", e)
+                logging.exception('')
                 break
 
     def scroll_down_byelement(self, element):
@@ -257,20 +254,19 @@ class FacebookScraper:
                 actions = ActionChains(self.driver)
                 actions.move_to_element(element).perform()
                 scroll_height = element.get_property('scrollHeight')
-                print("scroll_height: ", scroll_height)
                 if (scroll_height <= max_scroll):
                     break
                 max_scroll = scroll_height
             except Exception as e:
-                print("lỗi là: ", e)
+                logging.exception('')
                 break
 
     def close(self):
         try:
             self.driver.quit()
         except (WebDriverException, NoSuchWindowException) as e:
-            print("Close error: ", e)
-            pass 
+            logging.exception('Close chrome error')
+             
     # def __del__(self):
         # try:
         #     self.driver.close()
@@ -315,10 +311,8 @@ class FacebookScraper:
 
         if posted_link is None:
             return None
-        print(posted_link.get_attribute('href'))
         href = posted_link.get_attribute('href')
         posted_id = href.split('multi_permalinks=')[1].split('&__cft__')[0]
-        print(posted_id)
         return group_url+posted_id
 
     def get_post_history(self, pageid, loop_scan):
@@ -480,22 +474,8 @@ class FacebookScraper:
         post_btn.click()
         sleep(randrange(2, 5))
 
-        # FB_XPATH_POST_STATUS = "//a[starts-with(@href,'https://www.facebook.com/groups/1824383134456259/pending_posts')]"
-
-        # FB_XPATH_POST_STATUS = "//div[@role='article'][1]/div/div/div/div/div/div[2]/div/div/div[1]/div[1]/div/div[2]/div/div[1]/span/h3/span/span/a"
-
-        # FB_XPATH_POST_STATUS = "//div[@role='article'][1]//following::h3/span/span/a"
-
-        # FB_XPATH_POST_STATUS = "//div[@role='article'][1]//following::span/a[starts-with(@href,'https://www.facebook.com/groups/1824383134456259/posts') or starts-with(@href,'https://www.facebook.com/groups/1824383134456259/pendin')]"
-        # post_status = self.check_xpath(self.driver, FB_XPATH_POST_STATUS,
-        #                             "FB_XPATH_POST_STATUS", GetElement.ONE, timeout=30)
-        # if post_status:
-        #     print(post_status.get_attribute('href'))
         post_status = True
         return post_status
-        # post = utils.PostGroup('POSTING', group_url, '')
-        # utils.update_postedfile(post, 'post')
-        # utils.update_groups_report(utils.GROUPS_PATH, 'post', group_url, utils.PostStatus.PENDING, time.strftime("%Y-%m-%d %H:%M:%S"))
 
     def scan_group_by_keyword(self, keyword, loop_scan):
         groups = []
@@ -621,7 +601,6 @@ class FacebookScraper:
         TIMEOUT_S = 60
         fb_code = ''
         while True:
-            print("đang đợi email: --->")
             messages = mail_reader.get_email()
             for msg in messages:
                 result = re.search('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]', msg)
@@ -633,11 +612,12 @@ class FacebookScraper:
                 break
             if (time.time() - start) > TIMEOUT_S:
                 #TODO: raise exception timeout
-                print("Timeout rồi")
+                logging.debug('Timeout rồi')
                 return
             else:
                 sleep(2)
-        print('fb_code: ', fb_code)
+
+        logging.info('fb_code: %s', fb_code)
 
         self.input_xpath(STEPS[4], fb_code)
         self.click_xpath(STEPS[5])

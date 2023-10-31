@@ -51,11 +51,7 @@ class Proxy(QWidget, Ui_Form):
             extension_zip = proxies(user_proxy, pass_proxy, endpoint_proxy, port_proxy, user_proxy)
 
             self.controller.db_signals.proxy_add.emit(self.le_proxy.text(), user_proxy)
-            # try:
-            #     self.sqlquery.add_proxy_query(self.le_proxy.text(), user_proxy)
-            #     self.reload_tableview()
-            # except Exception as e:
-            #     print(e)
+
     def on_init(self):
         query = QtSql.QSqlQuery()
         query.exec("CREATE TABLE IF NOT EXISTS proxy (ID integer primary key, ProxyID UNIQUE, zip_proxy VARCHAR(20))")

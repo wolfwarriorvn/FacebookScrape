@@ -9,6 +9,7 @@ from common.payload import *
 
 import uuid
 import random
+import logging
 from controllers.worker.base_worker import semaphore
 
 
@@ -115,11 +116,9 @@ class MainController(QObject):
                     self._model.add_account_info(uid, pwd, category, code2fa, cookie, token,email, pass_email , birthday)
                     self.signals.add_user_completed.emit()
                 else:
-                    print("Input khong dung format")
                     self.signals.add_user_error.emit()
 
         except Exception as e:
-            # print("Error is {}".format(e))
             self.signals.add_user_error.emit(e)
 
     def on_get_free_group(self, type_groups):
@@ -131,15 +130,14 @@ class MainController(QObject):
             self._model.add_proxy(proxy, proxy_zip)
             self.db_signals.proxy_add_completed.emit()
         except Exception as e:
-            print("create_table error: ", e)
-            pass
+            logging.error('', exc_info=True)
 
     def init_thread_post(self, uids, setting: PostSetting):
         sema_id = self.genarate_semaphore(setting.threads)
         free_group_links = self._model.get_group_free(setting.type_group)
         total_post = len(uids) * setting.post_count
         if total_post > len(free_group_links):
-            print("Emit hết nick nha")
+            logging.warning('Outof free nick')
             return
         set_free_groups = set(free_group_links)
         set_picked = set()
@@ -175,7 +173,7 @@ class MainController(QObject):
         try:
             self._model.update_group_posted_status(pageid, group_link, status)
         except Exception as e:
-            print("post_completed error", e)
+            logging.error('', exc_info=True)
             pass
 
     def init_thread_checkpoint_956(self, list_uids):
@@ -236,8 +234,7 @@ class MainController(QObject):
                 self._model.update_post_commented_counts(href)
             self._model.add_seeding_action(uid, href, action)
         except Exception as e:
-            print("on_update_allow_page_status: ", e)
-            pass
+            logging.error('', exc_info=True)
 
     def init_thread_check_group_allow_page(self, uid, group_links):
         sema_id = self.genarate_semaphore(1)
@@ -256,15 +253,13 @@ class MainController(QObject):
                 self.update_mesage_dashboard)
             self.pool.start(worker)
         except Exception as e:
-            print("create_table error: ", e)
-            pass
+            logging.error('', exc_info=True)
 
     def on_update_allow_page_status(self, group_link, interact):
         try:
             self._model.update_group_interact(group_link, interact)
         except Exception as e:
-            print("on_update_allow_page_status: ", e)
-            pass
+            logging.error('', exc_info=True)
 
     def init_thread_check_approval_post(self, uid, pending_posts):
         sema_id = self.genarate_semaphore(1)
@@ -290,8 +285,7 @@ class MainController(QObject):
         try:
             self._model.update_post_status(pending_post, status)
         except Exception as e:
-            print("on_update_approve_status: ", e)
-            pass
+            logging.error('', exc_info=True)
 
     def on_scan_post_history(self, uids, loop_scan, sync_nick):
         sema_id = self.genarate_semaphore(sync_nick)
@@ -321,7 +315,7 @@ class MainController(QObject):
             self._model.add_post_history(
                 active_id, group_link, post_link, status)
         except Exception as e:
-            pass
+            logging.error('', exc_info=True)
 
     def on_get_accounts(self):
         accounts = self._model.get_account_userids()
@@ -366,16 +360,14 @@ class MainController(QObject):
             self._model.update_account_message(uid, message)
             self.signals.update_dashboard.emit()
         except Exception as e:
-            print("create_table error: ", e)
-            pass
+            logging.error('', exc_info=True)
 
     def update_status_dashboard(self, uid, status):
         try:
             self._model.update_account_status(uid, status)
             self.signals.update_dashboard.emit()
         except Exception as e:
-            print("create_table error: ", e)
-            pass
+            logging.error('', exc_info=True)
 
     def scan_group_by_keyword(self, uid, keyword, loop_scan):
         sema_id = self.genarate_semaphore(1)
@@ -402,8 +394,7 @@ class MainController(QObject):
             self._model.add_group_scan(talbe_name,
                                        groups)
         except Exception as e:
-            print("save group data failed: ", e)
-            pass
+            logging.error('', exc_info=True)
 
     Slot(object, object)
 
@@ -429,16 +420,14 @@ class MainController(QObject):
                                   group_list)
             self.signals.scan_group_completed.emit()
         except Exception as e:
-            print("save group data failed: ", e)
-            pass
+            logging.error('', exc_info=True)
 
     Slot(str)
     def create_table(self, talbe_name):
         try:
             self._model.create_table(talbe_name)
         except Exception as e:
-            print("create_table error: ", e)
-            pass
+            logging.error('', exc_info=True)
     Slot(str)
     def get_account_info(self, indexs):
         try:
@@ -447,8 +436,7 @@ class MainController(QObject):
                 self.signals.get_account_completed.emit(
                     AccountInfo(uid, pw, proxy))
         except Exception as e:
-            print("create_table error: ", e)
-            pass
+            logging.error('', exc_info=True)
 
     Slot(str)
     def add_new_account(self, raw_input):
@@ -471,11 +459,9 @@ class MainController(QObject):
                         uid, pwd, code2fa, '{}|{}'.format(email, _pass_email))
                     self.signals.add_user_completed.emit()
                 else:
-                    print("Input khong dung format")
                     self.signals.add_user_error.emit()
 
         except Exception as e:
-            print("Error is {}".format(e))
             self.signals.add_user_error.emit()
 
     Slot()
