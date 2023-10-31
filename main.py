@@ -19,7 +19,7 @@ from views.group_scan import GroupScan
 from common.database import Database
 # from setting import main_setting
 
-VERSION = '2023-10-25'
+VERSION = '2023-10-27'
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, model, main_controller):
@@ -110,11 +110,21 @@ class App(QApplication):
         self.main_view.showMaximized()
         # self.setApplicationVersion("1.0")
 
-
+import logging
+# filemode='a' to append or ='w' to rewrite
+logging.basicConfig(level=logging.DEBUG, filename='fb.log', filemode='a', format = (
+                                                    '%(asctime)s\t'
+                                                    '%(levelname)s:\t'
+                                                    '%(filename)s:'
+                                                    '%(funcName)s():'
+                                                    '%(lineno)d\t'
+                                                    '%(message)s'
+                                                )
+                    )
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    
+
     app = App(sys.argv)
     sys.exit(app.exec())
     

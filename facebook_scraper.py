@@ -5,6 +5,16 @@ from selenium.common.exceptions import (
     WebDriverException
 )
 import os
+import logging
+# Set the threshold for selenium to WARNING
+from selenium.webdriver.remote.remote_connection import LOGGER as seleniumLogger
+seleniumLogger.setLevel(logging.WARNING)
+from selenium.webdriver.common.service import logger
+logger.setLevel(logging.WARNING)
+# Set the threshold for urllib3 to WARNING
+from urllib3.connectionpool import log as urllibLogger
+urllibLogger.setLevel(logging.WARNING)
+
 import re
 import time
 from time import sleep
@@ -60,6 +70,7 @@ class FacebookScraper:
         # options.add_argument("--window-size=300,500")
         # options.add_argument("--headless --disable-gpu")
         options.add_argument("--disable-notifications")
+        # options.add_argument("--log-level=3")
 
         # options.add_argument("--enable-file-cookies")
         # options.add_argument(r'--profile-directory=12')
@@ -79,7 +90,6 @@ class FacebookScraper:
         self.driver = webdriver.Chrome(service=service_obj, options=options)
         # self.driver.minimize_window()
         # self.driver.implicitly_wait(randrange(2, 5))
-
 
     def maximize(self):
         self.driver.maximize_window()
