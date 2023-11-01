@@ -199,18 +199,20 @@ class MainController(QObject):
             setting.posted_links = self._model.get_post_approved_link()
         for uid in uids:
             try:
-                liked_links = self._model.get_seeding_liked_link(uid)
                 account = self._model.get_account_info(uid)
+                if setting.auto_getlink:
+                    liked_links = self._model.get_seeding_liked_link(uid)
+                    set_available_links = set(
+                        setting.posted_links).difference(set(liked_links))
+                    if len(set_available_links) < setting.seedings:
+                        self.update_mesage_dashboard(
+                            uid, 'Không đủ link để like. Số link còn lại: {}'.format(len(set_available_links)))
+                        continue
 
-                set_available_links = set(
-                    setting.posted_links).difference(set(liked_links))
-                if len(set_available_links) < setting.seedings:
-                    self.update_mesage_dashboard(
-                        uid, 'Không đủ link để like. Số link còn lại: {}'.format(len(set_available_links)))
-                    continue
-
-                available_links = random.sample(
-                    sorted(set_available_links), setting.seedings)
+                    available_links = random.sample(
+                        sorted(set_available_links), setting.seedings)
+                else:
+                    available_links = setting.posted_links
 
                 worker = SeedingWorker(
                     available_links, setting, sema_id, account)
@@ -242,7 +244,7 @@ class MainController(QObject):
             account = self._model.get_account_info(uid)
 
             worker = CheckGroupAllowPage(
-                group_links, account)
+                group_links,sema_id, account)
             worker.setAutoDelete(True)
             worker.signals.allow_page_group.connect(
                 self.on_update_allow_page_status)

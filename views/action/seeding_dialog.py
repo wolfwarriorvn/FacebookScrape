@@ -16,7 +16,7 @@ class SeedingDialog(QWidget, Ui_Seeding):
     def on_seeding_action(self):
         self._controller.signals.seeding_action.emit(self.selected_uid, SeedingSetting(
             self.ckb_autogetlink.isChecked(),
-            self.txt_links.toPlainText(),
+            self.txt_links.toPlainText().split('\n'),
             self.spin_seedings.value(),
             self.ckb_like.isChecked(),
             self.ckb_comment.isChecked(),

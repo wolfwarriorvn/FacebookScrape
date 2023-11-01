@@ -2,7 +2,9 @@
 from selenium.common.exceptions import (
     TimeoutException,
     NoSuchWindowException,
-    WebDriverException
+    WebDriverException,
+    NoSuchElementException,
+    ElementNotInteractableException
 )
 import os
 import logging
@@ -228,20 +230,16 @@ class FacebookScraper:
     def scroll_down_element(self, element, max_loop):
         max_scroll = 0
         for loop in range(0, max_loop):
-            try:
-                self.driver.execute_script(
-                    "arguments[0].scrollIntoView({ behavior: 'smooth', block: 'end' });", element)
-                sleep(randrange(2, 5))
-                self.wait_fully_load()
-                actions = ActionChains(self.driver)
-                actions.move_to_element(element).perform()
-                scroll_height = element.get_property('scrollHeight')
-                if (scroll_height <= max_scroll):
-                    break
-                max_scroll = scroll_height
-            except Exception as e:
-                logging.exception('')
+            sleep(randrange(2, 5))
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView({ behavior: 'smooth', block: 'end' });", element)
+            self.wait_fully_load()
+            actions = ActionChains(self.driver)
+            actions.move_to_element(element).perform()
+            scroll_height = element.get_property('scrollHeight')
+            if (scroll_height <= max_scroll):
                 break
+            max_scroll = scroll_height
 
     def scroll_down_byelement(self, element):
         max_scroll = 0
@@ -289,14 +287,11 @@ class FacebookScraper:
                     return element[0]
                 return element
             else:
-                log(LogLevel.ERROR, xpath_name + " is not found")
+                logging.error("%s is not found"), xpath_name
                 return None
             
-        except TimeoutException as ex:
-            log(LogLevel.ERROR, xpath_name + " was timeout " + str(ex))
-            return None
         except Exception as e:
-            log(LogLevel.ERROR, xpath_name + " was Exception " + str(e))
+            logging.exception('')
             return None
 
 
@@ -315,50 +310,18 @@ class FacebookScraper:
         posted_id = href.split('multi_permalinks=')[1].split('&__cft__')[0]
         return group_url+posted_id
 
-    def get_post_history(self, pageid, loop_scan):
+    def get_post_history(self, uid, loop_scan):
         pending_post = []
         history_url = "https://www.facebook.com/{}/allactivity?activity_history=false&category_key=GROUPPOSTS&manage_mode=false&should_load_landing_page=false".format(
-            pageid)
+            uid)
         self.open_url(history_url)
 
         FB_XPATH_GROUPS_MAIN = "//div[@role='main']"
-        group_main_element = self.check_xpath(self.driver, FB_XPATH_GROUPS_MAIN,
-                                              "FB_XPATH_GROUPS_MAIN", GetElement.ONE)
-        if group_main_element is None:
-            return []
-        self.scroll_down_element(group_main_element, loop_scan)
-
         FB_XPATH_TODAY_POSTS = "(//div[@role='main']//a[contains(@href, 'permalink') or contains(@href, 'pending_posts')])//self::div/div/div/div[3]/span/div/div/div[2]/div/span/div/span[text()='Nhóm công khai']//ancestor::a"
 
-        post_elements = self.check_xpath(self.driver, FB_XPATH_TODAY_POSTS,
-                                         "FB_XPATH_TODAY_POSTS", GetElement.MORE)
-        if post_elements is None:
-            return []
-
-        for post_element in post_elements:
-            pending_post.append(post_element.get_attribute('href').replace(
-                'pending_posts', 'posts').replace('permalink', 'posts'))
-
-        return pending_post
-
-    def get_post_today(self, pageid):
-        pending_post = []
-        history_url = "https://www.facebook.com/{}/allactivity?activity_history=false&category_key=GROUPPOSTS&manage_mode=false&should_load_landing_page=false".format(
-            pageid)
-        self.open_url(history_url)
-
-        FB_XPATH_GROUPS_MAIN = "//div[@role='main']"
-        group_main_element = self.check_xpath(self.driver, FB_XPATH_GROUPS_MAIN,
-                                              "FB_XPATH_GROUPS_MAIN", GetElement.ONE)
-        if group_main_element is None:
-            return []
-        self.scroll_down_element(group_main_element, 2)
-        FB_XPATH_TODAY_POSTS = "(//div[@role='main']/div/div[2]//a[contains(@href, 'permalink') or contains(@href, 'pending_posts')])//self::div/div/div/div[3]/span/div/div/div[2]/div/span/div/span[text()='Nhóm công khai']//ancestor::a"
-
-        post_elements = self.check_xpath(self.driver, FB_XPATH_TODAY_POSTS,
-                                         "FB_XPATH_TODAY_POSTS", GetElement.MORE)
-        if post_elements is None:
-            return []
+        group_main_element = self.driver.find_element(By.XPATH, FB_XPATH_GROUPS_MAIN)
+        self.scroll_down_element(group_main_element, loop_scan)
+        post_elements = self.driver.find_elements(By.XPATH, FB_XPATH_TODAY_POSTS)
 
         for post_element in post_elements:
             pending_post.append(post_element.get_attribute('href').replace(
@@ -367,157 +330,109 @@ class FacebookScraper:
         return pending_post
 
     def check_approval_post(self, pending_post):
-        self.open_url(pending_post)
-
         FB_XPATH_POST_PRESENCE = "//div[@aria-posinset='1']"
         try:
-            element = WebDriverWait(self.driver, 0).until(
-                EC.presence_of_element_located((By.XPATH, FB_XPATH_POST_PRESENCE)))
-        except Exception as e:
+            self.open_url(pending_post)
+            self.driver.find_element(By.XPATH, FB_XPATH_POST_PRESENCE)
+            return True
+        except (NoSuchElementException, TimeoutException):
             return False
-
-        return True
 
     def check_group_allow_post(self, group_link):
-        self.open_url(group_link)
-
+        status = False
         FB_XPATH_WRITE_POST_PRESENCE = "//*[text()='Write something...' or text()='Bạn viết gì đi...']"
         try:
-            element = WebDriverWait(self.driver, 0).until(
-                EC.presence_of_element_located((By.XPATH, FB_XPATH_WRITE_POST_PRESENCE)))
-        except Exception as e:
+            self.open_url(group_link)
+            element = self.driver.find_element(By.XPATH, FB_XPATH_WRITE_POST_PRESENCE)
+            return True
+        except (NoSuchElementException, TimeoutException):
             return False
-
-        return True
 
     def like_url_posted(self, url):
-        self.open_url(url)
-
-        FB_XPATH_LIKE = "//div[@aria-label='Like' or @aria-label='Thích']"
-        btn_like_element = self.check_xpath(self.driver, FB_XPATH_LIKE,
-                                            "FB_XPATH_LIKE", GetElement.ONE)
-        if btn_like_element is None:
+        try:
+            self.open_url(url)
+            sleep(2)
+            FB_XPATH_LIKE = "//div[@aria-label='Like' or @aria-label='Thích']"
+            like_btn = self.driver.find_element(By.XPATH, FB_XPATH_LIKE)
+            actions = ActionChains(self.driver)
+            actions.move_to_element(like_btn).click().perform()
+            return True
+        except (NoSuchElementException, TimeoutException):
+            logging.exception('UID: %s URL: %s', self.uid, url)
             return False
-        btn_like_element.click()
-        self.driver.implicitly_wait(2)
-        return True
+
 
     def post_group(self, group_url, contents, photos):
         post_status = False
-        # url = "https://www.facebook.com/groups/1763453443938234/"
-        # group_url = "https://www.facebook.com/groups/1400319690267642/"
-        # group_url = utils.get_available_groups_link()[0]
-        self.open_url(group_url)
-        FB_XPATH_TAB_LIST = '//*[@role="tablist"]'
-        tab_list = self.check_xpath(self.driver, FB_XPATH_TAB_LIST,
-                                    "FB_XPATH_TAB_LIST", GetElement.ONE)
+        try:
+            self.open_url(group_url)
+    
+            FB_XPATH_WRITE_POST = "//*[text()='Write something...' or text()='Bạn viết gì đi...']"
+            FB_XPATH_CREATE_PUBLIC_POST = '//div[@aria-label="Create a public post…" or @aria-label="Write something..." or @aria-label="Tạo bài viết công khai..."]'
+            FB_XPATH_PHOTO_MODE = '//div[@aria-label="Ảnh/video"]'
+            FB_XPATH_PHOTO = "//input[@type='file' and @multiple]"
+            FB_XPATH_POST_BTN = '//div[@aria-label="Post" or @aria-label="Đăng"]'
 
-        if tab_list is None:
-            return post_status
-        actions = ActionChains(self.driver)
-        actions.move_to_element(tab_list).perform()
-        sleep(randrange(2, 5))
 
-        FB_XPATH_WRITE_POST = "//*[text()='Write something...' or text()='Bạn viết gì đi...']"
+            self.driver.find_element(By.XPATH, FB_XPATH_WRITE_POST).click()
+            sleep(1)
+            public_post = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, FB_XPATH_CREATE_PUBLIC_POST)))
+            sleep(1)
+            public_post.send_keys(contents)
+            sleep(1)
+            self.driver.find_element(By.XPATH, FB_XPATH_PHOTO_MODE).click()
+            sleep(1)
 
-        write_post = self.check_xpath(self.driver, FB_XPATH_WRITE_POST,
-                                      "FB_XPATH_WRITE_POST", GetElement.ONE)
-        if write_post is None:
-            log(LogLevel.ERROR, "groups error is: " + group_url)
-            return post_status
-        write_post.click()
-        sleep(randrange(2, 5))
-        FB_XPATH_CREATE_PUBLIC_POST = '//div[@aria-label="Create a public post…" or @aria-label="Write something..." or @aria-label="Tạo bài viết công khai..."]'
-        public_post = self.check_xpath(
-            self.driver, FB_XPATH_CREATE_PUBLIC_POST, "FB_XPATH_CREATE_PUBLIC_POST", GetElement.ONE)
-        if public_post is None:
-            return post_status
-        public_post.send_keys(contents)
+            for photo in photos:
+                photo_input = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, FB_XPATH_PHOTO)))
+                photo_input.send_keys(photo)
+                sleep(1)
 
-        # FB_XPATH_TOOLBAR_LABEL = '//div[@id="toolbarLabel"]'
-        # toolbar_label = self.check_xpath(self.driver, FB_XPATH_TOOLBAR_LABEL,
-        #                                  "FB_XPATH_TOOLBAR_LABEL", GetElement.ONE)
-        # if toolbar_label is None:
-        #     return pending_link
-
-        FB_XPATH_PHOTO_MODE = '//div[@aria-label="Ảnh/video"]'
-        photo_mode = self.check_xpath(self.driver, FB_XPATH_PHOTO_MODE,
-                                      "FB_XPATH_PHOTO", GetElement.ONE)
-        if photo_mode is None:
-            return post_status
-        photo_mode.click()
-        sleep(randrange(2, 5))
-
-        FB_XPATH_PHOTO = "//input[@type='file' and @multiple]"
-
-        for photo in photos:
-            photo_input = self.check_xpath(self.driver, FB_XPATH_PHOTO,
-                                           "FB_XPATH_PHOTO", GetElement.ONE)
-            if photo_input is None:
-                return post_status
-
-            photo_input.send_keys(photo)
             sleep(randrange(5, 10))
 
-        # FB_XPATH_CLOSE_POST = '//*[@aria-label="Close"]'
-        # close_post = self.check_xpath(self.driver, FB_XPATH_CLOSE_POST,
-        #                                 "FB_XPATH_CLOSE_POST", GetElement.ONE)
-        # if close_post is None: return
-        # close_post.click()
-        sleep(randrange(5, 10))
-
-        FB_XPATH_POST_BTN = '//div[@aria-label="Post" or @aria-label="Đăng"]'
-        post_btn = self.check_xpath(self.driver, FB_XPATH_POST_BTN,
-                                    "FB_XPATH_POST_BTN", GetElement.ONE)
-        if post_btn is None:
-            return False
-        post_btn.click()
-        sleep(randrange(2, 5))
-
-        post_status = True
-        return post_status
+            self.driver.find_element(By.XPATH, FB_XPATH_POST_BTN).click()
+            post_status = True
+        
+        except (NoSuchElementException, TimeoutException):
+            logging.exception('UID: %s URL: %s', self.uid, group_url)
+        finally:
+            return post_status
 
     def scan_group_by_keyword(self, keyword, loop_scan):
         groups = []
-        url = "https://www.facebook.com/groups/search/groups/?q=" + \
-            keyword.replace(' ', '%20')
-        self.open_url(url)
+        try:
+            url = "https://www.facebook.com/groups/search/groups/?q={}".format(keyword.replace(' ', '%20'))
+            self.open_url(url)
 
-        FB_XPATH_GROUPS_MAIN = "//div[@role='main']"
-        group_main_element = self.check_xpath(self.driver, FB_XPATH_GROUPS_MAIN,
-                                              "FB_XPATH_GROUPS_MAIN", GetElement.ONE)
-        if group_main_element is None:
-            return []
-        self.scroll_down_element(group_main_element, loop_scan)
+            FB_XPATH_GROUPS_MAIN = "//div[@role='main']"
+            FB_XPATH_GROUPS = "//a[@role='presentation']"
+            XPATH_INFO = ".//parent::div//parent::span//parent::div//following-sibling::div[1]"
 
-        FB_XPATH_GROUPS = "//a[@role='presentation']"
-        group_elements = self.check_xpath(self.driver, FB_XPATH_GROUPS,
-                                          "FB_XPATH_GROUPS", GetElement.MORE)
-        if group_elements is None:
-            return []
+            group_main_element = self.driver.find_element(By.XPATH, FB_XPATH_GROUPS_MAIN)
+            self.scroll_down_element(group_main_element, loop_scan)
+            group_elements = self.driver.find_elements(By.XPATH, FB_XPATH_GROUPS)
 
-        for group_element in group_elements:
-            g_link = group_element.get_attribute('href')
-            g_name = group_element.get_attribute('innerText')
+            for group_element in group_elements:
+                g_link = group_element.get_attribute('href')
+                g_name = group_element.get_attribute('innerText')
 
-            XPATH_INFO = ".//parent::div//parent::span//parent::div//following-sibling::div[1]".format(
-                g_link)
-            group_info_element = self.check_xpath(
-                group_element, XPATH_INFO, 'XPATH_INFO', GetElement.ONE)
+                group_info_element = group_element.find_element(By.XPATH, XPATH_INFO)
 
-            if group_info_element:
-                info_text = group_info_element.get_property('innerText')
-                category, members_text, details = utils.extract_raw_group_info(
-                    info_text)
+                if group_info_element:
+                    info_text = group_info_element.get_property('innerText')
+                    category, members_text, details = utils.extract_raw_group_info(
+                        info_text)
 
-                members_in_K = members_text.replace(
-                    ' thành viên', '').replace(',', '.').replace(' ', '')
-                members = utils.convert_str_to_number(members_in_K)
-                groups.append(GroupInfo(g_name, g_link,
-                              category, members, details))
-
-        return groups
-
+                    members_in_K = members_text.replace(
+                        ' thành viên', '').replace(',', '.').replace(' ', '')
+                    members = utils.convert_str_to_number(members_in_K)
+                    groups.append(GroupInfo(g_name, g_link,
+                                category, members, details))
+            return groups
+        
+        except (NoSuchElementException, TimeoutException):
+            logging.exception('UID: %s URL: %s', self.uid, url)
+            return groups
     def scan_group_of_page(self):
         groups = []
         self.open_url(
@@ -526,14 +441,14 @@ class FacebookScraper:
         group_list = self.driver.find_elements(By.XPATH, FbXpath.GROUP_LIST)
 
         if len(group_list) == 0:
-            log(LogLevel.ERROR, "FB_XPATH_SCROLLBAR is not found")
+            # log(LogLevel.ERROR, "FB_XPATH_SCROLLBAR is not found")
             return groups
         joined_group_list = group_list[len(group_list) - 1]
 
         self.scroll_down_byelement(joined_group_list)
 
         if len(joined_group_list.find_elements(By.XPATH, FbXpath.GROUP_LINKS)) == 0:
-            log(LogLevel.ERROR, "FbXpath.GROUP_LINKS is not found")
+            # log(LogLevel.ERROR, "FbXpath.GROUP_LINKS is not found")
             return groups
         joined_group_links = joined_group_list.find_elements(
             By.XPATH, FbXpath.GROUP_LINKS)
@@ -566,17 +481,15 @@ class FacebookScraper:
 
     6. //div[@aria-label='Submit']
     """
-    def click_xpath(self, xpath):
+    def click_xpath(self, xpath, timeout=10):
         # TODO: raise exception in check_xpath
-        btn_element = self.check_xpath(self.driver, xpath,
-                                              xpath, GetElement.ONE)
+        btn_element = WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable((By.XPATH, xpath)))
         btn_element.click()
         sleep(randrange(1, 3))
 
-    def input_xpath(self, xpath, input):
+    def input_xpath(self, xpath, input, timeout=10):
         # TODO: raise exception in check_xpath
-        input_element = self.check_xpath(self.driver, xpath,
-                                              xpath, GetElement.ONE)
+        input_element = WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located((By.XPATH, xpath)))
         input_element.send_keys(input)
         sleep(randrange(1, 3))
 

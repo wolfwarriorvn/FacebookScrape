@@ -1,5 +1,5 @@
 from PySide6.QtCore import Signal, Slot
-from controllers.worker.base_worker import BaseWorker
+from controllers.worker.base_worker import *
 from time import sleep
 from random import randrange
 import random
@@ -37,8 +37,14 @@ class PostGroupWorker(BaseWorker):
 
             self.signals.update_status.emit(self._uid, 'Free')
 
-        except Exception as ex:
+        except NoLoginException:
+            self.signals.update_status.emit(self._uid, 'Unlogin')
+        except CheckpointException as ex:
+            self.signals.update_status.emit(self._uid, f'{ex}')
+        except :
+            self.signals.update_status.emit(self._uid, 'Free')
             self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: Error')
             logging.exception('')
+
         finally:
             self.exit()

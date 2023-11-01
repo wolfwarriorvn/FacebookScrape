@@ -19,14 +19,17 @@ class CheckApprovalPost(BaseWorker):
             
             for post in self.pending_posts:
                 is_approved = self.fb_scraper.check_approval_post(post)
-                if is_approved:
-                    self.signals.approved_post.emit(post, 'Approved')
-                else:
-                    self.signals.approved_post.emit(post, 'Pending')
+                
+                self.signals.approved_post.emit(post, 'Approved' if is_approved else 'Pending')
 
             self.signals.update_status.emit(self._uid, 'Free')
             
-        except Exception as ex:
+        except NoLoginException:
+            self.signals.update_status.emit(self._uid, 'Unlogin')
+        except CheckpointException as ex:
+            self.signals.update_status.emit(self._uid, f'{ex}')
+        except :
+            self.signals.update_status.emit(self._uid, 'Free')
             self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: Error')
             logging.exception('')
         finally:

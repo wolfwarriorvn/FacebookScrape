@@ -22,8 +22,13 @@ class ScanJoinedGroupWorker(BaseWorker):
 
             self.signals.update_status.emit(self._uid, 'Free')
 
-        except Exception as ex:
+        except NoLoginException:
+            self.signals.update_status.emit(self._uid, 'Unlogin')
+        except CheckpointException as ex:
+            self.signals.update_status.emit(self._uid, f'{ex}')
+        except :
+            self.signals.update_status.emit(self._uid, 'Free')
             self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: Error')
-            logging.exception('') 
+            logging.exception('')
         finally:
             self.exit()

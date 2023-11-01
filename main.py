@@ -112,7 +112,7 @@ class App(QApplication):
 
 import logging
 # filemode='a' to append or ='w' to rewrite
-logging.basicConfig(level=logging.DEBUG, encoding='utf-8', filename='fb.log', filemode='a', format = (
+logging.basicConfig(level=logging.DEBUG, encoding='utf-8', filename='fb.log', filemode='w', format = (
                                                     '%(asctime)s\t'
                                                     '%(levelname)s:\t'
                                                     '%(filename)s:'

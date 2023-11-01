@@ -18,14 +18,18 @@ class CheckGroupAllowPage(BaseWorker):
                 return
             
             for group_url in self.group_links:
-                if self.fb_scraper.check_group_allow_post(group_url):
-                    self.signals.allow_page_group.emit(group_url, 'Page')
-                else:
-                    self.signals.allow_page_group.emit(group_url, 'Personal')
-            
+                status = self.fb_scraper.check_group_allow_post(group_url)
+                interact = 'Page' if status else 'Personal'
+                self.signals.allow_page_group.emit(group_url, interact)
+
             self.signals.update_status.emit(self._uid, 'Free')
 
-        except Exception as ex:
+        except NoLoginException:
+            self.signals.update_status.emit(self._uid, 'Unlogin')
+        except CheckpointException as ex:
+            self.signals.update_status.emit(self._uid, f'{ex}')
+        except :
+            self.signals.update_status.emit(self._uid, 'Free')
             self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: Error')
             logging.exception('')
         finally:

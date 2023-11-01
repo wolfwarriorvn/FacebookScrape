@@ -21,11 +21,17 @@ class ScanPostHistoryWorker(BaseWorker):
             for post_link in post_links:
                 group_link = post_link[0:48]
                 self.signals.scan_post_history.emit(self.active_id, group_link, post_link, 'Pending')
+                print(group_link)
 
             self.signals.update_message.emit(self._uid, 'Scan post history completed!!!')
             self.signals.update_status.emit(self._uid, 'Free')
 
-        except Exception as ex:
+        except NoLoginException:
+            self.signals.update_status.emit(self._uid, 'Unlogin')
+        except CheckpointException as ex:
+            self.signals.update_status.emit(self._uid, f'{ex}')
+        except :
+            self.signals.update_status.emit(self._uid, 'Free')
             self.signals.update_message.emit(self._uid, f'{self.__class__.__name__}: Error')
             logging.exception('')
         finally:
