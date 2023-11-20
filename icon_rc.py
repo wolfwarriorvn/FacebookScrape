@@ -1,6 +1,6 @@
 # Resource object code (Python 3)
 # Created by: object code
-# Created by: The Resource Compiler for Qt version 6.5.3
+# Created by: The Resource Compiler for Qt version 6.5.0
 # WARNING! All changes made in this file will be lost!
 
 from PySide6 import QtCore
@@ -12391,7 +12391,7 @@ $I\x92$I\x92$I\x92$I\x92$I\x92$\
 I\x92$I\x92$I\x92\xa4F\xfc\x7f\xf1\xba\xf2A\
 \x9a\xf6\xb1\x94\x00\x00\x00\x00IEND\xaeB`\x82\
 \
-\x00\x00\x02w\
+\x00\x00\x03\x13\
 <\
 !DOCTYPE svg PUB\
 LIC \x22-//W3C//DTD\
@@ -12405,12 +12405,12 @@ ww.svgrepo.com, \
 Transformed by: \
 SVG Repo Mixer T\
 ools -->\x0a<svg wi\
-dth=\x22256px\x22 heig\
-ht=\x22256px\x22 viewB\
-ox=\x220 0 24 24\x22 f\
-ill=\x22none\x22 xmlns\
-=\x22http://www.w3.\
-org/2000/svg\x22>\x0a\x0d\
+dth=\x22800px\x22 heig\
+ht=\x22800px\x22 viewB\
+ox=\x220 0 24 24\x22 x\
+mlns=\x22http://www\
+.w3.org/2000/svg\
+\x22 fill=\x22none\x22>\x0a\x0d\
 <g id=\x22SVGRepo_b\
 gCarrier\x22 stroke\
 -width=\x220\x22/>\x0a\x0d<g\
@@ -12421,19 +12421,133 @@ d\x22 stroke-linejo\
 in=\x22round\x22/>\x0a\x0d<g\
  id=\x22SVGRepo_ico\
 nCarrier\x22> <path\
- d=\x22M6 4H10M18 2\
-0H14M3 8H10M21 1\
-6H14M3 12H10M21 \
-12H14M3 16H10M21\
- 8H14M3 20H10M20\
- 4H14\x22 stroke=\x22#\
-ffffff\x22 stroke-w\
-idth=\x222\x22 stroke-\
-linecap=\x22round\x22 \
-stroke-linejoin=\
-\x22round\x22/> </g>\x0a\x0d\
-</svg>\
-\x00\x00\x04l\
+ stroke=\x22#ffffff\
+\x22 stroke-width=\x22\
+2\x22 d=\x22M4 5a1 1 0\
+ 0 1 1-1h4a1 1 0\
+ 0 1 1 1v5a1 1 0\
+ 0 1-1 1H5a1 1 0\
+ 0 1-1-1V5ZM14 5\
+a1 1 0 0 1 1-1h4\
+a1 1 0 0 1 1 1v2\
+a1 1 0 0 1-1 1h-\
+4a1 1 0 0 1-1-1V\
+5ZM4 16a1 1 0 0 \
+1 1-1h4a1 1 0 0 \
+1 1 1v3a1 1 0 0 \
+1-1 1H5a1 1 0 0 \
+1-1-1v-3ZM14 13a\
+1 1 0 0 1 1-1h4a\
+1 1 0 0 1 1 1v6a\
+1 1 0 0 1-1 1h-4\
+a1 1 0 0 1-1-1v-\
+6Z\x22/> </g>\x0a\x0d</sv\
+g>\
+\x00\x00\x03\x13\
+<\
+!DOCTYPE svg PUB\
+LIC \x22-//W3C//DTD\
+ SVG 1.1//EN\x22 \x22h\
+ttp://www.w3.org\
+/Graphics/SVG/1.\
+1/DTD/svg11.dtd\x22\
+>\x0a\x0d<!-- Uploaded\
+ to: SVG Repo, w\
+ww.svgrepo.com, \
+Transformed by: \
+SVG Repo Mixer T\
+ools -->\x0a<svg wi\
+dth=\x22800px\x22 heig\
+ht=\x22800px\x22 viewB\
+ox=\x220 0 24 24\x22 x\
+mlns=\x22http://www\
+.w3.org/2000/svg\
+\x22 fill=\x22none\x22>\x0a\x0d\
+<g id=\x22SVGRepo_b\
+gCarrier\x22 stroke\
+-width=\x220\x22/>\x0a\x0d<g\
+ id=\x22SVGRepo_tra\
+cerCarrier\x22 stro\
+ke-linecap=\x22roun\
+d\x22 stroke-linejo\
+in=\x22round\x22/>\x0a\x0d<g\
+ id=\x22SVGRepo_ico\
+nCarrier\x22> <path\
+ stroke=\x22#ffffff\
+\x22 stroke-width=\x22\
+2\x22 d=\x22M4 5a1 1 0\
+ 0 1 1-1h4a1 1 0\
+ 0 1 1 1v5a1 1 0\
+ 0 1-1 1H5a1 1 0\
+ 0 1-1-1V5ZM14 5\
+a1 1 0 0 1 1-1h4\
+a1 1 0 0 1 1 1v2\
+a1 1 0 0 1-1 1h-\
+4a1 1 0 0 1-1-1V\
+5ZM4 16a1 1 0 0 \
+1 1-1h4a1 1 0 0 \
+1 1 1v3a1 1 0 0 \
+1-1 1H5a1 1 0 0 \
+1-1-1v-3ZM14 13a\
+1 1 0 0 1 1-1h4a\
+1 1 0 0 1 1 1v6a\
+1 1 0 0 1-1 1h-4\
+a1 1 0 0 1-1-1v-\
+6Z\x22/> </g>\x0a\x0d</sv\
+g>\
+\x00\x00\x03\x13\
+<\
+!DOCTYPE svg PUB\
+LIC \x22-//W3C//DTD\
+ SVG 1.1//EN\x22 \x22h\
+ttp://www.w3.org\
+/Graphics/SVG/1.\
+1/DTD/svg11.dtd\x22\
+>\x0a\x0d<!-- Uploaded\
+ to: SVG Repo, w\
+ww.svgrepo.com, \
+Transformed by: \
+SVG Repo Mixer T\
+ools -->\x0a<svg wi\
+dth=\x22800px\x22 heig\
+ht=\x22800px\x22 viewB\
+ox=\x220 0 24 24\x22 x\
+mlns=\x22http://www\
+.w3.org/2000/svg\
+\x22 fill=\x22none\x22>\x0a\x0d\
+<g id=\x22SVGRepo_b\
+gCarrier\x22 stroke\
+-width=\x220\x22/>\x0a\x0d<g\
+ id=\x22SVGRepo_tra\
+cerCarrier\x22 stro\
+ke-linecap=\x22roun\
+d\x22 stroke-linejo\
+in=\x22round\x22/>\x0a\x0d<g\
+ id=\x22SVGRepo_ico\
+nCarrier\x22> <path\
+ stroke=\x22#ffffff\
+\x22 stroke-width=\x22\
+2\x22 d=\x22M4 5a1 1 0\
+ 0 1 1-1h4a1 1 0\
+ 0 1 1 1v5a1 1 0\
+ 0 1-1 1H5a1 1 0\
+ 0 1-1-1V5ZM14 5\
+a1 1 0 0 1 1-1h4\
+a1 1 0 0 1 1 1v2\
+a1 1 0 0 1-1 1h-\
+4a1 1 0 0 1-1-1V\
+5ZM4 16a1 1 0 0 \
+1 1-1h4a1 1 0 0 \
+1 1 1v3a1 1 0 0 \
+1-1 1H5a1 1 0 0 \
+1-1-1v-3ZM14 13a\
+1 1 0 0 1 1-1h4a\
+1 1 0 0 1 1 1v6a\
+1 1 0 0 1-1 1h-4\
+a1 1 0 0 1-1-1v-\
+6Z\x22/> </g>\x0a\x0d</sv\
+g>\
+\x00\x00\x04a\
 <\
 !DOCTYPE svg PUB\
 LIC \x22-//W3C//DTD\
@@ -12450,62 +12564,281 @@ ools -->\x0a<svg fi\
 ll=\x22#ffffff\x22 wid\
 th=\x22256px\x22 heigh\
 t=\x22256px\x22 viewBo\
-x=\x220 0 32 32\x22 id\
-=\x22icon\x22 xmlns=\x22h\
+x=\x220 0 32.00 32.\
+00\x22 id=\x22icon\x22 xm\
+lns=\x22http://www.\
+w3.org/2000/svg\x22\
+>\x0a\x0d<g id=\x22SVGRep\
+o_bgCarrier\x22 str\
+oke-width=\x220\x22/>\x0a\
+\x0d<g id=\x22SVGRepo_\
+tracerCarrier\x22 s\
+troke-linecap=\x22r\
+ound\x22 stroke-lin\
+ejoin=\x22round\x22/>\x0a\
+\x0d<g id=\x22SVGRepo_\
+iconCarrier\x22> <d\
+efs> <style> .cl\
+s-1 { fill: none\
+; } </style> </d\
+efs> <path d=\x22M6\
+,30H26a2,2,0,0,0\
+,2-2V22a2,2,0,0,\
+0-2-2H6a2,2,0,0,\
+0-2,2v6A2,2,0,0,\
+0,6,30Zm0-8H26v6\
+H6Z\x22 transform=\x22\
+translate(0 0)\x22/\
+> <circle cx=\x229\x22\
+ cy=\x2225\x22 r=\x221\x22/>\
+ <path d=\x22M26,2,\
+24.59,3.41,27.17\
+,6H22.315A6.9835\
+,6.9835,0,0,0,9.\
+08,10H4.83L7.41,\
+7.41,6,6,1,11l5,\
+5,1.41-1.41L4.83\
+,12H9.685A6.9835\
+,6.9835,0,0,0,22\
+.92,8h4.25l-2.58\
+,2.59L26,12l5-5Z\
+M21,9a4.983,4.98\
+3,0,0,1-8.9745,3\
+H16V10H11.1011a4\
+.9852,4.9852,0,0\
+,1,8.8734-4H16V8\
+h4.8989A5.0019,5\
+.0019,0,0,1,21,9\
+Z\x22 transform=\x22tr\
+anslate(0 0)\x22/> \
+<rect id=\x22_Trans\
+parent_Rectangle\
+_\x22 data-name=\x22&l\
+t;Transparent Re\
+ctangle&gt;\x22 cla\
+ss=\x22cls-1\x22 width\
+=\x2232\x22 height=\x2232\
+\x22/> </g>\x0a\x0d</svg>\
+\
+\x00\x00\x04a\
+<\
+!DOCTYPE svg PUB\
+LIC \x22-//W3C//DTD\
+ SVG 1.1//EN\x22 \x22h\
 ttp://www.w3.org\
-/2000/svg\x22 strok\
-e=\x22#ffffff\x22>\x0a\x0d<g\
- id=\x22SVGRepo_bgC\
-arrier\x22 stroke-w\
-idth=\x220\x22/>\x0a\x0d<g i\
-d=\x22SVGRepo_trace\
-rCarrier\x22 stroke\
--linecap=\x22round\x22\
- stroke-linejoin\
-=\x22round\x22/>\x0a\x0d<g i\
-d=\x22SVGRepo_iconC\
-arrier\x22> <defs> \
-<style> .cls-1 {\
- fill: none; } <\
-/style> </defs> \
-<path d=\x22M6,30H2\
-6a2,2,0,0,0,2-2V\
-22a2,2,0,0,0-2-2\
-H6a2,2,0,0,0-2,2\
-v6A2,2,0,0,0,6,3\
-0Zm0-8H26v6H6Z\x22 \
-transform=\x22trans\
-late(0 0)\x22/> <ci\
-rcle cx=\x229\x22 cy=\x22\
-25\x22 r=\x221\x22/> <pat\
-h d=\x22M26,2,24.59\
-,3.41,27.17,6H22\
-.315A6.9835,6.98\
-35,0,0,0,9.08,10\
-H4.83L7.41,7.41,\
-6,6,1,11l5,5,1.4\
-1-1.41L4.83,12H9\
-.685A6.9835,6.98\
-35,0,0,0,22.92,8\
-h4.25l-2.58,2.59\
-L26,12l5-5ZM21,9\
-a4.983,4.983,0,0\
-,1-8.9745,3H16V1\
-0H11.1011a4.9852\
-,4.9852,0,0,1,8.\
-8734-4H16V8h4.89\
-89A5.0019,5.0019\
-,0,0,1,21,9Z\x22 tr\
-ansform=\x22transla\
-te(0 0)\x22/> <rect\
- id=\x22_Transparen\
-t_Rectangle_\x22 da\
-ta-name=\x22&lt;Tra\
-nsparent Rectang\
-le&gt;\x22 class=\x22c\
-ls-1\x22 width=\x2232\x22\
- height=\x2232\x22/> <\
-/g>\x0a\x0d</svg>\
+/Graphics/SVG/1.\
+1/DTD/svg11.dtd\x22\
+>\x0a\x0d<!-- Uploaded\
+ to: SVG Repo, w\
+ww.svgrepo.com, \
+Transformed by: \
+SVG Repo Mixer T\
+ools -->\x0a<svg fi\
+ll=\x22#ffffff\x22 wid\
+th=\x22256px\x22 heigh\
+t=\x22256px\x22 viewBo\
+x=\x220 0 32.00 32.\
+00\x22 id=\x22icon\x22 xm\
+lns=\x22http://www.\
+w3.org/2000/svg\x22\
+>\x0a\x0d<g id=\x22SVGRep\
+o_bgCarrier\x22 str\
+oke-width=\x220\x22/>\x0a\
+\x0d<g id=\x22SVGRepo_\
+tracerCarrier\x22 s\
+troke-linecap=\x22r\
+ound\x22 stroke-lin\
+ejoin=\x22round\x22/>\x0a\
+\x0d<g id=\x22SVGRepo_\
+iconCarrier\x22> <d\
+efs> <style> .cl\
+s-1 { fill: none\
+; } </style> </d\
+efs> <path d=\x22M6\
+,30H26a2,2,0,0,0\
+,2-2V22a2,2,0,0,\
+0-2-2H6a2,2,0,0,\
+0-2,2v6A2,2,0,0,\
+0,6,30Zm0-8H26v6\
+H6Z\x22 transform=\x22\
+translate(0 0)\x22/\
+> <circle cx=\x229\x22\
+ cy=\x2225\x22 r=\x221\x22/>\
+ <path d=\x22M26,2,\
+24.59,3.41,27.17\
+,6H22.315A6.9835\
+,6.9835,0,0,0,9.\
+08,10H4.83L7.41,\
+7.41,6,6,1,11l5,\
+5,1.41-1.41L4.83\
+,12H9.685A6.9835\
+,6.9835,0,0,0,22\
+.92,8h4.25l-2.58\
+,2.59L26,12l5-5Z\
+M21,9a4.983,4.98\
+3,0,0,1-8.9745,3\
+H16V10H11.1011a4\
+.9852,4.9852,0,0\
+,1,8.8734-4H16V8\
+h4.8989A5.0019,5\
+.0019,0,0,1,21,9\
+Z\x22 transform=\x22tr\
+anslate(0 0)\x22/> \
+<rect id=\x22_Trans\
+parent_Rectangle\
+_\x22 data-name=\x22&l\
+t;Transparent Re\
+ctangle&gt;\x22 cla\
+ss=\x22cls-1\x22 width\
+=\x2232\x22 height=\x2232\
+\x22/> </g>\x0a\x0d</svg>\
+\
+\x00\x00\x04a\
+<\
+!DOCTYPE svg PUB\
+LIC \x22-//W3C//DTD\
+ SVG 1.1//EN\x22 \x22h\
+ttp://www.w3.org\
+/Graphics/SVG/1.\
+1/DTD/svg11.dtd\x22\
+>\x0a\x0d<!-- Uploaded\
+ to: SVG Repo, w\
+ww.svgrepo.com, \
+Transformed by: \
+SVG Repo Mixer T\
+ools -->\x0a<svg fi\
+ll=\x22#ffffff\x22 wid\
+th=\x22256px\x22 heigh\
+t=\x22256px\x22 viewBo\
+x=\x220 0 32.00 32.\
+00\x22 id=\x22icon\x22 xm\
+lns=\x22http://www.\
+w3.org/2000/svg\x22\
+>\x0a\x0d<g id=\x22SVGRep\
+o_bgCarrier\x22 str\
+oke-width=\x220\x22/>\x0a\
+\x0d<g id=\x22SVGRepo_\
+tracerCarrier\x22 s\
+troke-linecap=\x22r\
+ound\x22 stroke-lin\
+ejoin=\x22round\x22/>\x0a\
+\x0d<g id=\x22SVGRepo_\
+iconCarrier\x22> <d\
+efs> <style> .cl\
+s-1 { fill: none\
+; } </style> </d\
+efs> <path d=\x22M6\
+,30H26a2,2,0,0,0\
+,2-2V22a2,2,0,0,\
+0-2-2H6a2,2,0,0,\
+0-2,2v6A2,2,0,0,\
+0,6,30Zm0-8H26v6\
+H6Z\x22 transform=\x22\
+translate(0 0)\x22/\
+> <circle cx=\x229\x22\
+ cy=\x2225\x22 r=\x221\x22/>\
+ <path d=\x22M26,2,\
+24.59,3.41,27.17\
+,6H22.315A6.9835\
+,6.9835,0,0,0,9.\
+08,10H4.83L7.41,\
+7.41,6,6,1,11l5,\
+5,1.41-1.41L4.83\
+,12H9.685A6.9835\
+,6.9835,0,0,0,22\
+.92,8h4.25l-2.58\
+,2.59L26,12l5-5Z\
+M21,9a4.983,4.98\
+3,0,0,1-8.9745,3\
+H16V10H11.1011a4\
+.9852,4.9852,0,0\
+,1,8.8734-4H16V8\
+h4.8989A5.0019,5\
+.0019,0,0,1,21,9\
+Z\x22 transform=\x22tr\
+anslate(0 0)\x22/> \
+<rect id=\x22_Trans\
+parent_Rectangle\
+_\x22 data-name=\x22&l\
+t;Transparent Re\
+ctangle&gt;\x22 cla\
+ss=\x22cls-1\x22 width\
+=\x2232\x22 height=\x2232\
+\x22/> </g>\x0a\x0d</svg>\
+\
+\x00\x00\x04a\
+<\
+!DOCTYPE svg PUB\
+LIC \x22-//W3C//DTD\
+ SVG 1.1//EN\x22 \x22h\
+ttp://www.w3.org\
+/Graphics/SVG/1.\
+1/DTD/svg11.dtd\x22\
+>\x0a\x0d<!-- Uploaded\
+ to: SVG Repo, w\
+ww.svgrepo.com, \
+Transformed by: \
+SVG Repo Mixer T\
+ools -->\x0a<svg fi\
+ll=\x22#ffffff\x22 wid\
+th=\x22256px\x22 heigh\
+t=\x22256px\x22 viewBo\
+x=\x220 0 32.00 32.\
+00\x22 id=\x22icon\x22 xm\
+lns=\x22http://www.\
+w3.org/2000/svg\x22\
+>\x0a\x0d<g id=\x22SVGRep\
+o_bgCarrier\x22 str\
+oke-width=\x220\x22/>\x0a\
+\x0d<g id=\x22SVGRepo_\
+tracerCarrier\x22 s\
+troke-linecap=\x22r\
+ound\x22 stroke-lin\
+ejoin=\x22round\x22/>\x0a\
+\x0d<g id=\x22SVGRepo_\
+iconCarrier\x22> <d\
+efs> <style> .cl\
+s-1 { fill: none\
+; } </style> </d\
+efs> <path d=\x22M6\
+,30H26a2,2,0,0,0\
+,2-2V22a2,2,0,0,\
+0-2-2H6a2,2,0,0,\
+0-2,2v6A2,2,0,0,\
+0,6,30Zm0-8H26v6\
+H6Z\x22 transform=\x22\
+translate(0 0)\x22/\
+> <circle cx=\x229\x22\
+ cy=\x2225\x22 r=\x221\x22/>\
+ <path d=\x22M26,2,\
+24.59,3.41,27.17\
+,6H22.315A6.9835\
+,6.9835,0,0,0,9.\
+08,10H4.83L7.41,\
+7.41,6,6,1,11l5,\
+5,1.41-1.41L4.83\
+,12H9.685A6.9835\
+,6.9835,0,0,0,22\
+.92,8h4.25l-2.58\
+,2.59L26,12l5-5Z\
+M21,9a4.983,4.98\
+3,0,0,1-8.9745,3\
+H16V10H11.1011a4\
+.9852,4.9852,0,0\
+,1,8.8734-4H16V8\
+h4.8989A5.0019,5\
+.0019,0,0,1,21,9\
+Z\x22 transform=\x22tr\
+anslate(0 0)\x22/> \
+<rect id=\x22_Trans\
+parent_Rectangle\
+_\x22 data-name=\x22&l\
+t;Transparent Re\
+ctangle&gt;\x22 cla\
+ss=\x22cls-1\x22 width\
+=\x2232\x22 height=\x2232\
+\x22/> </g>\x0a\x0d</svg>\
+\
 \x00\x00\x06\xee\
 <\
 !DOCTYPE svg PUB\
@@ -12619,6 +12952,769 @@ s56.8 130.4 126.\
 8-130.4-126.4-13\
 0.4z\x22 fill=\x22\x22/>\x0a\
 \x0d</g>\x0a\x0d</svg>\
+\x00\x00\x0eg\
+<\
+!DOCTYPE svg PUB\
+LIC \x22-//W3C//DTD\
+ SVG 1.1//EN\x22 \x22h\
+ttp://www.w3.org\
+/Graphics/SVG/1.\
+1/DTD/svg11.dtd\x22\
+>\x0a\x0d<!-- Uploaded\
+ to: SVG Repo, w\
+ww.svgrepo.com, \
+Transformed by: \
+SVG Repo Mixer T\
+ools -->\x0a<svg wi\
+dth=\x22256px\x22 heig\
+ht=\x22256px\x22 viewB\
+ox=\x220 0 24.00 24\
+.00\x22 fill=\x22none\x22\
+ xmlns=\x22http://w\
+ww.w3.org/2000/s\
+vg\x22>\x0a\x0d<g id=\x22SVG\
+Repo_bgCarrier\x22 \
+stroke-width=\x220\x22\
+/>\x0a\x0d<g id=\x22SVGRe\
+po_tracerCarrier\
+\x22 stroke-linecap\
+=\x22round\x22 stroke-\
+linejoin=\x22round\x22\
+/>\x0a\x0d<g id=\x22SVGRe\
+po_iconCarrier\x22>\
+ <path d=\x22M17 3H\
+19C20.1046 3 21 \
+3.89543 21 5V7M1\
+7 21H19C20.1046 \
+21 21 20.1046 21\
+ 19V17M7 3H5C3.8\
+9543 3 3 3.89543\
+ 3 5V7M7 21H5C3.\
+89543 21 3 20.10\
+46 3 19V17\x22 stro\
+ke=\x22#ffffff\x22 str\
+oke-width=\x222\x22 st\
+roke-linecap=\x22ro\
+und\x22/> <path d=\x22\
+M14.0662 15.9978\
+L14 15L14.0003 1\
+6.9956L14.0662 1\
+5.9978ZM18.6875 \
+14.9142L17.7672 \
+15.3055V15.3055L\
+18.6875 14.9142Z\
+M14.0833 13.7504\
+L13.3859 13.0338\
+L12.648 13.7518L\
+13.3873 14.4684L\
+14.0833 13.7504Z\
+M14.8317 15.0178\
+L15.7869 14.7216\
+L15.7869 14.7216\
+L14.8317 15.0178\
+ZM14.1328 15L14.\
+1321 15L14.0003 \
+16.9956C14.0442 \
+16.9985 14.0884 \
+17 14.1328 17V15\
+ZM17.8673 15H14.\
+1328V17H17.8673V\
+15ZM17.7672 15.3\
+055C17.7562 15.2\
+794 17.7452 15.2\
+308 17.754 15.17\
+12C17.7623 15.11\
+47 17.7848 15.07\
+23 17.8056 15.04\
+6C17.8442 14.997\
+ 17.8752 15 17.8\
+673 15V17C18.460\
+9 17 19.0196 16.\
+7369 19.3768 16.\
+2834C19.7483 15.\
+8118 19.8768 15.\
+1557 19.6078 14.\
+523L17.7672 15.3\
+055ZM16.0001 14C\
+16.9743 14 17.47\
+3 14.6134 17.767\
+2 15.3055L19.607\
+8 14.523C19.1718\
+ 13.4974 18.1397\
+ 12 16.0001 12V1\
+4ZM14.7807 14.46\
+71C15.051 14.204\
+1 15.423 14 16.0\
+001 14V12C14.863\
+2 12 14.0008 12.\
+4354 13.3859 13.\
+0338L14.7807 14.\
+4671ZM13.3873 14\
+.4684C13.6258 14\
+.6996 13.7806 15\
+.0044 13.8766 15\
+.314L15.7869 14.\
+7216C15.6273 14.\
+2069 15.3323 13.\
+5684 14.7794 13.\
+0324L13.3873 14.\
+4684ZM13.8766 15\
+.314C13.8667 15.\
+2821 13.8608 15.\
+2318 13.873 15.1\
+74C13.8846 15.11\
+86 13.9085 15.07\
+66 13.9308 15.04\
+95C13.9523 15.02\
+33 13.9719 15.01\
+11 13.9822 15.00\
+59C13.9931 15.00\
+06 13.9993 15.00\
+01 14 15L14.1325\
+ 16.9956C14.6494\
+ 16.9613 15.1427\
+ 16.7245 15.4755\
+ 16.3199C15.8222\
+ 15.8983 15.9709\
+ 15.3152 15.7869\
+ 14.7216L13.8766\
+ 15.314Z\x22 fill=\x22\
+#ffffff\x22/> <path\
+ d=\x22M9.9167 13.7\
+504L10.6127 14.4\
+684L11.352 13.75\
+18L10.6141 13.03\
+37L9.9167 13.750\
+4ZM5.31252 14.91\
+42L6.23281 15.30\
+55L5.31252 14.91\
+42ZM9.9338 15.99\
+78L9.9997 16.995\
+6L10 15L9.9338 1\
+5.9978ZM9.16826 \
+15.0178L10.1234 \
+15.314L10.1234 1\
+5.314L9.16826 15\
+.0178ZM8 14C8.57\
+703 14 8.94899 1\
+4.2041 9.2193 14\
+.4671L10.6141 13\
+.0337C9.9992 12.\
+4354 9.13686 12 \
+8 12V14ZM6.23281\
+ 15.3055C6.527 1\
+4.6134 7.02571 1\
+4 8 14V12C5.8603\
+6 12 4.82825 13.\
+4973 4.39223 14.\
+523L6.23281 15.3\
+055ZM6.13277 15C\
+6.12488 15 6.155\
+86 14.997 6.1944\
+4 15.046C6.21522\
+ 15.0723 6.23774\
+ 15.1147 6.24608\
+ 15.1712C6.25488\
+ 15.2308 6.24389\
+ 15.2794 6.23281\
+ 15.3055L4.39223\
+ 14.523C4.12327 \
+15.1557 4.25175 \
+15.8117 4.62323 \
+16.2834C4.9804 1\
+6.7369 5.53917 1\
+7 6.13277 17V15Z\
+M9.86721 15H6.13\
+277V17H9.86721V1\
+5ZM9.8679 15L9.8\
+6721 15V17C9.911\
+6 17 9.95578 16.\
+9985 9.9997 16.9\
+956L9.8679 15ZM1\
+0 15C10.0007 15.\
+0001 10.0069 15.\
+0006 10.0178 15.\
+0059C10.0281 15.\
+0111 10.0477 15.\
+0233 10.0692 15.\
+0495C10.0915 15.\
+0766 10.1154 15.\
+1186 10.127 15.1\
+74C10.1392 15.23\
+18 10.1333 15.28\
+21 10.1234 15.31\
+4L8.21313 14.721\
+6C8.02907 15.315\
+2 8.17779 15.898\
+3 8.52454 16.319\
+9C8.85734 16.724\
+5 9.35068 16.961\
+3 9.86756 16.995\
+6L10 15ZM10.1234\
+ 15.314C10.2194 \
+15.0044 10.3742 \
+14.6996 10.6127 \
+14.4684L9.22067 \
+13.0324C8.6677 1\
+3.5684 8.37275 1\
+4.2069 8.21313 1\
+4.7216L10.1234 1\
+5.314Z\x22 fill=\x22#f\
+fffff\x22/> <path d\
+=\x22M12 13C13.8516\
+ 13 14.5604 14.1\
+429 14.8317 15.0\
+178C14.9953 15.5\
+453 14.5523 16 1\
+4 16H10C9.44772 \
+16 9.00469 15.54\
+53 9.16826 15.01\
+78C9.43957 14.14\
+29 10.1484 13 12\
+ 13Z\x22 stroke=\x22#f\
+fffff\x22 stroke-wi\
+dth=\x222\x22 stroke-l\
+inecap=\x22round\x22/>\
+ <circle cx=\x2212\x22\
+ cy=\x229\x22 r=\x222\x22 fi\
+ll=\x22#ffffff\x22/> <\
+circle cx=\x2216\x22 c\
+y=\x229\x22 r=\x222\x22 fill\
+=\x22#ffffff\x22/> <ci\
+rcle cx=\x228\x22 cy=\x22\
+9\x22 r=\x222\x22 fill=\x22#\
+ffffff\x22/> </g>\x0a\x0d\
+</svg>\
+\x00\x00\x0eg\
+<\
+!DOCTYPE svg PUB\
+LIC \x22-//W3C//DTD\
+ SVG 1.1//EN\x22 \x22h\
+ttp://www.w3.org\
+/Graphics/SVG/1.\
+1/DTD/svg11.dtd\x22\
+>\x0a\x0d<!-- Uploaded\
+ to: SVG Repo, w\
+ww.svgrepo.com, \
+Transformed by: \
+SVG Repo Mixer T\
+ools -->\x0a<svg wi\
+dth=\x22256px\x22 heig\
+ht=\x22256px\x22 viewB\
+ox=\x220 0 24.00 24\
+.00\x22 fill=\x22none\x22\
+ xmlns=\x22http://w\
+ww.w3.org/2000/s\
+vg\x22>\x0a\x0d<g id=\x22SVG\
+Repo_bgCarrier\x22 \
+stroke-width=\x220\x22\
+/>\x0a\x0d<g id=\x22SVGRe\
+po_tracerCarrier\
+\x22 stroke-linecap\
+=\x22round\x22 stroke-\
+linejoin=\x22round\x22\
+/>\x0a\x0d<g id=\x22SVGRe\
+po_iconCarrier\x22>\
+ <path d=\x22M17 3H\
+19C20.1046 3 21 \
+3.89543 21 5V7M1\
+7 21H19C20.1046 \
+21 21 20.1046 21\
+ 19V17M7 3H5C3.8\
+9543 3 3 3.89543\
+ 3 5V7M7 21H5C3.\
+89543 21 3 20.10\
+46 3 19V17\x22 stro\
+ke=\x22#ffffff\x22 str\
+oke-width=\x222\x22 st\
+roke-linecap=\x22ro\
+und\x22/> <path d=\x22\
+M14.0662 15.9978\
+L14 15L14.0003 1\
+6.9956L14.0662 1\
+5.9978ZM18.6875 \
+14.9142L17.7672 \
+15.3055V15.3055L\
+18.6875 14.9142Z\
+M14.0833 13.7504\
+L13.3859 13.0338\
+L12.648 13.7518L\
+13.3873 14.4684L\
+14.0833 13.7504Z\
+M14.8317 15.0178\
+L15.7869 14.7216\
+L15.7869 14.7216\
+L14.8317 15.0178\
+ZM14.1328 15L14.\
+1321 15L14.0003 \
+16.9956C14.0442 \
+16.9985 14.0884 \
+17 14.1328 17V15\
+ZM17.8673 15H14.\
+1328V17H17.8673V\
+15ZM17.7672 15.3\
+055C17.7562 15.2\
+794 17.7452 15.2\
+308 17.754 15.17\
+12C17.7623 15.11\
+47 17.7848 15.07\
+23 17.8056 15.04\
+6C17.8442 14.997\
+ 17.8752 15 17.8\
+673 15V17C18.460\
+9 17 19.0196 16.\
+7369 19.3768 16.\
+2834C19.7483 15.\
+8118 19.8768 15.\
+1557 19.6078 14.\
+523L17.7672 15.3\
+055ZM16.0001 14C\
+16.9743 14 17.47\
+3 14.6134 17.767\
+2 15.3055L19.607\
+8 14.523C19.1718\
+ 13.4974 18.1397\
+ 12 16.0001 12V1\
+4ZM14.7807 14.46\
+71C15.051 14.204\
+1 15.423 14 16.0\
+001 14V12C14.863\
+2 12 14.0008 12.\
+4354 13.3859 13.\
+0338L14.7807 14.\
+4671ZM13.3873 14\
+.4684C13.6258 14\
+.6996 13.7806 15\
+.0044 13.8766 15\
+.314L15.7869 14.\
+7216C15.6273 14.\
+2069 15.3323 13.\
+5684 14.7794 13.\
+0324L13.3873 14.\
+4684ZM13.8766 15\
+.314C13.8667 15.\
+2821 13.8608 15.\
+2318 13.873 15.1\
+74C13.8846 15.11\
+86 13.9085 15.07\
+66 13.9308 15.04\
+95C13.9523 15.02\
+33 13.9719 15.01\
+11 13.9822 15.00\
+59C13.9931 15.00\
+06 13.9993 15.00\
+01 14 15L14.1325\
+ 16.9956C14.6494\
+ 16.9613 15.1427\
+ 16.7245 15.4755\
+ 16.3199C15.8222\
+ 15.8983 15.9709\
+ 15.3152 15.7869\
+ 14.7216L13.8766\
+ 15.314Z\x22 fill=\x22\
+#ffffff\x22/> <path\
+ d=\x22M9.9167 13.7\
+504L10.6127 14.4\
+684L11.352 13.75\
+18L10.6141 13.03\
+37L9.9167 13.750\
+4ZM5.31252 14.91\
+42L6.23281 15.30\
+55L5.31252 14.91\
+42ZM9.9338 15.99\
+78L9.9997 16.995\
+6L10 15L9.9338 1\
+5.9978ZM9.16826 \
+15.0178L10.1234 \
+15.314L10.1234 1\
+5.314L9.16826 15\
+.0178ZM8 14C8.57\
+703 14 8.94899 1\
+4.2041 9.2193 14\
+.4671L10.6141 13\
+.0337C9.9992 12.\
+4354 9.13686 12 \
+8 12V14ZM6.23281\
+ 15.3055C6.527 1\
+4.6134 7.02571 1\
+4 8 14V12C5.8603\
+6 12 4.82825 13.\
+4973 4.39223 14.\
+523L6.23281 15.3\
+055ZM6.13277 15C\
+6.12488 15 6.155\
+86 14.997 6.1944\
+4 15.046C6.21522\
+ 15.0723 6.23774\
+ 15.1147 6.24608\
+ 15.1712C6.25488\
+ 15.2308 6.24389\
+ 15.2794 6.23281\
+ 15.3055L4.39223\
+ 14.523C4.12327 \
+15.1557 4.25175 \
+15.8117 4.62323 \
+16.2834C4.9804 1\
+6.7369 5.53917 1\
+7 6.13277 17V15Z\
+M9.86721 15H6.13\
+277V17H9.86721V1\
+5ZM9.8679 15L9.8\
+6721 15V17C9.911\
+6 17 9.95578 16.\
+9985 9.9997 16.9\
+956L9.8679 15ZM1\
+0 15C10.0007 15.\
+0001 10.0069 15.\
+0006 10.0178 15.\
+0059C10.0281 15.\
+0111 10.0477 15.\
+0233 10.0692 15.\
+0495C10.0915 15.\
+0766 10.1154 15.\
+1186 10.127 15.1\
+74C10.1392 15.23\
+18 10.1333 15.28\
+21 10.1234 15.31\
+4L8.21313 14.721\
+6C8.02907 15.315\
+2 8.17779 15.898\
+3 8.52454 16.319\
+9C8.85734 16.724\
+5 9.35068 16.961\
+3 9.86756 16.995\
+6L10 15ZM10.1234\
+ 15.314C10.2194 \
+15.0044 10.3742 \
+14.6996 10.6127 \
+14.4684L9.22067 \
+13.0324C8.6677 1\
+3.5684 8.37275 1\
+4.2069 8.21313 1\
+4.7216L10.1234 1\
+5.314Z\x22 fill=\x22#f\
+fffff\x22/> <path d\
+=\x22M12 13C13.8516\
+ 13 14.5604 14.1\
+429 14.8317 15.0\
+178C14.9953 15.5\
+453 14.5523 16 1\
+4 16H10C9.44772 \
+16 9.00469 15.54\
+53 9.16826 15.01\
+78C9.43957 14.14\
+29 10.1484 13 12\
+ 13Z\x22 stroke=\x22#f\
+fffff\x22 stroke-wi\
+dth=\x222\x22 stroke-l\
+inecap=\x22round\x22/>\
+ <circle cx=\x2212\x22\
+ cy=\x229\x22 r=\x222\x22 fi\
+ll=\x22#ffffff\x22/> <\
+circle cx=\x2216\x22 c\
+y=\x229\x22 r=\x222\x22 fill\
+=\x22#ffffff\x22/> <ci\
+rcle cx=\x228\x22 cy=\x22\
+9\x22 r=\x222\x22 fill=\x22#\
+ffffff\x22/> </g>\x0a\x0d\
+</svg>\
+\x00\x00\x06\x02\
+<\
+!DOCTYPE svg PUB\
+LIC \x22-//W3C//DTD\
+ SVG 1.1//EN\x22 \x22h\
+ttp://www.w3.org\
+/Graphics/SVG/1.\
+1/DTD/svg11.dtd\x22\
+>\x0a\x0d<!-- Uploaded\
+ to: SVG Repo, w\
+ww.svgrepo.com, \
+Transformed by: \
+SVG Repo Mixer T\
+ools -->\x0a<svg fi\
+ll=\x22#ffffff\x22 ver\
+sion=\x221.1\x22 id=\x22L\
+ayer_1\x22 xmlns=\x22h\
+ttp://www.w3.org\
+/2000/svg\x22 xmlns\
+:xlink=\x22http://w\
+ww.w3.org/1999/x\
+link\x22 width=\x22256\
+px\x22 height=\x22256p\
+x\x22 viewBox=\x220 0 \
+100.00 100.00\x22 e\
+nable-background\
+=\x22new 0 0 100 10\
+0\x22 xml:space=\x22pr\
+eserve\x22>\x0a\x0d<g id=\
+\x22SVGRepo_bgCarri\
+er\x22 stroke-width\
+=\x220\x22/>\x0a\x0d<g id=\x22S\
+VGRepo_tracerCar\
+rier\x22 stroke-lin\
+ecap=\x22round\x22 str\
+oke-linejoin=\x22ro\
+und\x22/>\x0a\x0d<g id=\x22S\
+VGRepo_iconCarri\
+er\x22> <g> <g> <pa\
+th d=\x22M67.041,78\
+.553h-6.49h0c-0.\
+956,0-1.73,0.774\
+-1.73,1.73h-0.00\
+7v3.01H18.173V36\
+.16h17.723c0.956\
+,0,1.73-0.774,1.\
+73-1.73 V16.707h\
+21.188l0,12.34h0\
+.016c0.047,0.913\
+,0.796,1.641,1.7\
+21,1.641h6.49c0.\
+925,0,1.674-0.72\
+8,1.721-1.641h0.\
+009v-0.088 c0,0,\
+0-0.001,0-0.001c\
+0-0.001,0-0.001,\
+0-0.002l0-16.457\
+h-0.005V8.48c0-0\
+.956-0.774-1.73-\
+1.73-1.73h-2.45v\
+0H35.895v0h-1.73\
+ L8.216,32.7v2.4\
+47v1.013v52.912v\
+2.447c0,0.956,0.\
+774,1.73,1.73,1.\
+73h1.582h53.925h\
+1.582c0.956,0,1.\
+73-0.774,1.73-1.\
+73v-2.448 h0.005\
+l0-8.789l0-0.001\
+C68.771,79.328,6\
+7.997,78.553,67.\
+041,78.553z\x22/> <\
+/g> <g> <path d=\
+\x22M91.277,39.04L7\
+9.656,27.419c-0.\
+676-0.676-1.771-\
+0.676-2.447,0L45\
+.404,59.224l0.06\
+9,0.069l-0.109-0\
+.029l-4.351,16.2\
+37 l0.003,0.001c\
+-0.199,0.601-0.0\
+66,1.287,0.412,1\
+.765c0.528,0.528\
+,1.309,0.638,1.9\
+48,0.341l0.002,0\
+.006l16.08-4.309\
+l-0.01-0.037 l0.\
+023,0.024l31.806\
+-31.806C91.953,4\
+0.811,91.953,39.\
+716,91.277,39.04\
+z M46.305,72.353\
+l2.584-9.643l7.0\
+59,7.059L46.305,\
+72.353z\x22/> </g> \
+</g> </g>\x0a\x0d</svg\
+>\
+\x00\x00\x06\x02\
+<\
+!DOCTYPE svg PUB\
+LIC \x22-//W3C//DTD\
+ SVG 1.1//EN\x22 \x22h\
+ttp://www.w3.org\
+/Graphics/SVG/1.\
+1/DTD/svg11.dtd\x22\
+>\x0a\x0d<!-- Uploaded\
+ to: SVG Repo, w\
+ww.svgrepo.com, \
+Transformed by: \
+SVG Repo Mixer T\
+ools -->\x0a<svg fi\
+ll=\x22#ffffff\x22 ver\
+sion=\x221.1\x22 id=\x22L\
+ayer_1\x22 xmlns=\x22h\
+ttp://www.w3.org\
+/2000/svg\x22 xmlns\
+:xlink=\x22http://w\
+ww.w3.org/1999/x\
+link\x22 width=\x22256\
+px\x22 height=\x22256p\
+x\x22 viewBox=\x220 0 \
+100.00 100.00\x22 e\
+nable-background\
+=\x22new 0 0 100 10\
+0\x22 xml:space=\x22pr\
+eserve\x22>\x0a\x0d<g id=\
+\x22SVGRepo_bgCarri\
+er\x22 stroke-width\
+=\x220\x22/>\x0a\x0d<g id=\x22S\
+VGRepo_tracerCar\
+rier\x22 stroke-lin\
+ecap=\x22round\x22 str\
+oke-linejoin=\x22ro\
+und\x22/>\x0a\x0d<g id=\x22S\
+VGRepo_iconCarri\
+er\x22> <g> <g> <pa\
+th d=\x22M67.041,78\
+.553h-6.49h0c-0.\
+956,0-1.73,0.774\
+-1.73,1.73h-0.00\
+7v3.01H18.173V36\
+.16h17.723c0.956\
+,0,1.73-0.774,1.\
+73-1.73 V16.707h\
+21.188l0,12.34h0\
+.016c0.047,0.913\
+,0.796,1.641,1.7\
+21,1.641h6.49c0.\
+925,0,1.674-0.72\
+8,1.721-1.641h0.\
+009v-0.088 c0,0,\
+0-0.001,0-0.001c\
+0-0.001,0-0.001,\
+0-0.002l0-16.457\
+h-0.005V8.48c0-0\
+.956-0.774-1.73-\
+1.73-1.73h-2.45v\
+0H35.895v0h-1.73\
+ L8.216,32.7v2.4\
+47v1.013v52.912v\
+2.447c0,0.956,0.\
+774,1.73,1.73,1.\
+73h1.582h53.925h\
+1.582c0.956,0,1.\
+73-0.774,1.73-1.\
+73v-2.448 h0.005\
+l0-8.789l0-0.001\
+C68.771,79.328,6\
+7.997,78.553,67.\
+041,78.553z\x22/> <\
+/g> <g> <path d=\
+\x22M91.277,39.04L7\
+9.656,27.419c-0.\
+676-0.676-1.771-\
+0.676-2.447,0L45\
+.404,59.224l0.06\
+9,0.069l-0.109-0\
+.029l-4.351,16.2\
+37 l0.003,0.001c\
+-0.199,0.601-0.0\
+66,1.287,0.412,1\
+.765c0.528,0.528\
+,1.309,0.638,1.9\
+48,0.341l0.002,0\
+.006l16.08-4.309\
+l-0.01-0.037 l0.\
+023,0.024l31.806\
+-31.806C91.953,4\
+0.811,91.953,39.\
+716,91.277,39.04\
+z M46.305,72.353\
+l2.584-9.643l7.0\
+59,7.059L46.305,\
+72.353z\x22/> </g> \
+</g> </g>\x0a\x0d</svg\
+>\
+\x00\x00\x06\x02\
+<\
+!DOCTYPE svg PUB\
+LIC \x22-//W3C//DTD\
+ SVG 1.1//EN\x22 \x22h\
+ttp://www.w3.org\
+/Graphics/SVG/1.\
+1/DTD/svg11.dtd\x22\
+>\x0a\x0d<!-- Uploaded\
+ to: SVG Repo, w\
+ww.svgrepo.com, \
+Transformed by: \
+SVG Repo Mixer T\
+ools -->\x0a<svg fi\
+ll=\x22#ffffff\x22 ver\
+sion=\x221.1\x22 id=\x22L\
+ayer_1\x22 xmlns=\x22h\
+ttp://www.w3.org\
+/2000/svg\x22 xmlns\
+:xlink=\x22http://w\
+ww.w3.org/1999/x\
+link\x22 width=\x22256\
+px\x22 height=\x22256p\
+x\x22 viewBox=\x220 0 \
+100.00 100.00\x22 e\
+nable-background\
+=\x22new 0 0 100 10\
+0\x22 xml:space=\x22pr\
+eserve\x22>\x0a\x0d<g id=\
+\x22SVGRepo_bgCarri\
+er\x22 stroke-width\
+=\x220\x22/>\x0a\x0d<g id=\x22S\
+VGRepo_tracerCar\
+rier\x22 stroke-lin\
+ecap=\x22round\x22 str\
+oke-linejoin=\x22ro\
+und\x22/>\x0a\x0d<g id=\x22S\
+VGRepo_iconCarri\
+er\x22> <g> <g> <pa\
+th d=\x22M67.041,78\
+.553h-6.49h0c-0.\
+956,0-1.73,0.774\
+-1.73,1.73h-0.00\
+7v3.01H18.173V36\
+.16h17.723c0.956\
+,0,1.73-0.774,1.\
+73-1.73 V16.707h\
+21.188l0,12.34h0\
+.016c0.047,0.913\
+,0.796,1.641,1.7\
+21,1.641h6.49c0.\
+925,0,1.674-0.72\
+8,1.721-1.641h0.\
+009v-0.088 c0,0,\
+0-0.001,0-0.001c\
+0-0.001,0-0.001,\
+0-0.002l0-16.457\
+h-0.005V8.48c0-0\
+.956-0.774-1.73-\
+1.73-1.73h-2.45v\
+0H35.895v0h-1.73\
+ L8.216,32.7v2.4\
+47v1.013v52.912v\
+2.447c0,0.956,0.\
+774,1.73,1.73,1.\
+73h1.582h53.925h\
+1.582c0.956,0,1.\
+73-0.774,1.73-1.\
+73v-2.448 h0.005\
+l0-8.789l0-0.001\
+C68.771,79.328,6\
+7.997,78.553,67.\
+041,78.553z\x22/> <\
+/g> <g> <path d=\
+\x22M91.277,39.04L7\
+9.656,27.419c-0.\
+676-0.676-1.771-\
+0.676-2.447,0L45\
+.404,59.224l0.06\
+9,0.069l-0.109-0\
+.029l-4.351,16.2\
+37 l0.003,0.001c\
+-0.199,0.601-0.0\
+66,1.287,0.412,1\
+.765c0.528,0.528\
+,1.309,0.638,1.9\
+48,0.341l0.002,0\
+.006l16.08-4.309\
+l-0.01-0.037 l0.\
+023,0.024l31.806\
+-31.806C91.953,4\
+0.811,91.953,39.\
+716,91.277,39.04\
+z M46.305,72.353\
+l2.584-9.643l7.0\
+59,7.059L46.305,\
+72.353z\x22/> </g> \
+</g> </g>\x0a\x0d</svg\
+>\
 \x00\x00\x0aG\
 <\
 !DOCTYPE svg PUB\
@@ -12786,6 +13882,57 @@ C11.3097 10.75 1\
 75 9.5Z\x22 fill=\x22#\
 ffffff\x22/> </g>\x0a\x0d\
 </svg>\
+\x00\x00\x03\x05\
+<\
+!DOCTYPE svg PUB\
+LIC \x22-//W3C//DTD\
+ SVG 1.1//EN\x22 \x22h\
+ttp://www.w3.org\
+/Graphics/SVG/1.\
+1/DTD/svg11.dtd\x22\
+>\x0a\x0d<!-- Uploaded\
+ to: SVG Repo, w\
+ww.svgrepo.com, \
+Transformed by: \
+SVG Repo Mixer T\
+ools -->\x0a<svg wi\
+dth=\x22800px\x22 heig\
+ht=\x22800px\x22 viewB\
+ox=\x220 0 24 24\x22 f\
+ill=\x22none\x22 xmlns\
+=\x22http://www.w3.\
+org/2000/svg\x22>\x0a\x0d\
+<g id=\x22SVGRepo_b\
+gCarrier\x22 stroke\
+-width=\x220\x22/>\x0a\x0d<g\
+ id=\x22SVGRepo_tra\
+cerCarrier\x22 stro\
+ke-linecap=\x22roun\
+d\x22 stroke-linejo\
+in=\x22round\x22/>\x0a\x0d<g\
+ id=\x22SVGRepo_ico\
+nCarrier\x22> <path\
+ d=\x22M20 18L17 18\
+M17 18L14 18M17 \
+18V15M17 18V21M1\
+1 21H4C4 17.134 \
+7.13401 14 11 14\
+C11.695 14 12.36\
+63 14.1013 13 14\
+.2899M15 7C15 9.\
+20914 13.2091 11\
+ 11 11C8.79086 1\
+1 7 9.20914 7 7C\
+7 4.79086 8.7908\
+6 3 11 3C13.2091\
+ 3 15 4.79086 15\
+ 7Z\x22 stroke=\x22#ff\
+ffff\x22 stroke-wid\
+th=\x222\x22 stroke-li\
+necap=\x22round\x22 st\
+roke-linejoin=\x22r\
+ound\x22/> </g>\x0a\x0d</\
+svg>\
 \x00\x00\x06\xee\
 <\
 !DOCTYPE svg PUB\
@@ -12899,6 +14046,52 @@ s56.8 130.4 126.\
 8-130.4-126.4-13\
 0.4z\x22 fill=\x22\x22/>\x0a\
 \x0d</g>\x0a\x0d</svg>\
+\x00\x00\x02\xb3\
+<\
+!DOCTYPE svg PUB\
+LIC \x22-//W3C//DTD\
+ SVG 1.1//EN\x22 \x22h\
+ttp://www.w3.org\
+/Graphics/SVG/1.\
+1/DTD/svg11.dtd\x22\
+>\x0a\x0d<!-- Uploaded\
+ to: SVG Repo, w\
+ww.svgrepo.com, \
+Transformed by: \
+SVG Repo Mixer T\
+ools -->\x0a<svg wi\
+dth=\x22256px\x22 heig\
+ht=\x22256px\x22 viewB\
+ox=\x220 0 24.00 24\
+.00\x22 fill=\x22none\x22\
+ xmlns=\x22http://w\
+ww.w3.org/2000/s\
+vg\x22>\x0a\x0d<g id=\x22SVG\
+Repo_bgCarrier\x22 \
+stroke-width=\x220\x22\
+/>\x0a\x0d<g id=\x22SVGRe\
+po_tracerCarrier\
+\x22 stroke-linecap\
+=\x22round\x22 stroke-\
+linejoin=\x22round\x22\
+/>\x0a\x0d<g id=\x22SVGRe\
+po_iconCarrier\x22>\
+ <path d=\x22M15 12\
+H12M12 12H9M12 1\
+2V9M12 12V15M17 \
+21H7C4.79086 21 \
+3 19.2091 3 17V7\
+C3 4.79086 4.790\
+86 3 7 3H17C19.2\
+091 3 21 4.79086\
+ 21 7V17C21 19.2\
+091 19.2091 21 1\
+7 21Z\x22 stroke=\x22#\
+ffffff\x22 stroke-w\
+idth=\x221.056\x22 str\
+oke-linecap=\x22rou\
+nd\x22/> </g>\x0a\x0d</sv\
+g>\
 "
 
 qt_resource_name = b"\
@@ -12991,20 +14184,36 @@ qt_resource_name = b"\
 \x0c8\xe0\xc7\
 \x00p\
 \x00r\x00o\x00f\x00i\x00l\x00e\x00s\x00.\x00s\x00v\x00g\
+\x00\x09\
+\x06\xc3\x87\xe7\
+\x00g\
+\x00r\x00o\x00u\x00p\x00.\x00s\x00v\x00g\
+\x00\x08\
+\x07\xd8T\x07\
+\x00p\
+\x00a\x00g\x00e\x00.\x00s\x00v\x00g\
 \x00\x08\
 \x068W'\
 \x00h\
 \x00o\x00m\x00e\x00.\x00s\x00v\x00g\
+\x00\x0b\
+\x0c\x98n\x07\
+\x00a\
+\x00c\x00c\x00o\x00u\x00n\x00t\x00.\x00s\x00v\x00g\
 \x00\x07\
 \x07\x96Z\x07\
 \x00a\
 \x00c\x00c\x00.\x00s\x00v\x00g\
+\x00\x08\
+\x03\xc6T'\
+\x00p\
+\x00l\x00u\x00s\x00.\x00s\x00v\x00g\
 "
 
 qt_resource_struct = b"\
 \x00\x00\x00\x00\x00\x02\x00\x00\x00\x03\x00\x00\x00\x01\
 \x00\x00\x00\x00\x00\x00\x00\x00\
-\x00\x00\x00\x0c\x00\x02\x00\x00\x00\x01\x00\x00\x00\x19\
+\x00\x00\x00\x0c\x00\x02\x00\x00\x00\x01\x00\x00\x00%\
 \x00\x00\x00\x00\x00\x00\x00\x00\
 \x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x11\
 \x00\x00\x00\x00\x00\x00\x00\x00\
@@ -13040,23 +14249,47 @@ qt_resource_struct = b"\
 \x00\x00\x00\x00\x00\x00\x00\x00\
 \x00\x00\x00\x18\x00\x02\x00\x00\x00\x01\x00\x00\x00\x13\
 \x00\x00\x00\x00\x00\x00\x00\x00\
-\x00\x00\x00\x00\x00\x02\x00\x00\x00\x05\x00\x00\x00\x14\
+\x00\x00\x00\x00\x00\x02\x00\x00\x00\x11\x00\x00\x00\x14\
 \x00\x00\x00\x00\x00\x00\x00\x00\
-\x00\x00\x02:\x00\x00\x00\x00\x00\x01\x00\x03\x11\xe3\
+\x00\x00\x02\xae\x00\x00\x00\x00\x00\x01\x00\x03h\xff\
+\x00\x00\x01\x8b\xb3$5\x0b\
+\x00\x00\x02h\x00\x00\x00\x00\x00\x01\x00\x03T\xb9\
 \x00\x00\x01\x8boE\x91{\
-\x00\x00\x02\x04\x00\x00\x00\x00\x00\x01\x00\x03\x06\x81\
-\x00\x00\x01\x8boE\x91|\
-\x00\x00\x02P\x00\x00\x00\x00\x00\x01\x00\x03\x1c.\
+\x00\x00\x02:\x00\x00\x00\x00\x00\x01\x00\x03%\xd1\
+\x00\x00\x01\x8b\xb1\xbaJ,\
+\x00\x00\x02:\x00\x00\x00\x00\x00\x01\x00\x034<\
+\x00\x00\x01\x8b\xb1\xbaJ,\
+\x00\x00\x02\x04\x00\x00\x00\x00\x00\x01\x00\x03\x0dK\
+\x00\x00\x01\x8b\xeb\x19U\xd3\
+\x00\x00\x02\x04\x00\x00\x00\x00\x00\x01\x00\x03\x11\xb0\
+\x00\x00\x01\x8b\xeb\x19U\xd3\
+\x00\x00\x02\x04\x00\x00\x00\x00\x00\x01\x00\x03\x16\x15\
+\x00\x00\x01\x8b\xeb\x19U\xd3\
+\x00\x00\x02\x04\x00\x00\x00\x00\x00\x01\x00\x03\x1az\
+\x00\x00\x01\x8b\xeb\x19U\xd3\
+\x00\x00\x02\x9a\x00\x00\x00\x00\x00\x01\x00\x03b\x0d\
 \x00\x00\x01\x8boE\x91z\
-\x00\x00\x02\x1c\x00\x00\x00\x00\x00\x01\x00\x03\x0a\xf1\
+\x00\x00\x02R\x00\x00\x00\x00\x00\x01\x00\x03B\xa7\
+\x00\x00\x01\x8b\xb1\xbed\x15\
+\x00\x00\x02R\x00\x00\x00\x00\x00\x01\x00\x03H\xad\
+\x00\x00\x01\x8b\xb1\xbed\x15\
+\x00\x00\x02R\x00\x00\x00\x00\x00\x01\x00\x03N\xb3\
+\x00\x00\x01\x8b\xb1\xbed\x15\
+\x00\x00\x02\x1c\x00\x00\x00\x00\x00\x01\x00\x03\x1e\xdf\
 \x00\x00\x01\x8boE\x91{\
+\x00\x00\x02~\x00\x00\x00\x00\x00\x01\x00\x03_\x04\
+\x00\x00\x01\x8b\xb1\xd1\xffZ\
 \x00\x00\x01\xe4\x00\x00\x00\x00\x00\x01\x00\x03\x04\x06\
-\x00\x00\x01\x8boE\x91z\
-\x00\x00\x00&\x00\x02\x00\x00\x00\x01\x00\x00\x00\x1a\
+\x00\x00\x01\x8b\xeb\x19U\xd2\
+\x00\x00\x01\xe4\x00\x00\x00\x00\x00\x01\x00\x03\x07\x1d\
+\x00\x00\x01\x8b\xeb\x19U\xd2\
+\x00\x00\x01\xe4\x00\x00\x00\x00\x00\x01\x00\x03\x0a4\
+\x00\x00\x01\x8b\xeb\x19U\xd2\
+\x00\x00\x00&\x00\x02\x00\x00\x00\x01\x00\x00\x00&\
 \x00\x00\x00\x00\x00\x00\x00\x00\
-\x00\x00\x00\x18\x00\x02\x00\x00\x00\x01\x00\x00\x00\x1b\
+\x00\x00\x00\x18\x00\x02\x00\x00\x00\x01\x00\x00\x00'\
 \x00\x00\x00\x00\x00\x00\x00\x00\
-\x00\x00\x00\x0c\x00\x02\x00\x00\x00\x04\x00\x00\x00\x1c\
+\x00\x00\x00\x0c\x00\x02\x00\x00\x00\x04\x00\x00\x00(\
 \x00\x00\x00\x00\x00\x00\x00\x00\
 \x00\x00\x01\xce\x00\x00\x00\x00\x00\x01\x00\x02\xc7\xc1\
 \x00\x00\x01\x8boD_\xce\

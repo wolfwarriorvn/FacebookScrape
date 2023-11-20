@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'pages.ui'
+## Form generated from reading UI file 'groups.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.0
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -19,14 +19,14 @@ from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QPushButton,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 import icon_rc
 
-class Ui_Page(object):
-    def setupUi(self, Page):
-        if not Page.objectName():
-            Page.setObjectName(u"Page")
-        Page.resize(668, 499)
-        self.verticalLayout = QVBoxLayout(Page)
+class Ui_Group(object):
+    def setupUi(self, Group):
+        if not Group.objectName():
+            Group.setObjectName(u"Group")
+        Group.resize(655, 499)
+        self.verticalLayout = QVBoxLayout(Group)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.widget = QWidget(Page)
+        self.widget = QWidget(Group)
         self.widget.setObjectName(u"widget")
         self.widget.setMaximumSize(QSize(16777215, 30))
         self.widget.setLayoutDirection(Qt.LeftToRight)
@@ -35,10 +35,10 @@ class Ui_Page(object):
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setVerticalSpacing(0)
         self.gridLayout.setContentsMargins(-1, 0, -1, 0)
-        self.btn_add_page = QPushButton(self.widget)
-        self.btn_add_page.setObjectName(u"btn_add_page")
-        self.btn_add_page.setMaximumSize(QSize(150, 16777215))
-        self.btn_add_page.setStyleSheet(u"QPushButton{\n"
+        self.btn_add_group = QPushButton(self.widget)
+        self.btn_add_group.setObjectName(u"btn_add_group")
+        self.btn_add_group.setMaximumSize(QSize(150, 16777215))
+        self.btn_add_group.setStyleSheet(u"QPushButton{\n"
 "	 color: rgb(255, 255, 255);\n"
 "     background-color: qlineargradient(spread:pad, x1:0 y1:0, x2:1, y2:3, stop:0 #0081A7, stop:1 #00AFB9);;\n"
 "     border: 1px solid rgba(255,255,255,40);\n"
@@ -54,9 +54,9 @@ class Ui_Page(object):
 "}")
         icon = QIcon()
         icon.addFile(u":/icon/views/icon/user-plus.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_add_page.setIcon(icon)
+        self.btn_add_group.setIcon(icon)
 
-        self.gridLayout.addWidget(self.btn_add_page, 0, 2, 1, 1)
+        self.gridLayout.addWidget(self.btn_add_group, 0, 2, 1, 1)
 
         self.btn_refresh = QPushButton(self.widget)
         self.btn_refresh.setObjectName(u"btn_refresh")
@@ -88,21 +88,21 @@ class Ui_Page(object):
 
         self.verticalLayout.addWidget(self.widget)
 
-        self.frame_page = QFrame(Page)
-        self.frame_page.setObjectName(u"frame_page")
-        self.frame_page.setStyleSheet(u"")
+        self.frame_group = QFrame(Group)
+        self.frame_group.setObjectName(u"frame_group")
+        self.frame_group.setStyleSheet(u"")
 
-        self.verticalLayout.addWidget(self.frame_page)
+        self.verticalLayout.addWidget(self.frame_group)
 
 
-        self.retranslateUi(Page)
+        self.retranslateUi(Group)
 
-        QMetaObject.connectSlotsByName(Page)
+        QMetaObject.connectSlotsByName(Group)
     # setupUi
 
-    def retranslateUi(self, Page):
-        Page.setWindowTitle(QCoreApplication.translate("Page", u"Form", None))
-        self.btn_add_page.setText(QCoreApplication.translate("Page", u"Th\u00eam Page", None))
+    def retranslateUi(self, Group):
+        Group.setWindowTitle(QCoreApplication.translate("Group", u"Form", None))
+        self.btn_add_group.setText(QCoreApplication.translate("Group", u"Th\u00eam Nh\u00f3m", None))
         self.btn_refresh.setText("")
     # retranslateUi
 

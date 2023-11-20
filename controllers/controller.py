@@ -2,7 +2,7 @@ from PySide6.QtCore import QObject
 from PySide6.QtCore import Signal, Slot
 from PySide6.QtCore import QThreadPool, QSemaphore
 
-from model.model import Model
+from model.model import DatabaseModel
 
 from controllers.worker import *
 from common.payload import *
@@ -22,16 +22,7 @@ class AccountInfo:
 
 class MySignals(QObject):
     # Edit account signal
-    table_on_load = Signal()
-    get_account_completed = Signal(object)
-    save_account_completed = Signal()
-    create_table_db = Signal(str)
     update_dashboard = Signal()
-
-    wrong_user_input = Signal()
-    table_get_completed = Signal(object)
-    add_user_completed = Signal()
-    add_user_error = Signal(object)
 
     # Pages Manage
     get_accounts = Signal()
@@ -39,7 +30,6 @@ class MySignals(QObject):
 
     # facebook
     post_event = Signal(object, object)
-    scan_joined_group = Signal(object, object)
     scan_group_by_keyword = Signal(str, str, int)
     check_approval_post = Signal(str, object)
     check_group_allow_page = Signal(str, object)
@@ -51,76 +41,68 @@ class MySignals(QObject):
     #login
     #checkpoint 
     checkpoint_956 = Signal(object)
+class DatabaseWorker(QObject):
+    finished = Signal()
+    result = Signal(object, str)  # First argument for the result, second for error
+
+    def __init__(self, operation, data, callback):
+        super().__init__()
+        self.operation = operation
+        self.data = data
+        self.callback = callback
+
+    def run(self):
+        try:
+            result = self.operation(self.data) if self.data else self.operation()
+            self.result.emit(result, None)
+        except Exception as e:
+            self.result.emit(None, str(e))
+        finally:
+            self.finished.emit()
 
 class DbSignals(QObject):
     # Proxy table
-    proxy_add = Signal(str, str)
-    proxy_add_completed = Signal()
-    proxy_detete = Signal(object)
     get_free_group = Signal(str)
     get_free_group_completed = Signal(int)
-    #account table
-    account_add = Signal(str, str, str)
-    account_add_response = Signal()
 
-class MainController(QObject):
-    # sg_wrong_user_input = Signal()
+
+class Controller(QObject):
     signals = MySignals()
     db_signals = DbSignals()
+    database_operation = Signal(str, object, object)
 
-    def __init__(self, model: Model):
+    def __init__(self, model: DatabaseModel):
         super().__init__()
         self.pool = QThreadPool.globalInstance()
         self._model = model
-        self.signals.table_on_load.connect(self.update_table_view)
 
-        self.signals.get_accounts.connect(self.on_get_accounts)
+        self.database_operation.connect(self.handle_operation)
+
         self.signals.checkpoint_956.connect(self.init_thread_checkpoint_956)
-        self.signals.create_table_db.connect(self.create_table)
         self.signals.check_approval_post.connect(
             self.init_thread_check_approval_post)
         self.signals.check_group_allow_page.connect(
             self.init_thread_check_group_allow_page)
 
-        self.signals.scan_joined_group.connect(self.scan_joined_group)
         self.signals.post_event.connect(self.init_thread_post)
         self.signals.scan_group_by_keyword.connect(self.scan_group_by_keyword)
         self.signals.scan_post_history.connect(self.on_scan_post_history)
         self.signals.seeding_action.connect(self.init_thread_seeding_action)
         self.db_signals.get_free_group.connect(self.on_get_free_group)
-        self.db_signals.proxy_add.connect(self.on_add_proxy)
-        self.db_signals.account_add.connect(self.on_account_add)
 
-    def on_account_add(self, input_accounts, category, acc_format):
-        accs_raw = input_accounts.splitlines()
+
+    def handle_operation(self, operation_type, callback, args):
         try:
-            for acc in accs_raw:
-                elements = acc.split('|')
-                if acc_format in AccountFormat.UID_PASS:
-                    uid, pwd = acc.split('|')
-                    self._model.add_account_info(uid, pwd)
-                    self.signals.add_user_completed.emit()
-
-                elif acc_format in AccountFormat.CUSTOM1:
-                    uid, pwd, code2fa, email, pass_email, cookie, token, birthday, *stuff = acc.split('|')
-                    self._model.add_account_info(uid, pwd, category, code2fa, cookie, token,email, pass_email , birthday)
-                    self.signals.add_user_completed.emit()
-
-                elif acc_format in AccountFormat.CUSTOM2:
-                    uid, pwd, code2fa, cookie, token,email, pass_email , birthday, *stuff = acc.split('|')
-                    self._model.add_account_info(uid, pwd, category, code2fa, cookie, token,email, pass_email , birthday)
-                    self.signals.add_user_completed.emit()
-
-                elif acc_format in AccountFormat.DUYAN_5K:
-                    uid, pwd, code2fa, email, pass_email, _, birthday, cookie, token, *stuff = acc.split('|')
-                    self._model.add_account_info(uid, pwd, category, code2fa, cookie, token,email, pass_email , birthday)
-                    self.signals.add_user_completed.emit()
-                else:
-                    self.signals.add_user_error.emit()
-
+            operation_method = getattr(self._model, operation_type, None)
+            if operation_method:
+                result = operation_method(**args)
+                callback(result, None)
+            else:
+                raise ValueError(f"Unhandled operation type: {operation_type}")
         except Exception as e:
-            self.signals.add_user_error.emit(e)
+            callback(None, str(e))
 
+    
     def on_get_free_group(self, type_groups):
         free_group_links = self._model.get_group_free(type_groups)
         self.db_signals.get_free_group_completed.emit(len(free_group_links))
@@ -234,6 +216,7 @@ class MainController(QObject):
                 self._model.update_post_liked_counts(href)
             elif action == 'Commented':
                 self._model.update_post_commented_counts(href)
+
             self._model.add_seeding_action(uid, href, action)
         except Exception as e:
             logging.error('', exc_info=True)
@@ -319,10 +302,6 @@ class MainController(QObject):
         except Exception as e:
             logging.error('', exc_info=True)
 
-    def on_get_accounts(self):
-        accounts = self._model.get_account_userids()
-        self.signals.get_accounts_completed.emit(accounts)
-
     def login_chrome(self, selected_uids):
         sema_id = self.genarate_semaphore(1)
         for uid in selected_uids:
@@ -398,38 +377,6 @@ class MainController(QObject):
         except Exception as e:
             logging.error('', exc_info=True)
 
-    Slot(object, object)
-
-    def scan_joined_group(self, uids, page_ids):
-        sema_id = self.genarate_semaphore(1)
-        try:
-            for idx_uid, idx_page_id in zip(uids, page_ids):
-                account = self._model.get_account_info(idx_uid)
-
-                worker = ScanJoinedGroupWorker(
-                    idx_page_id, sema_id, account)
-                worker.setAutoDelete(True)
-                worker.signals.scan_complted.connect(self.scan_completed)
-                self.pool.start(worker)
-        except Exception as ex:
-            self.update_mesage_dashboard(uid, f'{type(ex).__name__}: {ex}')
-
-    def scan_completed(self, activeID, group_list):
-        talbe_name = 'groups_' + activeID
-        try:
-            self._model.create_table(talbe_name)
-            self._model.add_group(talbe_name,
-                                  group_list)
-            self.signals.scan_group_completed.emit()
-        except Exception as e:
-            logging.error('', exc_info=True)
-
-    Slot(str)
-    def create_table(self, talbe_name):
-        try:
-            self._model.create_table(talbe_name)
-        except Exception as e:
-            logging.error('', exc_info=True)
     Slot(str)
     def get_account_info(self, indexs):
         try:
@@ -439,47 +386,6 @@ class MainController(QObject):
                     AccountInfo(uid, pw, proxy))
         except Exception as e:
             logging.error('', exc_info=True)
-
-    Slot(str)
-    def add_new_account(self, raw_input):
-        accs_raw = raw_input.splitlines()
-        try:
-            for acc in accs_raw:
-                lenght_elements = acc.split('|')
-
-                if acc in AccountFormat.UID_PASS:
-                    uid, pwd = acc.split('|')
-                    self._model.add_account_info(uid, pwd)
-                    self.signals.add_user_completed.emit()
-                elif len(acc.split('|')) == 3:
-                    uid, pwd, code2fa = acc.split('|')
-                    self._model.add_account_info(uid, pwd, code2fa)
-                    self.signals.add_user_completed.emit()
-                elif len(acc.split('|')) == 5:
-                    uid, pwd, code2fa, email, _pass_email = acc.split('|')
-                    self._model.add_account_info(
-                        uid, pwd, code2fa, '{}|{}'.format(email, _pass_email))
-                    self.signals.add_user_completed.emit()
-                else:
-                    self.signals.add_user_error.emit()
-
-        except Exception as e:
-            self.signals.add_user_error.emit()
-
-    Slot()
-
-    def update_table_view(self):
-        self.signals.table_get_completed.emit(self._model._get_table())
-
-    Slot(object, list)
-
-    def delete_account(self, tb_model, acc_index):
-        ids = []
-        for index in sorted(acc_index):
-            id = str(tb_model.data(index))
-            ids.append(id)
-        self._model.delete_account(ids)
-        self.signals.table_get_completed.emit(self._model._get_table())
 
     def genarate_semaphore(self, resources):
         sema_id = uuid.uuid4()

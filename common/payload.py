@@ -1,3 +1,6 @@
+from dataclasses import dataclass, asdict
+
+
 class BaseSetting():
     def __init__(self, idle_from, idle_to, threads) -> None:
         self.idle_from = idle_from
@@ -40,5 +43,24 @@ class AccountFormat:
     CUSTOM1 = "Uid | Pass | 2FA | Email | Pass Mail | Cookie | Token | Birthday"
     CUSTOM2 = "UID | Pass | 2FA | Cookie | Token | Email | Pass Mail | Birthday"
     DUYAN_5K = "DUYAN_5K"
-    
+
+@dataclass
+class UserAccount():
+    UserID: str
+    Password: str
+    ProxyID: str
+    Code2FA: str
+    Cookie: str
+    Email: str
+    PassEmail: str
+    ProxyExtension: str = None
+
+@dataclass
+class SocialGroupProfile():
+    Group_Name: str
+    Group_Link: str
+    Category: str = None
+    Numbers: str = None
+    Details: str = None
+
 

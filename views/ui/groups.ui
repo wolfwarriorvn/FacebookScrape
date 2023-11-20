@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Page</class>
- <widget class="QWidget" name="Page">
+ <class>Group</class>
+ <widget class="QWidget" name="Group">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>668</width>
+    <width>655</width>
     <height>499</height>
    </rect>
   </property>
@@ -39,7 +39,7 @@
        <number>0</number>
       </property>
       <item row="0" column="2">
-       <widget class="QPushButton" name="btn_add_page">
+       <widget class="QPushButton" name="btn_add_group">
         <property name="maximumSize">
          <size>
           <width>150</width>
@@ -63,7 +63,7 @@ background-color: #00AFB9
 }</string>
         </property>
         <property name="text">
-         <string>Thêm Page</string>
+         <string>Thêm Nhóm</string>
         </property>
         <property name="icon">
          <iconset resource="../../icon.qrc">
@@ -126,7 +126,7 @@ background-color:rgba(227, 80, 168, 1)
     </widget>
    </item>
    <item>
-    <widget class="QFrame" name="frame_page">
+    <widget class="QFrame" name="frame_group">
      <property name="styleSheet">
       <string notr="true"/>
      </property>

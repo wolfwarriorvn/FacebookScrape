@@ -24,20 +24,41 @@ class PostDialog(QWidget, Ui_Post):
         self.cb_group_type.setModel(self.groups_model)
         self.cb_group_type.installEventFilter(self)
         self.btn_select_image.clicked.connect(self.choose_image_path)
-        self._controller.db_signals.get_free_group_completed.connect(self.update_label_free_groups)
-        self._controller.db_signals.get_free_group.emit(self.cb_group_type.currentText())
+        # self._controller.db_signals.get_free_group_completed.connect(self.update_label_free_groups)
+        # self._controller.db_signals.get_free_group.emit(self.cb_group_type.currentText())
+                # group =  self.select(table='groups_tita', 
+                #     conditions = "Type = :type and Category='Công khai ' and Interact='Page' and (Status IS NULL or Status = 'Free')",
+                #     parameters = {'type': 'MAY'})
+        self.triger_get_free_group(self.cb_group_type.currentText())
+        
+
+    def triger_get_free_group(self, type):
+        request = {
+            'table'         :'groups_tita',
+            'columns'       : 'Group_Link',
+            'conditions'    : "Type = :type and Category='Công khai ' and   Interact='Page' and (Status IS NULL or Status = 'Free')",
+            'parameters'    : {'type': type}
+        }
+        self._controller.database_operation.emit('select', self.on_get_groups_reponse, request)
+
+    def on_get_groups_reponse(self, result, error):
+        if error:
+            print("on_get_groups_reponse error: ", error)
+        else:
+            print(result)
+            counts = len(result) if result else 0
+            self.le_free_groups.setText('Rãnh: {} groups'.format(counts))
+            
 
     def on_current_text_changed(self):
         group_type = self.cb_group_type.currentText()
-        self._controller.db_signals.get_free_group.emit(group_type)
+        self.triger_get_free_group(group_type)
 
         if group_type == 'DEP':
             self.le_image_path.setText(r'H:\fbtools\image\dep')
         elif group_type == 'MAY':
-            self.le_image_path.setText(r'H:\fbtools\image\may')
-        
-    def update_label_free_groups(self, counts):
-        self.le_free_groups.setText('Rãnh: {} groups'.format(counts))
+            self.le_image_path.setText(r'H:\fbtools\image\may')     
+
     def choose_image_path(self):
         dialog = QFileDialog()
         folder_path = dialog.getExistingDirectory(None, "Select Folder")

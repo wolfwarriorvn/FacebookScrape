@@ -34,6 +34,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from subprocess import CREATE_NO_WINDOW
 from setting import main_setting
 from common.fbxpath import FbXpath
+from common.payload import SocialGroupProfile
 
 
 class NoLoginException(Exception):
@@ -397,6 +398,24 @@ class FacebookScraper:
             logging.exception('UID: %s URL: %s', self.uid, group_url)
         finally:
             return post_status
+    
+    def approve_pending_request(self, url, loop):
+        FB_XPATH_MAIN = "//div[@role='main']"
+        FB_XPATH_ARTICLE = "//div[@aria-posinset]"
+        try:
+            self.open_url(url)
+            main_element = self.driver.find_element(By.XPATH, FB_XPATH_MAIN)
+
+            self.scroll_down_element(main_element, loop)
+
+            pending_posts = self.driver.find_elements(By.XPATH, FB_XPATH_ARTICLE)
+            for pending_post in pending_posts:
+                raw_content = pending_post.get_property('innerText')
+                print(raw_content)
+
+
+        except (NoSuchElementException, TimeoutException):
+            logging.exception('UID: %s URL: %s', self.uid, url)
 
     def scan_group_by_keyword(self, keyword, loop_scan):
         groups = []
@@ -426,13 +445,13 @@ class FacebookScraper:
                     members_in_K = members_text.replace(
                         ' thành viên', '').replace(',', '.').replace(' ', '')
                     members = utils.convert_str_to_number(members_in_K)
-                    groups.append(GroupInfo(g_name, g_link,
-                                category, members, details))
+                    groups.append(SocialGroupProfile(g_name, g_link, category, members, details))
             return groups
         
         except (NoSuchElementException, TimeoutException):
             logging.exception('UID: %s URL: %s', self.uid, url)
             return groups
+        
     def scan_group_of_page(self):
         groups = []
         self.open_url(

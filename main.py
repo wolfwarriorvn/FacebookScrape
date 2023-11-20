@@ -7,11 +7,13 @@ from views.ui.main_window_ui import Ui_MainWindow
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import QStandardPaths, QSettings
 
-from controllers.main_ctrl import MainController
-from model.model import Model
+from controllers.controller import Controller
+from model.model import DatabaseModel
 
 from views.dashboard import DashBoard
 from views.account import Account
+from views.groups import Groups
+from views.pages import Pages
 from views.proxy import Proxy
 from views.group_view import GroupView
 from views.group_join import GroupJoin
@@ -36,6 +38,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.btn_account: Account(self._main_controller),
             self.btn_proxy: Proxy(self._main_controller),
             self.btn_group_view: GroupView(self._main_controller),
+            self.btn_group: Groups(self._main_controller),
+            self.btn_page: Pages(self._main_controller)
         }
         "Show home window"
         self.show_home_window()
@@ -44,6 +48,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
         self.btn_dashboard.clicked.connect(self.show_home_window)
         self.btn_account.clicked.connect(self.show_selected_window)
+        self.btn_group.clicked.connect(self.show_selected_window)
+        self.btn_page.clicked.connect(self.show_selected_window)
         self.btn_proxy.clicked.connect(self.show_selected_window)
         self.btn_group_view.clicked.connect(self.show_selected_window)
 
@@ -103,10 +109,10 @@ class App(QApplication):
     def __init__(self, sys_argv):
         super(App, self).__init__(sys_argv)
         #connect mvc structure
-        self.db = Database()
-        self.model = Model()
-        self.main_ctrl = MainController(self.model)
-        self.main_view = MainWindow(self.model, self.main_ctrl)
+        # self.db = Database()
+        self.model = DatabaseModel()
+        self.controller = Controller(self.model)
+        self.main_view = MainWindow(self.model, self.controller)
         self.main_view.showMaximized()
         # self.setApplicationVersion("1.0")
 

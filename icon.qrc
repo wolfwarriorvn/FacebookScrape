@@ -14,6 +14,18 @@
   </qresource>
   <qresource prefix="new">
     <file>views/icon/new/dashboard.svg</file>
+    <file>views/icon/new/plus.svg</file>
+    <file>views/icon/new/account.svg</file>
+    <file>views/icon/new/dashboard.svg</file>
+    <file>views/icon/new/dashboard.svg</file>
+    <file>views/icon/new/proxy.svg</file>
+    <file>views/icon/new/group.svg</file>
+    <file>views/icon/new/page.svg</file>
+    <file>views/icon/new/page.svg</file>
+    <file>views/icon/new/group.svg</file>
+    <file>views/icon/new/proxy.svg</file>
+    <file>views/icon/new/page.svg</file>
+    <file>views/icon/new/proxy.svg</file>
     <file>views/icon/new/acc.svg</file>
     <file>views/icon/new/home.svg</file>
     <file>views/icon/new/profiles.svg</file>

@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (QApplication, QMenu, QFrame, QVBoxLayout, QSizePo
     QWidget)
 from views.ui.fanpages.joined_groups_ui import Ui_JoinedGroup
 from views.table_custome import TableCustome
-from controllers.main_ctrl import MainController
+from controllers.controller import Controller
 import logging
 
 class CustomProxyModel(QtCore.QSortFilterProxyModel):
@@ -40,7 +40,7 @@ class CustomProxyModel(QtCore.QSortFilterProxyModel):
         return True
 
 class GroupView(QWidget):
-    def __init__(self, controller: MainController):
+    def __init__(self, controller: Controller):
         super(GroupView, self).__init__()
         self._controller = controller
         self.ui = Ui_JoinedGroup()

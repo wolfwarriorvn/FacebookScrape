@@ -2,12 +2,12 @@ from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Signal, QObject
 from views.ui.account_edit_menu_ui import Ui_Form
 from views.connection import Connection
-from controllers.main_ctrl import MainController
-from controllers.main_ctrl import AccountInfo
+from controllers.controller import Controller
+from controllers.controller import AccountInfo
 
 class EditAccount(QWidget, Ui_Form):
 
-    def __init__(self, controller: MainController, model, indexs, raw_idx):
+    def __init__(self, controller: Controller, model, indexs, raw_idx):
         super(EditAccount, self).__init__()
         self._controller = controller
         self.model = model
@@ -27,6 +27,3 @@ class EditAccount(QWidget, Ui_Form):
         self.le_uid.setText(account_info.uid)
         self.le_pass.setText(account_info.pw)
         self.le_proxy.setText(str(account_info.proxy))
-            
-    def on_save_account_completed(self):
-        self.close()

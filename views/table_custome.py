@@ -52,3 +52,4 @@ class TableCustome(QWidget):
         self.proxy = CustomProxyModel()
 
 
+

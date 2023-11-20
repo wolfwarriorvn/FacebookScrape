@@ -4,7 +4,7 @@ from PySide6.QtGui import QIcon
 
 from views.ui.dashboard_ui import Ui_DashBoard
 from PySide6 import QtGui
-from controllers.main_ctrl import MainController
+from controllers.controller import Controller
 from views.table_custome import TableCustome
 
 from views.action.post_dialog import PostDialog
@@ -12,7 +12,7 @@ from views.action.scan_history_dialog import ScanPostDialog
 from views.action.seeding_dialog import SeedingDialog
 
 class DashBoard(QWidget, Ui_DashBoard):
-    def __init__(self, controller: MainController):
+    def __init__(self, controller: Controller):
         super(DashBoard, self).__init__()
         self._controller = controller
         

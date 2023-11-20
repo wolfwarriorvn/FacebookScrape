@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.2
+## Created by: Qt User Interface Compiler version 6.5.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -109,7 +109,7 @@ class Ui_MainWindow(object):
         self.btn_account.setContextMenuPolicy(Qt.DefaultContextMenu)
         self.btn_account.setLayoutDirection(Qt.LeftToRight)
         icon1 = QIcon()
-        icon1.addFile(u":/new/views/icon/new/profiles.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u":/new/views/icon/new/account.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_account.setIcon(icon1)
         self.btn_account.setIconSize(QSize(20, 20))
         self.btn_account.setFlat(False)
@@ -125,13 +125,31 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.btn_proxy)
 
+        self.btn_group = QPushButton(self.page_3)
+        self.btn_group.setObjectName(u"btn_group")
+        icon3 = QIcon()
+        icon3.addFile(u":/new/views/icon/new/group.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_group.setIcon(icon3)
+        self.btn_group.setIconSize(QSize(20, 20))
+
+        self.verticalLayout.addWidget(self.btn_group)
+
+        self.btn_page = QPushButton(self.page_3)
+        self.btn_page.setObjectName(u"btn_page")
+        icon4 = QIcon()
+        icon4.addFile(u":/new/views/icon/new/page.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_page.setIcon(icon4)
+        self.btn_page.setIconSize(QSize(20, 20))
+
+        self.verticalLayout.addWidget(self.btn_page)
+
         self.verticalSpacer = QSpacerItem(20, 417, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
-        icon3 = QIcon()
-        icon3.addFile(u":/new/views/icon/new/home.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolBox.addItem(self.page_3, icon3, u"Gerneral")
+        icon5 = QIcon()
+        icon5.addFile(u":/new/views/icon/new/home.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.toolBox.addItem(self.page_3, icon5, u"Gerneral")
         self.page_4 = QWidget()
         self.page_4.setObjectName(u"page_4")
         self.page_4.setGeometry(QRect(0, 0, 180, 579))
@@ -148,9 +166,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addItem(self.verticalSpacer_2)
 
-        icon4 = QIcon()
-        icon4.addFile(u":/icons/icon/car-4-48.ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolBox.addItem(self.page_4, icon4, u"T\u01b0\u01a1ng t\u00e1c Fanpage")
+        icon6 = QIcon()
+        icon6.addFile(u":/icons/icon/car-4-48.ico", QSize(), QIcon.Normal, QIcon.Off)
+        self.toolBox.addItem(self.page_4, icon6, u"T\u01b0\u01a1ng t\u00e1c Fanpage")
         self.page_5 = QWidget()
         self.page_5.setObjectName(u"page_5")
         self.page_5.setGeometry(QRect(0, 0, 180, 579))
@@ -172,9 +190,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addItem(self.verticalSpacer_3)
 
-        icon5 = QIcon()
-        icon5.addFile(u":/icons/icon/group-48.ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolBox.addItem(self.page_5, icon5, u"Schedule")
+        icon7 = QIcon()
+        icon7.addFile(u":/icons/icon/group-48.ico", QSize(), QIcon.Normal, QIcon.Off)
+        self.toolBox.addItem(self.page_5, icon7, u"Schedule")
 
         self.gridLayout.addWidget(self.toolBox, 0, 0, 1, 1)
 
@@ -241,6 +259,8 @@ class Ui_MainWindow(object):
         self.btn_dashboard.setText(QCoreApplication.translate("MainWindow", u"Dashboard", None))
         self.btn_account.setText(QCoreApplication.translate("MainWindow", u"Qu\u1ea3n l\u00fd T\u00e0i Kho\u1ea3n", None))
         self.btn_proxy.setText(QCoreApplication.translate("MainWindow", u"Proxy", None))
+        self.btn_group.setText(QCoreApplication.translate("MainWindow", u"Nh\u00f3m", None))
+        self.btn_page.setText(QCoreApplication.translate("MainWindow", u"Page", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), QCoreApplication.translate("MainWindow", u"Gerneral", None))
         self.btn_group_view.setText(QCoreApplication.translate("MainWindow", u"Danh s\u00e1ch nh\u00f3m", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_4), QCoreApplication.translate("MainWindow", u"T\u01b0\u01a1ng t\u00e1c Fanpage", None))
