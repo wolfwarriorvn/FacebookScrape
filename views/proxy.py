@@ -7,12 +7,15 @@ from views.ui.proxy_ui import Ui_Form
 import parse
 from common.extension import proxies
 from views.messages import show_error_message
+from model.request import DeleteRequest, InsertRequest
+from model.db_model import Op
 class Proxy(QWidget, Ui_Form):
     def __init__(self, controller):
         super(Proxy, self).__init__()
         self.ui = Ui_Form()
         self.controller = controller
         self.setupUi(self)
+        self.table_name = 'proxy'
         self.on_init()
         #add right click menu
         self.tableView.setContextMenuPolicy(QtGui.Qt.CustomContextMenu)
@@ -33,12 +36,13 @@ class Proxy(QWidget, Ui_Form):
     def on_delete_proxy(self):
         selected_indexs = self.tableView.selectionModel().selectedRows()
         selected_id_proxy = [self.tableView.model().data(i) for i in selected_indexs]
-        request = {
-            'table': 'proxy',
-            'column': 'ID',
-            'values_list' : selected_id_proxy}
-        
-        self.controller.database_operation.emit('delete', self.on_delete_proxy_response, request)
+
+        request = DeleteRequest(
+            table=self.table_name,
+            column='ID',
+            values_list=selected_id_proxy
+        )
+        self.controller.database_operation.emit(Op.DELETE, self.on_delete_proxy_response, request)
 
     def on_delete_proxy_response(self, result, error):
         if error:
@@ -56,16 +60,16 @@ class Proxy(QWidget, Ui_Form):
             port_proxy = proxy[3]
             extension_zip = proxies(user_proxy, pass_proxy, endpoint_proxy, port_proxy, user_proxy)
 
-            request = {
-                'table': 'proxy',
-                'data': [{
+            request = InsertRequest(
+                table=self.table_name,
+                data=[{
                     'ProxyID' : self.le_proxy.text(),
                     'zip_proxy' : user_proxy
                 }]
-            }
-            self.controller.database_operation.emit('insert', self.on_add_proxy_completed, request)
+            )
+            self.controller.database_operation.emit(Op.INSERT, self.on_add_proxy_response, request)
 
-    def on_add_proxy_completed(self, result, error):
+    def on_add_proxy_response(self, result, error):
         if error:
             show_error_message(error, self)
         else:

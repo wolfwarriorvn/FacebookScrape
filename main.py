@@ -8,7 +8,7 @@ from PySide6.QtGui import QIcon
 from PySide6.QtCore import QStandardPaths, QSettings
 
 from controllers.controller import Controller
-from model.model import DatabaseModel
+from model.db_model import DatabaseModel
 
 from views.dashboard import DashBoard
 from views.account import Account

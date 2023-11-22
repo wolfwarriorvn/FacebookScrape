@@ -9,6 +9,8 @@ from views.add_accounts import AddAccount
 from controllers.controller import Controller
 from views.edit_accounts import EditAccount
 from views.table_custome import TableCustome
+from model.db_model import Op
+from model.db_model import DeleteRequest
 
 
 
@@ -21,12 +23,13 @@ class Account(QWidget, Ui_Form):
         self.setupUi(self)
         
 
+        self.table_name = 'accounts'
         self.verticalLayout = QVBoxLayout(self.f_account)
         self.table_accounts = TableCustome()
         self.verticalLayout.addWidget(self.table_accounts)
         # self.tableView = self.table_accounts.ui.tableView
         self.model = QSqlTableModel(self)
-        self.model.setTable('accounts')
+        self.model.setTable(self.table_name)
         self.model.select()
 
         self.table_accounts.proxy.setSourceModel(self.model)
@@ -131,16 +134,17 @@ class Account(QWidget, Ui_Form):
     def on_checkpoint_956(self):
         selected_indexs = self.table_accounts.ui.tableView.selectionModel().selectedRows(1) 
         selected_ids = [self.table_accounts.ui.tableView.model().data(i) for i in selected_indexs]
-        self._controller.signals.checkpoint_956.emit(selected_ids)
+        self._controller.task_signals.checkpoint_956.emit(selected_ids)
 
     def delete_selected_row(self):
-        request = {
-            'table': 'accounts',
-            'column': 'ID',
-            'values_list' : self.seleted_id}
-        self._controller.database_operation.emit('delete', self.on_delete_user_completed, request)
+        delete_request = DeleteRequest(
+            table= self.table_name,
+            column='ID',
+            values_list=self.seleted_id
+        )
+        self._controller.database_operation.emit(Op.DELETE, self.on_delete_user_response, delete_request)
 
-    def on_delete_user_completed(self, result, error):
+    def on_delete_user_response(self, result, error):
         if error:
             print(f"Error: {error}")
         else:
@@ -171,7 +175,7 @@ class Account(QWidget, Ui_Form):
         selected_indexs = self.table_accounts.ui.tableView.selectionModel().selectedRows(1) 
         selected_id_proxy = [self.table_accounts.ui.tableView.model().data(i) for i in selected_indexs]
 
-        self._controller.open_chrome(selected_id_proxy)
+        self._controller.task_signals.open_chrome.emit(selected_id_proxy)
         
     def refresh(self):
         self.model.setTable('accounts')

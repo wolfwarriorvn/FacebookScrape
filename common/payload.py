@@ -44,16 +44,6 @@ class AccountFormat:
     CUSTOM2 = "UID | Pass | 2FA | Cookie | Token | Email | Pass Mail | Birthday"
     DUYAN_5K = "DUYAN_5K"
 
-@dataclass
-class UserAccount():
-    UserID: str
-    Password: str
-    ProxyID: str
-    Code2FA: str
-    Cookie: str
-    Email: str
-    PassEmail: str
-    ProxyExtension: str = None
 
 @dataclass
 class SocialGroupProfile():

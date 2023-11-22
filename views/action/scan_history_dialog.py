@@ -27,5 +27,5 @@ class ScanPostDialog(QWidget, Ui_DialogScanPost):
         self.btn_runnow.clicked.connect(self.on_scan_post_history)
     
     def on_scan_post_history(self):
-        self._controller.signals.scan_post_history.emit(self.selected_uid, self.scrolls.value(), self.syncs.value())
+        self._controller.task_signals.scan_post_history.emit(self.selected_uid, self.scrolls.value(), self.syncs.value())
         self.close()

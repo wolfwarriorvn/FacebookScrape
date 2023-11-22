@@ -1,7 +1,7 @@
 from PySide6.QtCore import Signal
 from PySide6.QtCore import QRunnable, QObject,QMutex,QSemaphore
 from facebook_scraper import FacebookScraper
-from model.model import AccountInfo
+from model.db_model import AccountInfo
 from time import sleep
 from facebook_scraper import (
     NoLoginException,

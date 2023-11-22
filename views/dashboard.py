@@ -28,7 +28,7 @@ class DashBoard(QWidget, Ui_DashBoard):
         self.tableView.setContextMenuPolicy(QtGui.Qt.CustomContextMenu)
         self.tableView.customContextMenuRequested.connect(self.right_click_menu)
 
-        self._controller.signals.update_dashboard.connect(self.refresh)
+        self._controller.task_signals.update_dashboard.connect(self.refresh)
 
         self.model.setQuery('SELECT ID,UserID, PageID, Category, Status, Message  FROM accounts')
         self.model.select()
@@ -74,7 +74,7 @@ class DashBoard(QWidget, Ui_DashBoard):
         selected_indexs = self.tableView.selectionModel().selectedRows(1) 
         selected_id_proxy = [self.tableView.model().data(i) for i in selected_indexs]
 
-        self._controller.open_chrome(selected_id_proxy)
+        self._controller.task_signals.open_chrome.emit(selected_id_proxy)
 
     def change_category(self):
         category, ok = QInputDialog.getText(self, "Edit Category", "Category: ", QLineEdit.Normal, None)

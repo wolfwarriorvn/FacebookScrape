@@ -47,7 +47,7 @@ class GroupView(QWidget):
         self.ui.setupUi(self)
         self.activeUID = None
         
-        self._controller.signals.scan_group_completed.connect(self.refresh)
+        self._controller.task_signals.scan_group_completed.connect(self.refresh)
 
         
         self.verticalLayout = QVBoxLayout(self.ui.tbl_group)
@@ -104,7 +104,7 @@ class GroupView(QWidget):
                                         "Loop Scan:", 1, 1, 100, 1)
         if not ok:
             return
-        self._controller.signals.scan_post_history.emit(selected_ids , loop_scan, 1)
+        self._controller.task_signals.scan_post_history.emit(selected_ids , loop_scan, 1)
     def header_popup(self, pos) :
         self.header_right_click_column =  self.horizontalHeader.logicalIndexAt(pos)
         menu = QMenu()
@@ -165,14 +165,14 @@ class GroupView(QWidget):
 
         self.group_links = [self.table_group_view.ui.tableView.model().data(i) for i in sorted(selected_indexs)]
 
-        self._controller.signals.check_group_allow_page.emit(uid, self.group_links)
+        self._controller.task_signals.check_group_allow_page.emit(uid, self.group_links)
     def on_scan_approve_post(self):
         uid = self.ui.cb_uids.currentText()
         selected_indexs = self.table_group_view.ui.tableView.selectionModel().selectedRows(3)
 
         self.post_links = [self.table_group_view.ui.tableView.model().data(i) for i in sorted(selected_indexs)]
 
-        self._controller.signals.check_approval_post.emit(uid, self.post_links)
+        self._controller.task_signals.check_approval_post.emit(uid, self.post_links)
 
     def filter_notsave(self):
         sql_query = "DELETE FROM {}  WHERE {}.Group_Link  IN (SELECT Group_Link FROM groups_tita)".format(self.active_tb, self.active_tb)
@@ -239,7 +239,7 @@ class GroupView(QWidget):
             return
 
         uid = self.ui.cb_uids.currentText()
-        self._controller.signals.scan_group_by_keyword.emit(uid, keyword, loop_scan)
+        self._controller.task_signals.scan_group_by_keyword.emit(uid, keyword, loop_scan)
 
     def view_posts_table(self):
         self.proxy.clearFilters()

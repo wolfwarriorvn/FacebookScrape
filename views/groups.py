@@ -12,7 +12,8 @@ from controllers.controller import Controller
 from views.edit_accounts import EditAccount
 from views.table_custome import TableCustome
 from views.groups_add import GroupAdd
-from controllers.request import *
+from model.request import DeleteRequest
+from model.db_model import Op
 
 class Groups(QWidget, Ui_Group):
     def __init__(self, controller: Controller):
@@ -20,13 +21,14 @@ class Groups(QWidget, Ui_Group):
         self._controller = controller
 
         self.setupUi(self)
+        self.table_name = 'groups'
 
         #Load table
         vlayout = QVBoxLayout(self.frame_group)
         self.tb_view = TableCustome()
         vlayout.addWidget(self.tb_view)
         self.model = QSqlTableModel(self)
-        self.model.setTable('groups')
+        self.model.setTable(self.table_name)
         self.model.select()
 
         self.tb_view.ui.tableView.setContextMenuPolicy(QtGui.Qt.CustomContextMenu)
@@ -55,12 +57,14 @@ class Groups(QWidget, Ui_Group):
         action = menu.exec_(self.tb_view.ui.tableView.mapToGlobal(position))
     
     def delete_selected_row(self):
-        payload = {
-            'table': 'groups',
-            'column': 'ID',
-            'values_list' : self.seleted_id}
-        self._controller.database_operation.emit('delete', self.on_delete_response, payload)
+        request = DeleteRequest(
+            table=self.table_name,
+            column='ID',
+            values_list=self.seleted_id
+        )
+        self._controller.database_operation.emit(Op.DELETE, self.on_delete_response, request)
 
+    
     def on_delete_response(self, result, error):
         if error:
             print(f"Error now: {error}")

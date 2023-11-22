@@ -5,6 +5,8 @@ from views.connection import Connection
 from common.payload import AccountFormat
 from PySide6.QtWidgets import QErrorMessage,QMessageBox
 from views.messages import show_error_message
+from model.db_model import Op
+from model.request import InsertRequest
 
 class AccountFields:
     UID_PASS = ["UserID", "Password"]
@@ -37,6 +39,7 @@ class AddAccount(QWidget, Ui_Addaccount):
         super(AddAccount, self).__init__()
         self._controller = controller
         self.setupUi(self)
+        self.table_name = 'accounts'
         self.cb_acc_format.addItems(AccountFields.get_formats())
 
         # self.acc_db = Connection()
@@ -68,10 +71,12 @@ class AddAccount(QWidget, Ui_Addaccount):
             show_error_message("Please Input valid accounts!", self)
             return
         accounts = self.process_accounts(accounts_lines, format_string)
-        request = {
-            'table': 'accounts',
-            'data' : accounts}
-        self._controller.database_operation.emit('insert', self.on_add_account_response, request)
+
+        request = InsertRequest(
+            table=self.table_name,
+            data=accounts
+        )
+        self._controller.database_operation.emit(Op.INSERT, self.on_add_account_response, request)
 
     def on_add_account_response(self, succes, error):
         if error:

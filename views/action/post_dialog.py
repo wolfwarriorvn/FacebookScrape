@@ -8,7 +8,8 @@ from PySide6.QtSql import QSqlTableModel
 from views.ui.dialog.post_ui import Ui_Post
 from views.connection import Connection
 from common.payload import PostSetting
-
+from model.request import SelectRequest
+from model.db_model import Op
 
 class PostDialog(QWidget, Ui_Post):
     def __init__(self, controller, selected_uid):
@@ -24,28 +25,24 @@ class PostDialog(QWidget, Ui_Post):
         self.cb_group_type.setModel(self.groups_model)
         self.cb_group_type.installEventFilter(self)
         self.btn_select_image.clicked.connect(self.choose_image_path)
-        # self._controller.db_signals.get_free_group_completed.connect(self.update_label_free_groups)
-        # self._controller.db_signals.get_free_group.emit(self.cb_group_type.currentText())
-                # group =  self.select(table='groups_tita', 
-                #     conditions = "Type = :type and Category='Công khai ' and Interact='Page' and (Status IS NULL or Status = 'Free')",
-                #     parameters = {'type': 'MAY'})
         self.triger_get_free_group(self.cb_group_type.currentText())
         
 
     def triger_get_free_group(self, type):
-        request = {
-            'table'         :'groups_tita',
-            'columns'       : 'Group_Link',
-            'conditions'    : "Type = :type and Category='Công khai ' and   Interact='Page' and (Status IS NULL or Status = 'Free')",
-            'parameters'    : {'type': type}
-        }
-        self._controller.database_operation.emit('select', self.on_get_groups_reponse, request)
+        select_request = SelectRequest(
+            table='groups_tita',
+            columns='Group_Link',
+            conditions="Type = :type and Category='Công khai ' and   Interact='Page' and (Status IS NULL or Status = 'Free')",
+            parameters={'type': type}
+        )
+
+        self._controller.database_operation.emit(Op.SELECT, self.on_get_groups_reponse, select_request)
 
     def on_get_groups_reponse(self, result, error):
         if error:
             print("on_get_groups_reponse error: ", error)
         else:
-            print(result)
+            
             counts = len(result) if result else 0
             self.le_free_groups.setText('Rãnh: {} groups'.format(counts))
             
@@ -97,5 +94,5 @@ class PostDialog(QWidget, Ui_Post):
             self.sp_idle_to.value(),
             self.sp_threads.value()
         )
-        self._controller.signals.post_event.emit(self.selected_uid, setting)
+        self._controller.task_signals.post_event.emit(self.selected_uid, setting)
         self.close()
