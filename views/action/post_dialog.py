@@ -10,14 +10,16 @@ from views.connection import Connection
 from common.payload import PostSetting
 from model.request import SelectRequest
 from model.db_model import Op
+from views.messages import show_error_message
 
 class PostDialog(QWidget, Ui_Post):
-    def __init__(self, controller, selected_uid):
+    def __init__(self, controller, selected_uids):
         super(PostDialog, self).__init__()
         self._controller = controller
-        self.selected_uid = selected_uid
+        self.selected_uids = selected_uids
         self.setupUi(self)
         self.btn_runnow.clicked.connect(self.on_post)
+        self.free_groups_count = 0
 
         self.groups_model = QSqlTableModel(self)
         self.groups_model.setQuery('SELECT DISTINCT Type FROM groups_tita')
@@ -42,9 +44,9 @@ class PostDialog(QWidget, Ui_Post):
         if error:
             print("on_get_groups_reponse error: ", error)
         else:
-            
-            counts = len(result) if result else 0
-            self.le_free_groups.setText('Rãnh: {} groups'.format(counts))
+            self.free_groups = [entry.get('Group_Link') for entry in result]
+            self.free_groups_count = len(result) if result else 0
+            self.le_free_groups.setText('Rãnh: {} groups'.format(self.free_groups_count))
             
 
     def on_current_text_changed(self):
@@ -79,6 +81,10 @@ class PostDialog(QWidget, Ui_Post):
             QtWidgets.QMessageBox.warning(None, "Không có hình để đăng.", QtWidgets.QMessageBox.Cancel)
             return
         
+        if len(self.selected_uids) * self.sp_numposts.value() > self.free_groups_count:
+            show_error_message('There are more groups wanting to post than the available free group slots allow.', self)
+            return
+        
         setting = PostSetting(
             self.ckb_post_to_groups.isChecked(),
             self.sp_numposts.value(),
@@ -94,5 +100,5 @@ class PostDialog(QWidget, Ui_Post):
             self.sp_idle_to.value(),
             self.sp_threads.value()
         )
-        self._controller.task_signals.post_event.emit(self.selected_uid, setting)
+        self._controller.task_signals.post_groups.emit(self.selected_uids, self.free_groups, setting)
         self.close()

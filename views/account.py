@@ -152,9 +152,9 @@ class Account(QWidget, Ui_Form):
 
     def on_login_chrome(self):
         selected_indexs = self.table_accounts.ui.tableView.selectionModel().selectedRows(1)
-        selected_id_proxy = [self.table_accounts.ui.tableView.model().data(i) for i in selected_indexs]
+        selected_uids = [self.table_accounts.ui.tableView.model().data(i) for i in selected_indexs]
 
-        self._controller.login_chrome(selected_id_proxy)
+        self._controller.task_signals.login_chrome.emit(selected_uids)
 
     def on_open_edit_dialog(self):
         indexes = self.table_accounts.ui.tableView.selectionModel().selectedRows()

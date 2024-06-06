@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Approve</class>
+ <widget class="QWidget" name="Approve">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>728</width>
+    <height>422</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Duyệt bài</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">* {
+	font: 11pt &quot;Segoe UI&quot;;
+}
+QTextEdit {
+	background-color: transparent;
+	border: 1px solid rgba(192, 209, 231, 1);
+	border-radius: 7px;
+	color: black;
+	border-bottom-right-radius: 7px; 
+	border-bottom-left-radius: 7px; 
+}
+QComboBox {
+	background-color: transparent;
+	border: 1px solid rgba(192, 209, 231, 1);
+	border-radius: 7px;
+	color: black;
+	border-bottom-right-radius: 7px; 
+	border-bottom-left-radius: 7px; 
+}
+QPushButton#btn_start{
+	 color: rgb(255, 255, 255);
+     background-color: qlineargradient(spread:pad, x1:0 y1:0, x2:1, y2:3, stop:0 #0081A7, stop:1 #00AFB9);
+     border: 1px solid rgba(255,255,255,40);
+     border-radius:7px;
+width: 150;
+height: 35;
+}
+QPushButton#btn_start:hover{
+background-color: #0081A7
+}
+QPushButton#btn_start:pressed{
+background-color: #00AFB9
+}
+QPushButton#btn_cancel{
+	 color: rgb(255, 255, 255);
+     background-color: qlineargradient(spread:pad, x1:0 y1:0, x2:1, y2:3, stop:0 #0011A7, stop:1 #00AFB9);
+     border: 1px solid rgba(255,255,255,40);
+     border-radius:7px;
+width: 150;
+height: 35;
+}
+QPushButton#btn_schedule{
+	 color: rgb(255, 255, 255);
+     background-color: qlineargradient(spread:pad, x1:0 y1:0, x2:1, y2:3, stop:0 #FFA500, stop:1 #00AFB9);
+     border: 1px solid rgba(255,255,255,40);
+     border-radius:7px;
+width: 150;
+height: 35;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Số bài:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="num_posts"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Danh sách nhóm: UID | approve | decline</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="groups_settings"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="btn_schedule">
+       <property name="text">
+        <string>Lên lịch</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_start">
+       <property name="text">
+        <string>Chạy ngay</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_cancel">
+       <property name="text">
+        <string>Huỷ</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../icon.qrc"/>
+ </resources>
+ <connections/>
+</ui>

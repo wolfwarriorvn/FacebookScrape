@@ -8,6 +8,7 @@ from controllers.controller import Controller
 from views.table_custome import TableCustome
 
 from views.action.post_dialog import PostDialog
+from views.action.approve_dialog import ApproveDialog
 from views.action.scan_history_dialog import ScanPostDialog
 from views.action.seeding_dialog import SeedingDialog
 
@@ -28,7 +29,7 @@ class DashBoard(QWidget, Ui_DashBoard):
         self.tableView.setContextMenuPolicy(QtGui.Qt.CustomContextMenu)
         self.tableView.customContextMenuRequested.connect(self.right_click_menu)
 
-        self._controller.task_signals.update_dashboard.connect(self.refresh)
+        self._controller.ui_signals.update_dashboard.connect(self.refresh)
 
         self.model.setQuery('SELECT ID,UserID, PageID, Category, Status, Message  FROM accounts')
         self.model.select()
@@ -57,16 +58,19 @@ class DashBoard(QWidget, Ui_DashBoard):
         scan_post_history = QtGui.QAction(QIcon(":/icon/views/icon/post.png"),"Scan History Post", self)
         seeding = QtGui.QAction(QIcon(":/icon/views/icon/positive-vote.png"), "Seeding", self)
         post_group = QtGui.QAction(QIcon(":/icon/views/icon/blog.png"), "Post Group", self)
+        approval = QtGui.QAction(QIcon(":/icon/views/icon/blog.png"), "Duyệt bài", self)
         menu.addAction(open_chrome)
         menu.addAction(change_category)
         menu.addAction(scan_post_history)
         menu.addAction(seeding)
         menu.addAction(post_group)
+        menu.addAction(approval)
         open_chrome.triggered.connect(self.open_chrome)
         change_category.triggered.connect(self.change_category)
         scan_post_history.triggered.connect(self.scan_history_post)
         seeding.triggered.connect(self.seeding)
         post_group.triggered.connect(self.posting)
+        approval.triggered.connect(self.approval)
         
         action = menu.exec_(self.table_accounts.ui.tableView.mapToGlobal(position))
 
@@ -91,6 +95,10 @@ class DashBoard(QWidget, Ui_DashBoard):
 
         self.scan_post_dialog = ScanPostDialog(self._controller, selected_ids)
         self.scan_post_dialog.show()
+
+    def approval(self):
+        self.approve_dialog = ApproveDialog(self._controller, self.selected_uids)
+        self.approve_dialog.show()
 
     def seeding(self):
         selected_indexs = self.tableView.selectionModel().selectedRows(1) 

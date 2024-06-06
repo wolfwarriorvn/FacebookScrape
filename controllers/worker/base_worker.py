@@ -15,26 +15,22 @@ login_mutex = QMutex()
 post_mutex = QMutex()
 open_chrom_sem = QSemaphore(2)
 
-
-class Signals(QObject):
-    scan_complted = Signal(str, object)
-    scan_keyword_completed = Signal(str, object)
-    scan_post_history = Signal(str, str, str, str)
-    approved_post = Signal(str, str)
-    allow_page_group = Signal(str, str)
+class BaseSignals(QObject):
     update_status = Signal(str, str)
     update_message = Signal(str, str)
-    seeding_status = Signal(str, str, str)
-
-    posted_group_completed = Signal(str,str, str)
-    pending_post = Signal(str, str, str)
-    scan_today_posts= Signal(str, str, str, str)
 
 
 class BaseWorker(QRunnable):
-    def __init__(self, semaphore_id, accounts: AccountInfo) -> None:
+    def __init__(self, semaphore_id, user_id, *args) -> None:
         super().__init__()
         self.sema_id = semaphore_id
+        self.user_id = user_id
+        self.signals = BaseSignals()
+    
+    def setup_before_execution(self, db_manager, ui_signals):
+        self.ui_signals = ui_signals
+        self.db_manager = db_manager
+        accounts = db_manager.get_account_info(self.user_id)
         self._uid = accounts.uid
         self._pw = accounts.password
         self._proxy = accounts.proxy
@@ -42,7 +38,25 @@ class BaseWorker(QRunnable):
         self.pass_email = accounts.pass_email
         self._secret_2fa = accounts.secret_2fa
         self.cookie = accounts.cookie
-        self.signals = Signals()
+
+    def update_message_dashboard(self, uid, message):
+        try:
+            self.db_manager.update_account_message(uid, message)
+            self.ui_signals.update_dashboard.emit()
+        except Exception as e:
+            logging.error('', exc_info=True)
+
+    def update_status_dashboard(self, uid, status):
+        try:
+            self.db_manager.update_account_status(uid, status)
+            self.ui_signals.update_dashboard.emit()
+        except Exception as e:
+            logging.error('', exc_info=True)
+
+    def connect_signals(self):
+        self.signals.update_status.connect(self.update_status_dashboard)
+        self.signals.update_message.connect(self.update_message_dashboard)
+        
     def checkpoint(self):
         try:
             if self.fb_scraper.checkpoint():

@@ -109,7 +109,7 @@ class DatabaseModel(QObject):
             return result
         else:
             raise Exception(f"Error: Query execution failed with message - {self.query.lastError().text()}\n"+
-                            f"QUERY: {self.query_text}\n" +
+                            f"QUERY: {query_text}\n" +
                             f"PARAMETERS: {parameters}")
 
     def insert(self, request: InsertRequest):

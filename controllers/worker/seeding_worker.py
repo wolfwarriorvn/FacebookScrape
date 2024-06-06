@@ -2,14 +2,47 @@ from PySide6.QtCore import Signal, Slot
 from controllers.worker.base_worker import *
 from time import sleep
 from random import randrange
+import random
 
+class SeedingSignals(BaseSignals):
+    seeding_status = Signal(str, str, str)
 
 class SeedingWorker(BaseWorker):
-    def __init__(self, available_links, settings, semaphore_id, account) -> None:
-        super().__init__(semaphore_id, account)
-        self.available_links = available_links
+    def __init__(self, semaphore, user_id, settings) -> None:
+        super().__init__(semaphore, user_id)
         self.settings = settings
+        self.signals = SeedingSignals()
 
+    def setup_before_execution(self, db_manager, ui_signals):
+        super().setup_before_execution(db_manager, ui_signals)
+        if self.settings.auto_getlink:
+            self.settings.posted_links = db_manager.get_post_approved_link()
+        if self.settings.auto_getlink:
+            liked_links = db_manager.get_seeding_liked_link(self._uid)
+            set_available_links = set(
+                self.settings.posted_links).difference(set(liked_links))
+            if len(set_available_links) < self.settings.seedings:
+                raise ValueError(f"Không đủ link để like. Số link còn lại: {len(set_available_links)}")
+
+            self.available_links = random.sample(
+                sorted(set_available_links), self.settings.seedings)
+        else:
+            self.available_links = self.settings.posted_links
+
+    def on_update_seeding_status(self, uid, href, action):
+        try:
+            if action == 'Liked':
+                self.db_manager.update_post_liked_counts(href)
+            elif action == 'Commented':
+                self.db_manager.update_post_commented_counts(href)
+
+            self.db_manager.add_seeding_action(uid, href, action)
+        except Exception as e:
+            logging.error('', exc_info=True)
+
+    def connect_signals(self):
+        super().connect_signals()
+        self.signals.seeding_status.connect(self.on_update_seeding_status)
     @Slot()
     def run(self):
         try:

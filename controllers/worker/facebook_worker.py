@@ -3,8 +3,8 @@ from controllers.worker.base_worker import *
 from time import sleep
 import logging
 class FacebookWorker(BaseWorker):
-    def __init__(self,semaphore_id, account) -> None:
-        super().__init__(semaphore_id,account)
+    def __init__(self,semaphore, user_id) -> None:
+        super().__init__(semaphore, user_id)
 
     @Slot()
     def run(self):

@@ -16,6 +16,7 @@ logger.setLevel(logging.WARNING)
 # Set the threshold for urllib3 to WARNING
 from urllib3.connectionpool import log as urllibLogger
 urllibLogger.setLevel(logging.WARNING)
+from common.classes import PostPendingRequest
 
 import re
 import time
@@ -48,7 +49,11 @@ class CheckpointException(Exception):
 class GetElement():
     ONE = 0
     MORE = 1
-
+class Action():
+    NONE = 'None'
+    APPROVE = 'Approve'
+    DECLINE = 'Decline'
+    BLOCK = 'Block'
 
 class GroupInfo():
     def __init__(self, name, link, category=None, members=None, details=None):
@@ -380,9 +385,13 @@ class FacebookScraper:
             public_post = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, FB_XPATH_CREATE_PUBLIC_POST)))
             sleep(1)
             public_post.send_keys(contents)
-            sleep(1)
-            self.driver.find_element(By.XPATH, FB_XPATH_PHOTO_MODE).click()
-            sleep(1)
+            sleep(5)
+
+            #TODO: hardcode here to send link instead of image from local
+            public_post.clear()
+            sleep(2)
+            # self.driver.find_element(By.XPATH, FB_XPATH_PHOTO_MODE).click()
+            # sleep(1)
 
             for photo in photos:
                 photo_input = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, FB_XPATH_PHOTO)))
@@ -399,23 +408,93 @@ class FacebookScraper:
         finally:
             return post_status
     
-    def approve_pending_request(self, url, loop):
+
+    def approve_pending_request(self, group_approve, loop):
+        group_id = group_approve.group_id
+        pending_posts_url = f'https://www.facebook.com/groups/{group_id}/pending_posts?search=&has_selection=false&is_notif_background=false'
         FB_XPATH_MAIN = "//div[@role='main']"
         FB_XPATH_ARTICLE = "//div[@aria-posinset]"
+        FB_XPATH_APPROVE = ".//div[@aria-label='Phê duyệt' or @aria-label='Approve']"
+        FB_XPATH_DECLINE = ".//div[@aria-label='Từ chối' or @aria-label='Decline']"
+
+        seen = set()
+        posts_pending = []
+        approve_keywords = "(" + \
+            ")|(".join(group_approve.approve_key.split(',')) + ")"
+        decline_keywords = "(" + \
+            ")|(".join(group_approve.decline_key.split(',')) + ")"
+        
         try:
-            self.open_url(url)
+            self.open_url(pending_posts_url)
             main_element = self.driver.find_element(By.XPATH, FB_XPATH_MAIN)
 
             self.scroll_down_element(main_element, loop)
 
             pending_posts = self.driver.find_elements(By.XPATH, FB_XPATH_ARTICLE)
             for pending_post in pending_posts:
+                actions = ActionChains(self.driver)
+                actions.move_to_element(pending_post).perform()
+                sleep(randrange(2, 5))
                 raw_content = pending_post.get_property('innerText')
-                print(raw_content)
+                
+                post_pending = PostPendingRequest(group_id, '', '',raw_content, '')
+
+                content_split = str(raw_content).split('·')
+                if len(content_split) == 2:
+                    post_pending.UserName = content_split[0].split('\n')[0]
+                    real_content = content_split[1].strip().replace(
+                        'Phê duyệt' + '\n' + 'Từ chối', '').replace(
+                        'Approve' + '\n' + 'Decline', '')
+                    post_pending.Content = real_content
+                    check_approve = re.search(
+                        approve_keywords, real_content, re.IGNORECASE)
+                    if check_approve:
+                        post_pending.Action = Action.APPROVE
+                        post_pending.KeyCheck = check_approve.group()
+
+                    check_decline = re.search(
+                        decline_keywords, real_content, re.IGNORECASE)
+                    if check_decline:
+                        post_pending.Action = Action.DECLINE
+                        post_pending.KeyCheck = check_decline.group()
+                # share link detect
+                elif len(content_split) == 3:
+                    post_pending.Action = Action.DECLINE
+                    post_pending.KeyCheck = 'reshare'
+                else:
+                    post_pending.KeyCheck = "ignore"
+
+                # check duplicate
+                if post_pending.UserName is not None:
+                    if post_pending.UserName not in seen:
+                        seen.add(post_pending.UserName)
+                    else:
+                        post_pending.Action = Action.DECLINE
+                        post_pending.KeyCheck = 'duplicate'
 
 
+                # approve now
+                if post_pending.Action is Action.APPROVE:
+                    btn_approve = pending_post.find_element(
+                        By.XPATH, FB_XPATH_APPROVE)
+                    # btn_approve.click()
+                    self.driver.execute_script("arguments[0].scrollIntoView(true);", btn_approve)
+                    self.driver.execute_script("arguments[0].click()", btn_approve)
+                    # sleep(randrange(1,5))
+                elif post_pending.Action is Action.DECLINE:
+                    btn_decline = pending_post.find_element(
+                        By.XPATH, FB_XPATH_DECLINE)
+                    # btn_decline.click()
+                    self.driver.execute_script("arguments[0].scrollIntoView(true);", btn_decline)
+                    self.driver.execute_script("arguments[0].click()", btn_decline)
+                    # sleep(randrange(1,5))
+
+                posts_pending.append(post_pending)
         except (NoSuchElementException, TimeoutException):
-            logging.exception('UID: %s URL: %s', self.uid, url)
+            logging.exception('UID: %s URL: %s', self.uid, pending_posts_url)
+        
+        finally:
+            return posts_pending
 
     def scan_group_by_keyword(self, keyword, loop_scan):
         groups = []
@@ -513,7 +592,7 @@ class FacebookScraper:
         sleep(randrange(1, 3))
 
     def checkpoint_956(self, mail_reader):
-        STEPS = ["//div[@aria-label='Start security steps']",
+        STEPS = ["//div[@aria-label='Start security steps' or @aria-label='Get started']",
                  "//div[@aria-label='Next']",
                  "//*[contains(text(),'Get a code by email')]",
                  "//div[@aria-label='Get code']",

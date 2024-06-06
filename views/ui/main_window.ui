@@ -119,7 +119,7 @@ border: none;</string>
           <enum>QFrame::Raised</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page_3">
           <property name="geometry">
@@ -294,7 +294,7 @@ border: none;</string>
             <normaloff>:/icons/icon/car-4-48.ico</normaloff>:/icons/icon/car-4-48.ico</iconset>
           </attribute>
           <attribute name="label">
-           <string>Tương tác Fanpage</string>
+           <string>History</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <property name="spacing">
@@ -316,6 +316,13 @@ border: none;</string>
             <widget class="QPushButton" name="btn_group_view">
              <property name="text">
               <string>Danh sách nhóm</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_approve_request">
+             <property name="text">
+              <string>Approve Request</string>
              </property>
             </widget>
            </item>

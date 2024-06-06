@@ -162,13 +162,18 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.btn_group_view)
 
+        self.btn_approve_request = QPushButton(self.page_4)
+        self.btn_approve_request.setObjectName(u"btn_approve_request")
+
+        self.verticalLayout_2.addWidget(self.btn_approve_request)
+
         self.verticalSpacer_2 = QSpacerItem(20, 381, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_2.addItem(self.verticalSpacer_2)
 
         icon6 = QIcon()
         icon6.addFile(u":/icons/icon/car-4-48.ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolBox.addItem(self.page_4, icon6, u"T\u01b0\u01a1ng t\u00e1c Fanpage")
+        self.toolBox.addItem(self.page_4, icon6, u"History")
         self.page_5 = QWidget()
         self.page_5.setObjectName(u"page_5")
         self.page_5.setGeometry(QRect(0, 0, 180, 579))
@@ -246,7 +251,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.toolBox.setCurrentIndex(0)
+        self.toolBox.setCurrentIndex(1)
         self.btn_dashboard.setDefault(False)
         self.tabWidget.setCurrentIndex(-1)
 
@@ -263,7 +268,8 @@ class Ui_MainWindow(object):
         self.btn_page.setText(QCoreApplication.translate("MainWindow", u"Page", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), QCoreApplication.translate("MainWindow", u"Gerneral", None))
         self.btn_group_view.setText(QCoreApplication.translate("MainWindow", u"Danh s\u00e1ch nh\u00f3m", None))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.page_4), QCoreApplication.translate("MainWindow", u"T\u01b0\u01a1ng t\u00e1c Fanpage", None))
+        self.btn_approve_request.setText(QCoreApplication.translate("MainWindow", u"Approve Request", None))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.page_4), QCoreApplication.translate("MainWindow", u"History", None))
         self.btn_youtube.setText(QCoreApplication.translate("MainWindow", u"Duy\u1ec7t b\u00e0i nh\u00f3m", None))
         self.btn_tumb.setText(QCoreApplication.translate("MainWindow", u"\u0110\u0103ng b\u00e0i", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_5), QCoreApplication.translate("MainWindow", u"Schedule", None))

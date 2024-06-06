@@ -3,12 +3,29 @@ from controllers.worker.base_worker import *
 from time import sleep
 from random import randrange
 
+class ScanPostHistorySignals(BaseSignals):
+    scan_post_history = Signal(str, str, str, str)
 
 class ScanPostHistoryWorker(BaseWorker):
-    def __init__(self, active_id, loop_scan, semaphore_id, account) -> None:
-        super().__init__(semaphore_id, account)
-        self.active_id = active_id
+    def __init__(self, semaphore, user_id, loop_scan) -> None:
+        super().__init__(semaphore, user_id)
         self.loop_scan = loop_scan
+        self.signals = ScanPostHistorySignals()
+
+    def setup_before_execution(self, db_manager, ui_signals):
+        super().setup_before_execution(db_manager, ui_signals)
+        self.active_id = self.db_manager.get_account_pageid(self.user_id)
+
+    def on_save_post_history(self, active_id, group_link, post_link, status):
+        try:
+            self.db_manager.add_post_history(
+                active_id, group_link, post_link, status)
+        except Exception as e:
+            logging.error('', exc_info=True)
+
+    def connect_signals(self):
+        super().connect_signals()
+        self.signals.scan_post_history.connect(self.on_save_post_history)
 
     @Slot()
     def run(self):

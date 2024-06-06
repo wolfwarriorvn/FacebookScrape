@@ -3,11 +3,24 @@ from controllers.worker.base_worker import *
 from time import sleep
 from random import randrange
 
+class CheckApprovalSignals(BaseSignals):
+    approved_post = Signal(str, str)
 
 class CheckApprovalPost(BaseWorker):
-    def __init__(self,pending_posts, semaphore_id, account) -> None:
-        super().__init__(semaphore_id, account)
+    def __init__(self, semaphore, user_id, pending_posts) -> None:
+        super().__init__(semaphore, user_id)
         self.pending_posts = pending_posts
+        self.signals = CheckApprovalSignals()
+
+    def on_update_approve_status(self, pending_post, status):
+        try:
+            self.db_manager.update_post_status(pending_post, status)
+        except Exception as e:
+            logging.error('', exc_info=True)
+
+    def connect_signals(self):
+        super().connect_signals()
+        self.signals.approved_post.connect(self.on_update_approve_status)
 
     @Slot()
     def run(self):

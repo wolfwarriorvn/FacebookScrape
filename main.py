@@ -15,6 +15,7 @@ from views.account import Account
 from views.groups import Groups
 from views.pages import Pages
 from views.proxy import Proxy
+from views.approve_request import AproveRequest
 from views.group_view import GroupView
 from views.group_join import GroupJoin
 from views.group_scan import GroupScan
@@ -39,7 +40,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.btn_proxy: Proxy(self._main_controller),
             self.btn_group_view: GroupView(self._main_controller),
             self.btn_group: Groups(self._main_controller),
-            self.btn_page: Pages(self._main_controller)
+            self.btn_page: Pages(self._main_controller),
+            self.btn_approve_request: AproveRequest(self._main_controller)
         }
         "Show home window"
         self.show_home_window()
@@ -52,6 +54,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btn_page.clicked.connect(self.show_selected_window)
         self.btn_proxy.clicked.connect(self.show_selected_window)
         self.btn_group_view.clicked.connect(self.show_selected_window)
+        self.btn_approve_request.clicked.connect(self.show_selected_window)
 
     def show_home_window(self):
         result = self.open_tab_flag(self.btn_dashboard.text())

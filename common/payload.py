@@ -1,5 +1,5 @@
 from dataclasses import dataclass, asdict
-
+from typing import List
 
 class BaseSetting():
     def __init__(self, idle_from, idle_to, threads) -> None:
@@ -52,5 +52,17 @@ class SocialGroupProfile():
     Category: str = None
     Numbers: str = None
     Details: str = None
+
+@dataclass
+class GroupApprovalSettings():
+    group_id: str
+    approve_key: str
+    decline_key: str
+    
+@dataclass
+class ThreadAprovalPayload():
+    post_count: int
+    approval_settings: List[GroupApprovalSettings]
+
 
 
